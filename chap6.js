@@ -373,10 +373,78 @@ for(let key of Object.keys(source)) {
 }
 target // => {x: 1, y: 2, z: 3}
 
- 
+//Object.assign() expects two or more objects as its arguments.
+//It modifies and returns the first argument, which is the target object,
+//but does not alter the second or any subsequent arguments, which are the
+//source objects.
 
-f
+
+//Object.assign() copies properties with ordinary property get and set operations,
+
+Object.assign(o, defaults); // overwrites everything in o with defaults
+
+//what you can do is to create a new object, copy the defaultsinto it, 
+//and then override those defaults with the properties in o:
+
+o = Object.assign({}, defaults, o);
+// Like Object.assign() but doesn't override existing properties
+// (and also doesn't handle Symbol properties)
+function merge(target, ...sources) {
+    for(let source of sources) {
+        for(let key of Object.keys(source)) {
+            if (!(key in target)) { // This is different than Object.assign()
+                target[key] = source[key];
+            }
+        }
+    }
+    return target;
+}
+Object.assign({x: 1}, {x: 2, y: 2}, {y: 3, z: 4}) // => {x:2, y: 3, z: 4}
+merge({x: 1}, {x: 2, y: 2}, {y: 3, z: 4}) // => {x: 1, y: 2, z: 4}
 
 
 
+//6.8 Serializing Objects
+//Object serialization is the process of converting an object’s state to a
+//string from which it can later be restored.
 
+
+let o = {x: 1, y: {z: [false, null, ""]}}; // Define a test object
+let s = JSON.stringify(o); // s == '{"x":1,"y":{"z":[false,null,""]}}'
+let p = JSON.parse(s); // p == {x: 1, y: {z: [false, null, ""]}}
+
+
+//JSON syntax is a subset of JavaScript syntax, and it cannot represent
+//all JavaScript values. Objects, arrays, strings, finite numbers, true,
+///false, and null are supported and can be serialized and restored.
+
+//If a property value cannot be serialized, 
+//that property is simply omitted from the stringified output.
+
+
+
+//6.9 Object Methods
+
+//all JavaScript objects (except those explicitly
+//created without a prototype) inherit properties from Object.prototype.
+
+//These inherited properties are primarily methods, 
+//and because they are universally available,
+
+//6.9.1 The toString() Method
+
+//The toString() method takes no arguments;
+//the following line of code simply evaluates to the string “[object Object]”:
+let s = { x: 1, y: 1 }.toString(); // s == "[object Object]"
+
+
+//when an array is converted to a string, you obtain a list of the
+//array elements, themselves each converted to a string, and when a
+//function is converted to a string,you obtain the source code for the function.
+
+let point = {
+    x: 1,
+    y: 2,
+    toString: function() { return `(${this.x}, ${this.y})`; }
+    };
+    String(point) // => "(1, 2)": toString() is used for string conversions
