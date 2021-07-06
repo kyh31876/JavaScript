@@ -129,7 +129,7 @@ object.property
 object["property"]
 
 //When you use the . operator to access a property of an object,
-//however, the name of the property is expressed as an identifier.
+//h4owever, the name of the property is expressed as an identifier.
 
 
 //hand, when you access a property of an object with the [] array notation, 
@@ -447,4 +447,55 @@ let point = {
     y: 2,
     toString: function() { return `(${this.x}, ${this.y})`; }
     };
-    String(point) // => "(1, 2)": toString() is used for string conversions
+String(point) // => "(1, 2)": toString() is used for string conversions
+
+//6.9.2 The toLocaleString() Method
+
+//In addition to the basic toString() method, objects all have a
+//toLocaleString().
+
+
+//The purpose of this method is to return a localized string representation of the object.
+
+
+
+//The Date and Number classes define customized versions of
+//toLocaleString() that attempt to format numbers, dates, and
+//times according to local conventions.
+
+
+let point = {
+    x: 1000,
+    y: 2000,
+    toString: function() { return `(${this.x}, ${this.y})`;
+},
+    toLocaleString: function() {
+        return `(${this.x.toLocaleString()},
+${this.y.toLocaleString()})`;
+    }
+};
+point.toString() // => "(1000, 2000)"
+point.toLocaleString() // => "(1,000, 2,000)": note thousands separators
+
+
+//6.9.3 The valueOf() Method
+
+//it is called when JavaScript needs to convert an object to some
+//primitive type other than a string—typically, a number. JavaScript calls
+//this method automatically if an object is used in a context where a
+//primitive value is required.
+
+
+
+let point = {
+    x: 3,
+    y: 4,
+    valueOf: function() { return Math.hypot(this.x, this.y);
+}
+};
+Number(point) // => 5: valueOf() is used for conversions to numbers
+point > 4 // => true
+point > 5 // => false 
+
+
+6.9.4 The toJSON() Method
