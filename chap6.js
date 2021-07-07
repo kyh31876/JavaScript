@@ -498,4 +498,240 @@ point > 4 // => true
 point > 5 // => false 
 
 
-6.9.4 The toJSON() Method
+//6.9.4 The toJSON() Method
+
+let point = {
+    x: 1,
+    y: 2,
+    toString: function() { return `(${this.x}, ${this.y})`;
+},
+    toJSON: function() { return this.toString(); }
+};
+JSON.stringify([point]) // => '["(1, 2)"]'
+
+
+
+//6.10 Extended Object Literal Syntax
+
+//6.10.1 Shorthand Properties
+
+//With basic object literal syntax, 
+//you’d end up repeating each identifier twice:
+
+let x = 1, y = 2;
+let o = {
+    x: x,
+    y: y
+};
+
+//In ES6 and later,
+let x = 1, y = 2;
+let o = { x, y };
+o.x + o.y // => 3
+
+
+//6.10.2 Computed Property Names
+
+//the name of that property is not a compile-time constant that you can
+//type literally in your source code.
+
+
+//You can’t use a basic object literal for this kind of property.
+//Instead, you have to create an object and then add the desired
+//properties as an extra step:
+
+const PROPERTY_NAME = "p1";
+function computePropertyName() { return "p" + 2; }
+
+let o = {};
+o[PROPERTY_NAME] = 1;
+o[computePropertyName()] = 2;
+
+
+
+//It is much simpler to set up an object like this with an ES6 feature
+//known as computed properties
+
+const PROPERTY_NAME = "p1";
+function computePropertyName() { return "p" + 2; }
+
+let p = {
+    [PROPERTY_NAME]: 1,
+    [computePropertyName()]: 2
+};
+
+p.p1 + p.p2 // => 3
+
+
+//6.10.3 Symbols as Property Names
+
+//If you assign a symbol to a variable or constant, then you can
+//use that symbol as a property name using the computed property syntax:
+
+const extension = Symbol("my extension symbol");
+let o = {
+    [extension]: { /* extension data stored in this object */
+}
+};
+o[extension].x = 0; // This won't conflict with other properties of o
+
+//6.10.4 Spread Operator
+
+//you can copy the properties of an existing object into 
+//a new object using the “spread operator” ... inside an object literal:
+
+let position = { x: 0, y: 0 };
+let dimensions = { width: 100, height: 75 };
+let rect = { ...position, ...dimensions };
+rect.x + rect.y + rect.width + rect.height // => 175
+
+
+
+//the properties of the position and dimensions objects 
+//are “spread out” into the rect object literal as if they had been
+//written literally inside those curly braces.
+
+
+let o = { x: 1 };
+let p = { x: 0, ...o };
+p.x // => 1: the value from object o overrides the initial value
+let q = { ...o, x: 2 };
+q.x // => 2: the value 2 overrides the previous value from o.
+
+
+
+//the spread operator only spreads the own properties of
+//an object, not any inherited ones:
+let o = Object.create({x: 1}); // o inherits the property x
+let p = { ...o };
+p.x // => undefined
+
+
+//6.10.5 Shorthand Methods
+
+//When a function is defined as a property of an object, we call that
+//function a method.
+
+let square = {
+    area() { return this.side * this.side; },
+    side: 10
+};
+square.area() // => 100
+
+//The shorthand syntax makes it clearer that area()
+//is a method and not a data property like side.
+
+//the property name can take any of the forms that are legal in an object literal:
+
+
+const METHOD_NAME = "m";
+const symbol = Symbol();
+let weirdMethods = {
+    "method With Spaces"(x) { return x + 1; },
+    [METHOD_NAME](x) { return x + 2; },
+    [symbol](x) { return x + 3; }
+};
+weirdMethods["method With Spaces"](1) // => 2
+weirdMethods[METHOD_NAME](1) // => 3
+weirdMethods[symbol](1) // => 4
+
+
+//6.10.6 Property Getters and Setters
+
+//JavaScript also supports accessor properties,
+//which do not have a single value but instead have one or two accessor methods:
+
+
+//When a program queries the value of an accessor property,
+//JavaScript invokes the getter method (passing no arguments).
+
+
+//The return value of this method becomes 
+//the value of the property access expression.
+
+
+//When a program sets the value of an accessor property, JavaScript
+//invokes the setter method, passing the value of the righthand side of the
+//assignment.
+
+
+//This method is responsible for “setting,” in some sense, the property value. 
+//The return value of the setter method is ignored.
+
+
+
+//If a property has both a getter and a setter method, it is a read/write
+//property.
+
+//If it has only a getter method, it is a read-only property. 
+
+//And if it has only a setter method, it is a write-only property, 
+//and attempts to read it always evaluate to undefined.
+
+
+let o = {
+    // An ordinary data property
+    dataProp: value,
+    // An accessor property defined as a pair of functions.
+    get accessorProp() { return this.dataProp; },
+    set accessorProp(value) { this.dataProp = value; }
+};
+
+
+//Accessor properties are defined as one or two methods whose name is
+//the same as the property name.
+
+
+
+//The accessor methods defined above simply get and set the value of a
+//data property, and there is no reason to prefer the accessor property
+//over the data property.
+
+
+let p = {
+    // x and y are regular read-write data properties.
+    x: 1.0,
+    y: 1.0,
+    // r is a read-write accessor property with getter and setter.
+    // Don't forget to put a comma after accessor methods.
+    get r() { return Math.hypot(this.x, this.y); },
+    set r(newvalue) {
+        let oldvalue = Math.hypot(this.x, this.y);
+        let ratio = newvalue/oldvalue;
+        this.x *= ratio;
+        this.y *= ratio;
+    },
+    // theta is a read-only accessor property with getter only.
+    get theta() { return Math.atan2(this.y, this.x); }
+};
+p.r // => Math.SQRT2
+p.theta // => Math.PI / 4
+
+
+let q = Object.create(p); // A new object that inherits getters and setters
+q.x = 3; q.y = 4; // Create q's own data properties
+q.r // => 5: the inherited accessor properties work
+q.theta // => Math.atan2(4, 3)
+
+
+//The code above uses accessor properties to define an API that provides
+//two representations (Cartesian coordinates and polar coordinates) of a
+//single set of data.
+
+
+// This object generates strictly increasing serial numbers
+const serialnum = {
+    // This data property holds the next serial number.
+    // The _ in the property name hints that it is for internal use only.
+    _n: 0,
+    // Return the current value and increment it
+    get next() { return this._n++; },
+    // Set a new value of n, but only if it is larger than current
+    set next(n) {
+        if (n > this._n) this._n = n;
+        else throw new Error("serial number can only be set to a larger value");
+    }
+};
+serialnum.next = 10; // Set the starting serial number
+serialnum.next // => 10
+serialnum.next // => 11: different value each time we get next  
