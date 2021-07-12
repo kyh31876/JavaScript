@@ -736,3 +736,376 @@ o.setName(0); // !TypeError: try to set a value of the wrong type
 
 
 
+
+//it is a common error to try to move the loop within the function
+//that defines the closures.
+// Return an array of functions that return the values 0-9
+function constfuncs() {
+    let funcs = [];
+    for(var i = 0; i < 10; i++) {
+        funcs[i] = () => i;
+    }
+    return funcs;
+}
+let funcs = constfuncs();
+funcs[5]() // => 10; Why doesn't this return 5?
+
+
+//Another thing to remember when writing closures is that "this" is a
+//JavaScript keyword, not a variable.
+
+//if you’re writing a closure that needs to use the "this" value of 
+//its containing function, you should use an arrow function, 
+//or call bind(), on the closure before returning it,
+
+const self = this; // Make the this value available to nested functions
+
+
+
+//8.7 Function Properties, Methods, and Constructor
+
+//8.7.2 The name Property
+
+//Function object's read-only name property indicates 
+//the function's name as specified when it was created, 
+const func1 = function() {};
+
+const object = {
+  func2: function() {}
+};
+
+console.log(func1.name);
+// expected output: "func1"
+
+console.log(object.func2.name);
+// expected output: "func2"
+
+
+
+//8.7.3 The prototype Property
+
+//When a function is used as a constructor, 
+//the newly created object inherits properties from the prototype object.
+
+
+
+//8.7.4 The call() and apply() Methods
+
+//The first argument to both call() and apply() is the object 
+//on which the function is to be invoked;
+
+//this argument is the invocation context and becomes the
+//value of the "this" keyword within the body of the function.
+
+
+
+//To invoke the function f() as a method of the object o
+//you could use either call() or apply():
+f.call(o);
+f.apply(o);
+
+o.m = f; // Make f a temporary method of o.
+o.m(); // Invoke it, passing no arguments.
+delete o.m; // Remove the temporary method.
+
+
+//If you call either of those methods on an arrow function, 
+//the first argument is effectively ignored.
+
+
+
+
+//call()
+
+
+//It can be used to invoke (call) a method with an owner object 
+//as an argument (parameter).
+
+//the first invocation context argument
+//are the values that are passed to the function that is invoked
+
+f.call(o, 1, 2);//to pass two numbers to the function f() 
+//and invoke it as if it were a method of the object o,
+
+
+//apply()
+
+
+//The call() method takes arguments separately.
+//The apply() method takes arguments as an array.
+
+f.apply(o, [1,2]);
+
+
+//It uses the apply() method instead of a spread operator,
+//and by doing that, it is able to invoke the wrapped method with the
+//same arguments and the same this value as the wrapper method:
+
+// Replace the method named m of the object o with a version that logs
+// messages before and after invoking the original method.
+function trace(o, m) {
+    let original = o[m]; // Remember original method in the closure.
+    o[m] = function(...args) { // Now define the new method.
+    console.log(new Date(), "Entering:", m); // Log message.
+    let result = original.apply(this, args); // Invoke original.
+    console.log(new Date(), "Exiting:", m); // Log message.
+    return result; // Return result.
+    };
+}
+
+//8.7.5 The bind() Method
+
+//When you invoke the bind() method on a function f and pass 
+//an object o, the method returns a new function.
+
+//Invoking the new function (as a function) invokes 
+//the original function f as a method of o. 
+
+//Any arguments you pass to the new function are passed to the original function.
+
+function f(y) { return this.x + y; } // This function needs to be bound
+let o = { x: 1 }; // An object we'll bind to
+let g = f.bind(o); // Calling g(x) invokes f() on o
+g(2) // => 3
+let p = { x: 10, g }; // Invoke g() as a method of this object
+p.g(2) // => 3: g is still bound to o, not p.
+
+
+let sum = (x,y) => x + y; // Return the sum of 2 args
+let succ = sum.bind(null, 1); // Bind the first argument to 1
+succ(2) // => 3: x is bound to 1, and we pass 2 for the y argument
+function f(y,z) { return this.x + y + z; }
+let g = f.bind({x: 1}, 2); // Bind this and y
+g(3) // => 6: this.x is bound to 1, y is bound to 2 and z is 3
+
+
+//8.7.7 The Function() Constructor
+
+//that can be used to create new functions:
+const f = new Function("x", "y", "return x*y;");
+
+//The Function() constructor expects any number of string arguments.
+
+
+//If you are defining a function that takes no arguments,
+//you would simply pass a single string to the constructor.
+
+
+//8.8 Functional Programming
+
+//8.8.1 Processing Arrays with Functions
+
+let data = [1,1,3,5,5]; // This is our array of numbers
+// The mean is the sum of the elements divided by the number of elements
+let total = 0;
+for(let i = 0; i < data.length; i++) total += data[i];
+let mean = total/data.length; // mean == 3; The mean of our data is 3
+// To compute the standard deviation, we first sum the squares of
+// the deviation of each element from the mean.
+total = 0;
+for(let i = 0; i < data.length; i++) {
+    let deviation = data[i] - mean;
+    total += deviation * deviation;
+}
+let stddev = Math.sqrt(total/(data.length-1)); // stddev == 2
+
+
+
+//We can perform these same computations in concise functional style
+// First, define two simple functions
+const sum = (x,y) => x+y;
+const square = x => x*x;
+// Then use those functions with Array methods to compute mean and stddev
+let data = [1,1,3,5,5];
+let mean = data.reduce(sum)/data.length; // mean == 3
+let deviations = data.map(x => x-mean);
+let stddev = Math.sqrt(deviations.map(square).reduce(sum)/(data.length- 1));
+stddev // => 2
+
+
+//Let’s write functional versions of the map() and reduce() methods:
+const map = function(a, ...args) { return a.map(...args); };
+const reduce = function(a, ...args) { return a.reduce(...args); };
+
+//With these map() and reduce() functions defined, out code to compute 
+//the mean and standard deviation.
+
+const sum = (x,y) => x+y;
+const square = x => x*x;
+let data = [1,1,3,5,5];
+let mean = reduce(data, sum)/data.length;
+let deviations = map(data, x => x-mean);
+let stddev = Math.sqrt(reduce(map(deviations, square),sum)/(data.length-1));
+stddev // => 2
+
+
+//8.8.2 Higher-Order Functions
+
+//A higher-order function is a function that operates on functions, taking
+//one or more functions as arguments and returning a new function.
+
+// This higher-order function returns a new function that passes its
+// arguments to f and returns the logical negation of f's return value;
+function not(f) {
+    return function(...args) { // Return a new function
+        let result = f.apply(this, args); // that calls f
+        return !result; // and negates its result.
+    };
+}
+const even = x => x % 2 === 0; // A function to determine if a number is even
+const odd = not(even); // A new function that does the opposite
+[1,1,3,5,5].every(odd) // => true: every element of the array is odd
+
+//This not() function is a higher-order function because it takes a
+//function argument and returns a new function.
+
+
+
+//This function uses the map() function defined earlier,
+
+// Return a function that expects an array argument and applies f to
+// each element, returning the array of return values.
+// Contrast this with the map() function from earlier.
+function mapper(f) {
+    return a => map(a, f);
+}
+const increment = x => x+1;
+const incrementAll = mapper(increment);
+incrementAll([1,2,3]) // => [2,3,4]
+
+
+//f and g, and returns a new function that computes f(g()):
+
+// Return a new function that computes f(g(...)).
+// The returned function h passes all of its arguments to g, then passes
+// the return value of g to f, then returns the return value of f.
+// Both f and g are invoked with the same this value as h was invoked with.
+function compose(f, g) {
+    return function(...args) {
+// We use call for f because we're passing a single value and
+// apply for g because we're passing an array of values.
+    return f.call(this, g.apply(this, args));
+    };
+}
+const sum = (x,y) => x+y;
+const square = x => x*x;
+compose(square, sum)(2,3) // => 25; the square of the sum
+
+
+
+//8.8.3 Partial Application of Functions
+
+//The bind() method partially applies arguments on the left
+
+// The arguments to this function are passed on the left
+function partialLeft(f, ...outerArgs) {
+    return function(...innerArgs) { // Return this function
+        let args = [...outerArgs, ...innerArgs]; // Build the argument list
+        return f.apply(this, args); // Then invoke f with it
+    };
+}
+// The arguments to this function are passed on the right
+function partialRight(f, ...outerArgs) {
+    return function(...innerArgs) { // Return this function
+        let args = [...innerArgs, ...outerArgs]; // Build the argument list
+        return f.apply(this, args); // Then invoke f with it
+    };
+}
+// The arguments to this function serve as a template. Undefined values
+// in the argument list are filled in with values from the inner set.
+function partial(f, ...outerArgs) {
+    return function(...innerArgs) {
+        let args = [...outerArgs]; // local copy of outerargs template
+        let innerIndex=0; // which inner arg is next
+// Loop through the args, filling in undefined values from inner args
+        for(let i = 0; i < args.length; i++) {
+            if (args[i] === undefined) args[i] = innerArgs[innerIndex++];
+        }
+    // Now append any remaining inner arguments
+        args.push(...innerArgs.slice(innerIndex));
+        return f.apply(this, args);
+    };
+}
+// Here is a function with three arguments
+const f = function(x,y,z) { return x * (y - z); };
+// Notice how these three partial applications differ
+partialLeft(f, 2)(3,4) // => -2: Bind first argument:
+2 * (3 - 4)
+partialRight(f, 2)(3,4) // => 6: Bind last argument:
+3 * (4 - 2)
+partial(f, undefined, 2)(3,4) // => -6: Bind middle argument: 3 * (2 - 4)
+
+
+
+
+const increment = partialLeft(sum, 1);
+const cuberoot = partialRight(Math.pow, 1/3);
+cuberoot(increment(26)) // => 3
+
+//We can also use composition and partial application to redo our mean
+//and standard deviation calculations in extreme functional style:
+
+// sum() and square() functions are defined above. Here are some more:
+const product = (x,y) => x*y;
+const neg = partial(product, -1);
+const sqrt = partial(Math.pow, undefined, .5);
+const reciprocal = partial(Math.pow, undefined, neg(1));
+// Now compute the mean and standard deviation.
+let data = [1,1,3,5,5]; // Our data
+let mean = product(reduce(data, sum),
+reciprocal(data.length));
+let stddev = sqrt(product(reduce(map(data,
+    compose(square,
+        partial(sum,neg(mean)))))),sum)
+reciprocal(sum(data.length,neg(1)))));
+[mean, stddev] // => [3, 2]
+
+
+//8.8.4 Memoization
+
+
+//The code that follows shows a higher-order function, memoize(), 
+//that accepts a function as its argument and 
+//returns a memoized version of the function:
+
+
+// Return a memoized version of f.
+// It only works if arguments to f all have distinct string representations.
+function memoize(f) {
+    const cache = new Map(); // Value cache stored in the closure.
+    return function(...args) {
+    // Create a string version of the arguments to use as a cache key.
+        let key = args.length + args.join("+");
+        if (cache.has(key)) {
+        return cache.get(key);
+        } else {
+            let result = f.apply(this, args);
+            cache.set(key, result);
+            return result;
+        }
+    };
+}
+
+//The memoize() function creates a new object to use as the cache and
+//assigns this object to a local variable so that it is private to (in the
+//closure of) the returned function.
+
+// Return the Greatest Common Divisor of two integers using the Euclidian
+// algorithm: http://en.wikipedia.org/wiki/Euclidean_algorithm
+function gcd(a,b) { // Type checking for a and b has been omitted
+if (a < b) { // Ensure that a >= b when we start
+    [a, b] = [b, a]; // Destructuring assignment to swap variables
+    }
+    while(b !== 0) { // This is Euclid's algorithm for GCD
+        [a, b] = [b, a%b];
+    }
+    return a;
+}
+const gcdmemo = memoize(gcd);
+gcdmemo(85, 187) // => 17
+// Note that when we write a recursive function that we will be memoizing,
+// we typically want to recurse to the memoized version, not the original.
+const factorial = memoize(function(n) {
+    return (n <= 1) ? 1 : n * factorial(n-1);
+});
+factorial(5) // => 120: also caches values for 4, 3, 2 and 1.
