@@ -11,24 +11,43 @@ i *= 3;
 counter++;//These have the side effect of changing a variable value, 
 //just as if an assignment had been performed:
 
+
+
 //5.2 Compound and Empty Statements
 
-//the following lines act as a single statement and can be used anywhere
-//that JavaScript expects a single statement:
+
+//A statement block is simply a 
+//sequence of statements enclosed within curly braces{}.
+//While the primitive statements within the block end in semicolons,
+//it does not end with a semicolon.
+
+//Second, the lines inside the block are indented 
+//relative to the curly braces that enclose them.
 {
     x = Math.PI;
     cx = Math.cos(x);
     console.log("cos(π) = " + cx);
     }
+//The empty statement allows you to include 
+//no statements where one is expected.
+;
 
-;//The empty statement looks like this:
+
+
+//The JavaScript interpreter takes no action 
+//when it executes an empty statement.
 
 // Initialize an array a
 for(let i = 0; i < a.length; a[i++] = 0) ;
 
 
+
+//the accidental inclusion of a semicolon after the right
+//parenthesis of a for loop, while loop, or if statement can cause
+//frustrating bugs that are difficult to detect.
+
 if ((a === 0) || (b === 0)); // Oops! This line does nothing...
-o = null; // and this line is always executed
+    o = null; // and this line is always executed
 
 for(let i = 0; i < a.length; a[i++] = 0) /* empty */ ;
 // your code in a way that makes it clear that you are doing it on purpose.
@@ -36,10 +55,11 @@ for(let i = 0; i < a.length; a[i++] = 0) /* empty */ ;
 
 //5.3 Conditionals
 
-if (expression)
-    statement
 
+//5.3.1 if
 
+if (expression) //evaluated. If the resulting value is truthy,
+    statement//statement is executed.
 
 if (username == null) // If username is null or undefined,
     username = "John Doe"; // define it
@@ -47,6 +67,10 @@ if (username == null) // If username is null or undefined,
 //Or similarly:
 // If username is null, undefined, false, 0, "", or NaN, give it a new value
 if (!username) username = "John Doe";
+
+
+
+
 
 //you can use a statement block to combine multiple statements into one.
 if (!address) {
@@ -69,26 +93,15 @@ else
 
 i = j = 1;
 k = 2;
-if (i === j)
-    if (j === k)
-        console.log("i equals k");
-else
-    console.log("i doesn't equal j"); // WRONG!!
 
-if (i === j) {
-    if (j === k)
-        console.log("i equals k");
-    else
-        console.log("i doesn't equal j"); // OOPS!
-    }
 
 if (i === j) {
     if (j === k) {
         console.log("i equals k");
     }
     } else { // What a difference the location of a curly brace makes!
-        console.log("i doesn't equal j");
     }
+    console.log("i doesn't equal j");
 
 //5.3.2 else if
 
@@ -103,6 +116,10 @@ if (n === 1) {
     }
 
 
+//Using the else if idiom is preferable to, and more legible than, 
+//writing these statements out in their syntactically equivalent,
+//fully nested form:
+
 if (n === 1) {
     // Execute code block #1
 }
@@ -110,18 +127,22 @@ else {
     if (n === 2) {
         // Execute code block #2
 }
-else {
-    if (n === 3) {
-        // Execute code block #3
-}
-else {
-        // If all else fails, execute block #4
+    else {
+        if (n === 3) {
+            // Execute code block #3
+    }
+    else {
+            // If all else fails, execute block #4
         }   
     }
 }
 
 
 //5.3.3 switch
+
+
+///Use the switch statement to select one of many code blocks to be executed.
+
 switch(expression) {
     statements
     }
@@ -141,8 +162,11 @@ switch(n) {
         // Execute code block #4.
         break; // Stop here
     }
+
 //the break keyword used at the end of each case in this code.
 
+//The case clauses in a switch statement specify 
+//only the starting point of the desired code;
 
 function convert(x) {
         switch(typeof x) {
@@ -154,14 +178,24 @@ function convert(x) {
             return String(x);
     }
 }
+
+//If it does not find a case with a matching value, it looks for a statement
+//labeled default: ,the switch statement skips the block of code altogether.
+
 //When using switch inside a function, however, you may use a return statement
 //instead of a break statement.
+
+
+
+
 
 //5.4 Loops
 
 //5.4.1 while
-while (expression)
-    statement
+while (condition) {
+    // code block to be executed
+  }
+    
 //If the value of the expression is falsy, then the interpreter
 //skips over the statement that serves as the loop body and moves on to
 //the next statement in the program.
@@ -175,13 +209,40 @@ while(count < 10) {
     console.log(count);
     count++;
 }
+
+while(count < 10) {
+    count++;
+    console.log(count);
+}
+
 //becomes false, the while statement finishes, and the interpreter
 //can move on to the next statement in the program.
 
 //5.4.2 do/while
-do
-    statement
-while (expression);
+do {
+    // code block to be executed
+  }
+while (condition);
+
+let text ="", i=0;
+do {
+    text += "The number is " + i;
+    i++;
+    console.log(text);
+}
+while (i < 10);
+
+
+const cars = ["BMW", "Volvo", "Saab", "Ford"];
+let i = 0;
+let text = "";
+
+while (cars[i]) {
+  text = text + cars[i];
+  i++;
+  console.log(cars[i]);
+}
+
 
 
 function printArray(a) {
@@ -193,19 +254,17 @@ function printArray(a) {
             console.log(a[i]);
         } while(++i < len);
     }
-}
+}   
+
+
+
 
 
 //5.4.3 for
 
-//This variable is initialized before the loop starts
-//and is tested before each iteration of the loop.
-//Finally, the counter variable is incremented or otherwise updated at the end of the loop
-//body, just before the variable is tested again.
-
-
-for(initialize ; test ; increment)
-    statement
+for (initialize; test; increment) {
+    // code block to be executed
+  }
 
 //equivalent while loop:
 initialize;
@@ -226,16 +285,13 @@ for(i = 0, j = 10 ; i < 10 ; i++, j--) {
     sum += i * j;
 }
 
-
-
-function tail(o) { // Return the tail of linked list o
-    for(; o.next; o = o.next) /* empty */ ; // Traverse while o.next is truthy
-    return o;
-    }
-
 //5.4.4 for/of
 
-// for/of is a completely different kind of loop than the regular for loop. 
+//The JavaScript for of statement loops through the values 
+//of an iterable object.
+for (variable of iterable) {
+    // code block to be executed
+}
 
 let data = [1, 2, 3, 4, 5, 6, 7, 8, 9], sum = 0;
 for(let element of data) {
@@ -245,7 +301,8 @@ sum // => 45
 //the parentheses contain a variable declaration
 //followed by the of keyword and an expression that evaluates to an iterable object,
 
-data.push(sum)
+data.push(sum)//an infinite loop because the iteration can never reach the last
+//element of the array.
 
 //FOR/OF WITH OBJECTS
 let o = { x: 1, y: 2, z: 3 };
@@ -268,6 +325,8 @@ for(let v of Object.values(o)) {
 }
 sum // => 6
 
+
+
 //you can use for/of with Object.entries() and destructuring assignment:
 let pairs = "";
 for(let [k, v] of Object.entries(o)) {
@@ -277,6 +336,7 @@ pairs // => "x1y2z3"
 
 
 //FOR/OF WITH STRINGS
+
 let frequency = {};
 for(let letter of "mississippi") {
     if (frequency[letter]) {
@@ -303,19 +363,13 @@ for(let [key, value] of m) {
     value // => "one"
 }
 
-//ASYNCHRONOUS ITERATION WITH FOR/AWAIT
-// Read chunks from an asynchronously iterable stream and print them out
-async function printStream(stream) {
-    for await (let chunk of stream) {
-        console.log(chunk);
-    }
-}
-
 
 //5.4.5 for/in
 //The for/in statement loops through the property names of a specified object.
-for (variable in object)
-    statement
+for (var in object) {
+    //code block to be executed
+  }
+
 
 for(let p in o) { // Assign property names of o to variable p
     console.log(o[p]); // Print the value of each property
