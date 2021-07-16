@@ -373,7 +373,7 @@ for (var in object) {
 
 for(let p in o) { // Assign property names of o to variable p
     console.log(o[p]); // Print the value of each property
-    }
+}
 
 let o = { x: 1, y: 2, z: 3 };
 let a = [], i = 0;
@@ -382,10 +382,21 @@ for(a[i++] in o) /* empty */;
 //object properties that can be enumerated with a for/in loop
 for(let i in a) console.log(i);
 
+
+
+const object = { a: 1, b: 2, c: 3 };
+for (const property in object) {
+  console.log(`${property}: ${object[property]}`);
+}
+
+
+
 //5.5 Jumps
 
 //5.5.1 Labeled Statements
 identifier: statement
+//you give it a name that you can use to refer to it elsewhere in your program.
+
 
 //break and continue are the only JavaScript statements that use statement labels;
 mainloop: while(token !== null) {
@@ -397,16 +408,19 @@ mainloop: while(token !== null) {
 
 //5.5.2 break
 break;
+
 //this form of the break statement is legal only 
 //if it appears inside one of these statements.
 
 
 for(let i = 0; i < a.length; i++) {
     if (a[i] === target) break;
-    }
+}
+
 
 
 break labelname;
+
 //When break is used with a label, it jumps to the end of, or terminates,
 //the enclosing statement that has the specified label.
 
@@ -436,7 +450,13 @@ computeSum: if (matrix) {
 //5.5.3 continue
 
 //continue restarts a loop at the next iteration.
+continue;
 
+//With a label reference, the break statement can be used 
+//to jump out of any code block:
+continue labelname;
+
+//can be used only within the body of a loop.
 
 //an unlabeled continue statement being used to skip 
 //the rest of the current iteration of a loop when an error occurs:
@@ -446,6 +466,10 @@ for(let i = 0; i < data.length; i++) {
 }
 
 //5.5.4 return
+//The return statement ends function execution 
+//and specifies a value to be returned to the function caller.
+
+
 return expression;
 
 //A return statement may appear only within the body of a function. 
@@ -454,6 +478,8 @@ return expression;
 function square(x) { return x*x; } // A function that has a return statement
 square(2) // => 4
 
+
+
 //The return statement can also be used without an expression to
 //make the function return undefined to its caller.
 
@@ -461,10 +487,11 @@ function displayObject(o) {
     // Return immediately if the argument is null or undefined.
     if (!o) return;
     // Rest of function goes here...
-    }
+}
 
 //5.5.5 yield
-// A generator function that yields a range of integers
+//The yield keyword is used to pause and resume a generator function 
+
 function* range(from, to) {
     for(let i = from; i <= to; i++) {
         yield i;
@@ -472,10 +499,12 @@ function* range(from, to) {
 }
 
 //5.5.6 throw
+
 throw expression;
-//exceptions are thrown whenever a runtime error occurs and 
-//whenever the program explicitly throws one using the throw statement. 
-//Exceptions are caught with the try/catch/finally statement,
+//An exception is a signal that indicates that some sort of exceptional
+//condition or error has occurred. 
+
+
 
 function factorial(x) {
     // If the input argument is invalid, throw an exception!
@@ -486,6 +515,8 @@ function factorial(x) {
     return f;
     }
 factorial(4) // => 24
+
+
 
 //5.5.7 try/catch/finally
 //The try clause of this statement simply defines 
