@@ -303,6 +303,9 @@ delete x // => true: this property can be deleted
 delete x; // SyntaxError in strict mode
 delete globalThis.x; // This works
 
+
+
+
 //6.5 Testing Properties
 //JavaScript objects can be thought of as sets of properties, 
 //and it is often useful to be able to test for membership in the set
@@ -329,8 +332,10 @@ let o = { x: 1 };
 o.propertyIsEnumerable("x") // => true: o has an own enumerable property x
 o.propertyIsEnumerable("toString") // => false: not an own property
 Object.prototype.propertyIsEnumerable("toString") // => false: not enumerable
-//It returns true only if the named property is an own property and its enumerable attribute is true.
+//It returns true only if the named property is an own 
+//property and its enumerable attribute is true.
 //Certain built-in properties are not enumerable.
+
 
 
 //Instead of using the in operator
@@ -352,11 +357,13 @@ delete o.x; // Delete the property x
 
 
 //6.6 Enumerating Properties
+
 let o = {x: 1, y: 2, z: 3}; // Three enumerable own properties
 o.propertyIsEnumerable("toString") // => false: not enumerable
 for(let p in o) { // Loop through theproperties
     console.log(p); // Prints x, y, and z, but not toString
 }
+
 
 
 //To guard against enumerating inherited properties with for/in, 
@@ -368,6 +375,7 @@ for(let p in o) {
 for(let p in o) {
     if (typeof o[p] === "function") continue; // Skip all methods
     }
+
 
 //There are four functions you can use to get an array of property names:
     //Object.keys() returns an array of the names 
@@ -403,7 +411,8 @@ target // => {x: 1, y: 2, z: 3}
 //source objects.
 
 
-//Object.assign() copies properties with ordinary property get and set operations,
+//Object.assign() copies properties with ordinary property 
+//get and set operations,
 
 Object.assign(o, defaults); // overwrites everything in o with defaults
 
@@ -473,13 +482,16 @@ let point = {
     };
 String(point) // => "(1, 2)": toString() is used for string conversions
 
+
+
 //6.9.2 The toLocaleString() Method
 
 //In addition to the basic toString() method, objects all have a
 //toLocaleString().
 
 
-//The purpose of this method is to return a localized string representation of the object.
+//The purpose of this method is to return a localized 
+//string representation of the object.
 
 
 
@@ -505,10 +517,10 @@ point.toLocaleString() // => "(1,000, 2,000)": note thousands separators
 //6.9.3 The valueOf() Method
 
 //it is called when JavaScript needs to convert an object to some
-//primitive type other than a string—typically, a number. JavaScript calls
-//this method automatically if an object is used in a context where a
-//primitive value is required.
+//primitive type other than a string—typically, a number.
 
+//JavaScript calls this method automatically 
+//if an object is used in a context where a primitive value is required.
 
 
 let point = {
@@ -539,9 +551,10 @@ JSON.stringify([point]) // => '["(1, 2)"]'
 
 //6.10.1 Shorthand Properties
 
+
+
 //With basic object literal syntax, 
 //you’d end up repeating each identifier twice:
-
 let x = 1, y = 2;
 let o = {
     x: x,
@@ -571,8 +584,6 @@ let o = {};
 o[PROPERTY_NAME] = 1;
 o[computePropertyName()] = 2;
 
-
-
 //It is much simpler to set up an object like this with an ES6 feature
 //known as computed properties
 
@@ -585,7 +596,7 @@ let p = {
 };
 
 p.p1 + p.p2 // => 3
-
+c
 
 //6.10.3 Symbols as Property Names
 
@@ -598,6 +609,10 @@ let o = {
 }
 };
 o[extension].x = 0; // This won't conflict with other properties of o
+
+
+
+
 
 //6.10.4 Spread Operator
 
@@ -645,7 +660,8 @@ square.area() // => 100
 //The shorthand syntax makes it clearer that area()
 //is a method and not a data property like side.
 
-//the property name can take any of the forms that are legal in an object literal:
+//the property name can take any of the forms that
+// are legal in an object literal:
 
 
 const METHOD_NAME = "m";
@@ -665,7 +681,7 @@ weirdMethods[symbol](1) // => 4
 //JavaScript also supports accessor properties,which do not have 
 //a single value but instead have one or two accessor methods:
 
-//getter 
+//getter (passing no arguments).
 //the get syntax binds an object property to a function 
 //that will be called when that property is looked up.
 
@@ -754,9 +770,8 @@ let p = {
     // Don't forget to put a comma after accessor methods.
     get r() { return Math.hypot(this.x, this.y); },
     set r(newvalue) {
-        let oldvalue = Math.hypot(this.x, this.y);
-        let ratio = newvalue/oldvalue;
-        this.x *= ratio;
+        let oldvalue = Math.hypot(this.x, this.y), ratio = newvalue/oldvalue;
+        this.x *= ratio; //this refers to the point object p.
         this.y *= ratio;
     },
     // theta is a read-only accessor property with getter only.
@@ -765,7 +780,7 @@ let p = {
 p.r // => Math.SQRT2
 p.theta // => Math.PI / 4
 
-
+//Accessor properties are inherited
 let q = Object.create(p); // A new object that inherits getters and setters
 q.x = 3; q.y = 4; // Create q's own data properties
 q.r // => 5: the inherited accessor properties work
