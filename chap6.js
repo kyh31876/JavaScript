@@ -24,20 +24,29 @@
     //The configurable attribute specifies whether the property can
     //be deleted and whether its attributes can be altered.
 
+
+
+//JavaScript Primitives
+
+//A primitive value is a value that has no properties or methods.
+
+//string
+//number
+//boolean
+//null
+//undefined
+
 //6.2 Creating Objects
 
 //6.2.1 Object Literals
-
-//The easiest way to create an object is to include an object literal in your
-//JavaScript code.
 
 //an object literal is a commaseparated list of colon-separated name:value pairs,
 //enclosed within curly braces.
 
 //A property name is a JavaScript identifier or a string literal
-
 //A property value is any JavaScript expression; 
 //the value of the expression becomes the value of the property.
+
 let empty = {}; // An object with no properties
 let point = { x: 0, y: 0 }; // Two numeric properties
 let p2 = { x: point.x, y: point.y+1 }; // More complex values
@@ -54,7 +63,11 @@ let book = {
 //An object literal is an expression that creates and initializes a new and
 //distinct object each time it is evaluated.
 
+
+
+
 //6.2.2 Creating Objects with new
+
 
 //The new keyword must be followed by a function invocation.
 
@@ -65,6 +78,8 @@ let a = new Array(); // Create an empty array: same as [].
 let d = new Date(); // Create a Date object representing the current time
 let r = new Map(); // Create a Map object for key/value mapping
 
+
+
 //6.2.3 Prototypes
 //Almost every JavaScript object has a second JavaScript object associated with it.
 
@@ -74,14 +89,19 @@ let r = new Map(); // Create a Map object for key/value mapping
 //So the object created by new Object() inherits from Object.prototype, 
 //just as the object created by {} does.
 
-//Remember: almost all objects have a prototype, but only a relatively small number
-//of objects have a prototype property.
+//Remember: almost all objects have a prototype, but only a relatively 
+//small number of objects have a prototype property.
 
 
 //Object.prototype is one of the rare objects that has no prototype:
 
 //6.2.4 Object.create()
-//using its first argument as the prototype of that object:
+//The Object.create() method creates a new object,
+//using an existing object as the prototype of the newly created object.
+Object.create(proto)
+Object.create(proto, propertiesObject)
+
+
 let o1 = Object.create({x: 1, y: 2}); // o1 inherits properties x and y.
 o1.x + o1.y // => 3
 
@@ -97,9 +117,12 @@ let o3 = Object.create(Object.prototype); // o3 is like {} or new Object().
 
 //Instead of passing the object directly to the function,
 //you can pass an object that inherits from it. 
+
 //If the function reads properties of that object, it will see the inherited values.
 let o = { x: "don't change this value" };
 library.function(Object.create(o)); // Guard against accidental modifications
+
+
 
 
 //6.3 Querying and Setting Properties
@@ -174,8 +197,6 @@ function computeValue(portfolio) {
 //that every time you create an instance of a class with new, 
 //you are creating an object that inherits properties from a prototype object.
 
-
-
 //If o does not have an own property with that name, 
 //the prototype object of o is queried for the property x.
 
@@ -239,6 +260,8 @@ let surname = book?.author?.surname;
 //it is not possible to hide an inherited read-only property with an own
 //property of the same name.
 
+
+
 //6.4 Deleting Properties
 delete book.author; // The book object now has no author property.
 delete book["main title"]; // Now it doesn't have "main title", either.
@@ -258,7 +281,8 @@ delete 1 // => true: nonsense, but true anyway
 //delete does not remove properties that have a configurable attribute of false.
 
 //Certain properties of built-in objects are non-configurable,
-//as are properties of the global object created by variable declaration and function declaration.
+//as are properties of the global object created by variable declaration 
+//and function declaration.
 
 // In strict mode, all these deletions throw TypeError instead of returning false
 delete Object.prototype // => false: property is nonconfigurable
@@ -638,17 +662,30 @@ weirdMethods[symbol](1) // => 4
 
 //6.10.6 Property Getters and Setters
 
-//JavaScript also supports accessor properties,
-//which do not have a single value but instead have one or two accessor methods:
+//JavaScript also supports accessor properties,which do not have 
+//a single value but instead have one or two accessor methods:
+
+//getter 
+//the get syntax binds an object property to a function 
+//that will be called when that property is looked up.
+
+{get prop() { ... } }
+{get [expression]() { ... } }
 
 
-//When a program queries the value of an accessor property,
-//JavaScript invokes the getter method (passing no arguments).
-
-
-//The return value of this method becomes 
-//the value of the property access expression.
-
+const obj = {
+    log: ['a', 'b', 'c'],
+    get latest() {
+      if (this.log.length === 0) {
+        return undefined;
+      }
+      return this.log[this.log.length - 1];
+    }
+};
+  
+  console.log(obj.latest);
+  // expected output: "c"
+  
 
 //When a program sets the value of an accessor property, JavaScript
 //invokes the setter method, passing the value of the righthand side of the
@@ -659,14 +696,35 @@ weirdMethods[symbol](1) // => 4
 //The return value of the setter method is ignored.
 
 
-
 //If a property has both a getter and a setter method, it is a read/write
 //property.
+
+
 
 //If it has only a getter method, it is a read-only property. 
 
 //And if it has only a setter method, it is a write-only property, 
 //and attempts to read it always evaluate to undefined.
+
+//setter 
+//The set syntax binds an object property to a function to be called
+//when there is an attempt to set that property.
+
+{set prop(val) { . . . }}
+{set [expression](val) { . . . }}
+
+const language = {
+    set current(name) {
+      this.log.push(name);
+    },
+    log: []
+    };
+  
+language.current = 'EN';
+language.current = 'FA';
+  
+console.log(language.log);
+// expected output: Array ["EN", "FA"]
 
 
 let o = {
