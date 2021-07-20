@@ -479,6 +479,10 @@ ${this.valueType}`);
 //API but implements those methods by delegating to an internal Map object.
 
 
+
+
+
+
 //Example 9-7. Histogram.js: a Set-like class implemented with delegation
 /**
 * A Set-like class that keeps track of how many times a value has
@@ -521,8 +525,12 @@ class Histogram {
 
 
 
+
+
 //9.5.4 Class Hierarchies and Abstract Classes
 
+//Note that JavaScript does not have any formal definition of
+//abstract methods or abstract classes
 
 //Example 9-8. Sets.js: a hierarchy of abstract and concrete set classes
 //The A bstractSet class defines a single abstract method,has().
