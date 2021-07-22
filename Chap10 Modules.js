@@ -319,3 +319,28 @@ export * from "./stats/stddev.js";
 
 export { mean, mean as average } from "./stats/mean.js";
 export { stddev } from "./stats/stddev.js";
+
+
+
+
+//the re-export syntax is a little more complicated because it needs to
+//define a name for the unnamed default exports
+export { default as mean } from "./stats/mean.js";
+export { default as stddev } from "./stats/stddev.js";
+
+
+
+
+
+//you could do an import followed by an export default, 
+//or you could combine the two statements like this:
+
+
+// Import the mean() function from ./stats.js and make it the
+// default export of this module
+export { mean as default } from "./stats.js"
+
+
+
+// The average.js module simply re-exports the stats/mean.js default export
+export { default } from "./stats/mean.js"
