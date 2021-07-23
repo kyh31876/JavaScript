@@ -537,6 +537,7 @@ matched. Groups are subexpressions within (possibly nested) parentheses. Group
 numbers are assigned by counting left parentheses from left to right. Groups
 formed with (?: are not numbered.*/
 
+
 /ab|cd|ef/ //matches the string “ab” or the string “cd” or the string “ef”.
 //that alternatives are considered left to right until a match is found
 //If the left alternative matches, the right alternative is ignored
@@ -549,7 +550,6 @@ formed with (?: are not numbered.*/
 //more repetitions of either of the strings “ab” or “cd”.
 
 
-
 //A related use of parenthesized subexpressions is to allow you to refer back
 //to a subexpression later in the same regular expression.
 
@@ -558,3 +558,54 @@ formed with (?: are not numbered.*/
 
 /([Jj]ava([Ss]cript)?)\sis\s(fun\w*)/
  //the nested subexpression ([Ss]cript) is referred to as \2:
+ 
+/*A reference to a previous subexpression of a regular expression does
+not refer to the pattern for that subexpression but rather to the text that
+matched the pattern.*/
+
+//To require the quotes to match, use a reference:
+/(['"])[^'"]*\1/
+
+//The \1 matches whatever the first parenthesized subexpression matched.
+
+
+//Instead of simply grouping the items within ( and ), 
+//begin the group with (?: and end it with ). Consider the following pattern:
+/([Jj]ava(?:[Ss]cript)?)\sis\s(fun\w*)/
+
+
+//the subexpression (?:[Ss]cript) is used simply for grouping, 
+//so the ? repetition character can be applied to the group.
+//in this regular expression, \2 refers to the text matched by (fun\w*).
+
+
+
+
+
+//SPECIFYING MATCH POSITION
+
+
+//Table 11-5. Regular expression anchor characters
+
+//Character                 Meaning
+
+^//Match the beginning of the string or, with the m flag,
+//the beginning of a line.
+
+$ //Match the end of the string and, with the m flag, the end of a line.
+
+\b /*Match a word boundary. That is, match the position between a \w character 
+and  a \W character or between a \w character and the beginning or 
+end of a string. (Note, however, that [\b] matches backspace.) */
+
+\B //Match a position that is not a word boundary.
+
+(?=p) /*A positive lookahead assertion. Require that the following 
+characters match the pattern p, but do not include those characters in the match.*/
+
+(?!p) /*A negative lookahead assertion. Require that the following characters 
+do not match the pattern p. */
+
+
+/^JavaScript$/. //matching  the word "JavaScript" 
+/\sJava\s/   //searching for "Java" as a word
