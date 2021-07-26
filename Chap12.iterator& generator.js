@@ -109,8 +109,7 @@ class Range {
     }
 
     // Make a Range act like a Set of numbers
-    has(x) { return typeof x === "number" && this.from <= x &&
-x <= this.to; }
+    has(x) { return typeof x === "number" && this.from <= x && x <= this.to; }
     // Return string representation of the range using set notation
     toString() { return `{ x | ${this.from} ≤ x ≤ ${this.to}
 }`; }
@@ -137,3 +136,161 @@ x <= this.to; }
 }
 for(let x of new Range(1,10)) console.log(x); // Logs numbers 1 to 10
 [...new Range(-2,2)] // => [-2, -1, 0, 1, 2]
+
+
+
+
+
+
+
+
+
+/* In addition to making your classes iterable, it can be quite useful to
+define functions that return iterable values. Consider these iterablebased
+alternatives to the map() and filter() methods of JavaScript arrays: */ 
+
+// Return an iterable object that iterates the result of applying f()
+// to each value from the source iterable
+function map(iterable, f) {
+    let iterator = iterable[Symbol.iterator]();
+    return { // This object is both iterator and iterable
+        [Symbol.iterator]() { return this; },
+        next() {
+            let v = iterator.next();
+            if (v.done) {
+                return v;
+            } else {
+                return { value: f(v.value) };
+            }
+        }
+    };
+}
+// Map a range of integers to their squares and convert to an array
+[...map(new Range(1,4), x => x*x)] // => [1, 4, 9, 16]
+
+// Return an iterable object that filters the specified iterable,
+// iterating only those elements for which the predicate returns true
+function filter(iterable, predicate) {
+    let iterator = iterable[Symbol.iterator]();
+    return { // This object is both iterator and iterable
+        [Symbol.iterator]() { return this; },
+        next() {
+            for(;;) {
+                let v = iterator.next();
+                if (v.done || predicate(v.value)) {
+                    return v;
+                }
+            }
+        }
+    };
+}
+// Filter a range so we're left with only even numbers
+[...filter(new Range(1,10), x => x % 2 === 0)] // => [2,4,6,8,10]
+
+
+//when computation is required to compute the next value, 
+//that computation can be deferred until the value is actually needed.
+
+//for example, that you have a very long string of text
+//that you want to tokenize into space-separated words. You could
+//simply use the split() method of your string, but if you do this,
+//then the entire string has to be processed before you can use even the
+//first word.
+
+
+function words(s) {
+    var r = /\s+|$/g; // Match one or more spaces or end
+    r.lastIndex = s.match(/[^ ]/).index; // Start matching at first nonspace
+    return { // Return an iterable iterator object
+        [Symbol.iterator]() { // This makes us iterable
+            return this;
+        },
+        next() { // This makes us an iterator
+        let start = r.lastIndex; // Resume where the last match ended
+        if (start < s.length) { // If we're not done
+            let match = r.exec(s); // Match the next word boundary
+            if (match) { // If we found one, return the word
+                return { value: s.substring(start,
+match.index) };
+                }
+            }
+            return { done: true }; // Otherwise, say that we're done
+        }
+    };
+}
+[...words(" abc def ghi! ")] // => ["abc", "def", "ghi!"]
+
+
+
+//12.3 Generators
+
+//it’s particularly useful when the values to be iterated are not the
+//elements of a data structure, but the result of a computation.
+
+/* To create a generator, you must first define a generator function. A
+generator function is syntactically like a regular JavaScript function but
+is defined with the keyword "function*" rather than "function".*/ 
+
+
+//When you invoke a generator function, it does not actually execute 
+//the function body, but instead returns a generator object.
+
+
+
+// A generator function that yields the set of one digit (base-10) primes.
+function* oneDigitPrimes() { // Invoking this function does not run the code
+    yield 2; // but just returns a generator object. Calling
+    yield 3; // the next() method of that generator runs
+    yield 5; // the code until a yield statement provides
+    yield 7; // the return value for the next() method.
+}
+// When we invoke the generator function, we get a generator
+let primes = oneDigitPrimes();
+
+// A generator is an iterator object that iterates the yielded values
+primes.next().value // => 2
+primes.next().value // => 3
+primes.next().value // => 5
+primes.next().value // => 7
+primes.next().done // => true
+
+// Generators have a Symbol.iterator method to make them iterable
+primes[Symbol.iterator]() // => primes
+// We can use generators like other iterable types
+[...oneDigitPrimes()] // => [2,3,5,7]
+let sum = 0;
+for(let prime of oneDigitPrimes()) sum += prime;
+
+/*This generator object is an iterator.
+Calling its next() method causes the body of the generator function
+to run from the start (or whatever its current position is) until it reaches
+a yield statement. 
+The value of the yield statement becomes the
+value returned by the next() call on the iterator.*/
+
+
+
+
+//we used a function* statement to define a generator.
+const seq = function*(from,to) {
+    for(let i = from; i <= to; i++) yield i;
+};
+[...seq(3,5)] // => [3, 4, 5]
+
+
+
+/* In classes and object literals, we can use shorthand notation to omit the
+function keyword entirely when we define methods. To define a
+generator in this context, we simply use an * before the method
+name where the function keyword would have been, had we used it: */
+
+let o = {
+    x: 1, y: 2, z: 3,
+    // A generator that yields each of the keys of thisobject
+    *g() {
+        for(let key of Object.keys(this)) {
+            yield key;
+        }
+    }
+};
+[...o.g()] // => ["x", "y", "z", "g"]
