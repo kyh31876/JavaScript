@@ -26,7 +26,6 @@ let unique = new Set("Mississippi"); // 4 elements: "M", "i", "s", and "p"
 
 unique.size // => 4
 
-
 //Sets don’t need to be initialized when you create them. You can add
 //and remove elements at any time with add(), delete(), and clear().
 
@@ -1114,7 +1113,7 @@ to extend the JSON format, and these are described next. */
 
 
 let o = {s: "test", n: 0};
-JSON.stringify(o, 2) // => '{\n "s": "test",\n "n": 0\n}'
+JSON.stringify(o,null, 2) // => '{\n "s": "test",\n "n": 0\n}'
 // IF you would likfe JSON file to be human readable, you should pass "null"
 // as the second argument and pass a number or string as the third argument.
 
@@ -1125,3 +1124,75 @@ for each indentation level.
 If the third argument is a string of whitespace (such as '\t'), it will use that
 string for each level of indent. */
 
+
+
+//11.6.1 JSON Customizations
+
+/*If you need to re-create Date objects (or modify the parsed object in
+any other way), you can pass a “reviver” function as the second
+argument to JSON.parse() */
+
+
+/*parse(). If specified, this “reviver” function is
+invoked once for each primitive value (but not the objects or arrays that
+contain those primitive values) parsed from the input string.*/
+
+//The function is invoked with two arguments.
+//The first is a property name either an object property name 
+//or an array index converted to a string.
+
+//The second argument is the primitive value of that object property or
+//array element.
+
+
+
+
+// here is a call to JSON.parse() that uses a reviver
+//function to filter some properties and to re-create Date objects:
+let data = JSON.parse(text, function(key, value) {
+    // Remove any values whose property name begins with an underscore
+    if (key[0] === "_") return undefined;
+    
+    // If the value is a string in ISO 8601 date format convert it to a Date.
+    if (typeof value === "string" &&
+        /^\d\d\d\d-\d\d-
+\d\dT\d\d:\d\d:\d\d.\d\d\dZ$/.test(value)) {
+        return new Date(value);
+    }
+    // Otherwise, return the value unchanged
+    return value;
+});
+
+
+
+/*If an array of strings (or numbers—they are converted to strings) is
+passed instead as the second argument, these are used as the names of
+object properties (or array elements). */
+
+//the returned string will include properties in the same order that they
+//appear in the array
+
+//If you pass a function, it is a replacer function—effectively the inverse
+//of the optional reviver function you can pass to JSON.parse().
+
+
+
+
+/* If specified, the replacer function is invoked for each value to be
+stringified. The first argument to the replacer function is the object
+property name or array index of the value within that object, and the
+second argument is the value itself. */
+
+/* If the replacer returns undefined or returns nothing at
+all, then that value (and its array element or object property) is omitted
+from the stringification. */ 
+
+
+
+
+// Specify what fields to serialize, and what order to serialize them in
+let text = JSON.stringify(address,
+["city","state","country"]);
+// Specify a replacer function that omits RegExp-value properties
+let json = JSON.stringify(o, (k, v) => v instanceof RegExp ?
+undefined : v);
