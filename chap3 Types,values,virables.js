@@ -1,10 +1,44 @@
+//Dynamic typing
+ /* JavaScript is a loosely typed and dynamic language. 
+ Variables in JavaScript are not directly associated with 
+ any particular value type, and any variable can be assigned (and re-assigned)
+  values of all types: */
+
+let foo = 42;    // foo is now a number
+foo     = 'bar'; // foo is now a string
+foo     = true;  // foo is now a boolean
 
 
 
 
 
 
+//Structural Types:
+ typeof instance === "object". 
+/*Object : Special non-data but Structural type for any constructed object 
+instance also used as data structures: new Object, new Array, new Map, new Set,
+new WeakMap, new WeakSet, new Date and almost everything made with new keyword; */
 
+//Function : a non-data structure, though it also answers for typeof operator:
+ typeof instance === "function". 
+ /*This is merely a special shorthand for Functions, though every Function 
+ constructor is derived from Object constructor. */
+
+
+//Primitive values
+//All types except objects define immutable values
+// We refer to values of these types as "primitive values".
+
+//Undefined type
+//A variable that has not been assigned a value has the value undefined.
+
+var x; //create a variable but assign it no value
+
+console.log("x's value is", x) //logs "x's value is undefined"
+
+ 
+//Null types
+//The Null type has exactly one value: null
 
 
 //primitive types: number, strings ,Booleans 

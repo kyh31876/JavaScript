@@ -29,6 +29,8 @@ null // Absence of an object
 //A JavaScript identifier must begin with a letter, 
 //an underscore (_), or a dollar sign ($).
 
+/*In JavaScript, there is no way to convert identifiers to strings, 
+but sometimes it is possible to parse strings into identifiers. */
 
 //These are all legal identifiers:
 i my_variable_name
