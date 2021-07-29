@@ -1,15 +1,17 @@
 //Dynamic typing
- /* JavaScript is a loosely typed and dynamic language. 
- Variables in JavaScript are not directly associated with 
- any particular value type, and any variable can be assigned (and re-assigned)
-  values of all types: */
+/* JavaScript is a loosely typed and dynamic language. 
+Variables in JavaScript are not directly associated with 
+any particular value type, and any variable can be assigned (and re-assigned)
+values of all types: */
 
 let foo = 42;    // foo is now a number
 foo     = 'bar'; // foo is now a string
 foo     = true;  // foo is now a boolean
 
+//Primitive
 
-
+//a primitive (primitive value, primitive data type) is data 
+//that is not an object and has no methods. 
 
 
 
@@ -31,14 +33,184 @@ new WeakMap, new WeakSet, new Date and almost everything made with new keyword; 
 
 //Undefined type
 //A variable that has not been assigned a value has the value undefined.
-
 var x; //create a variable but assign it no value
 
 console.log("x's value is", x) //logs "x's value is undefined"
 
- 
 //Null types
 //The Null type has exactly one value: null
+
+
+
+//3.2 Numbers
+
+
+
+//3.2.1 Integer Literals
+//When a number appears directly in a JavaScript program, it’s called a
+//"numeric literal"
+0
+3 
+10000000
+
+//3.2.2 Floating-Point Literals
+//Floating-point literals can have a decimal point;
+
+[digits][.digits][(E|e)[(+|-)]digits]
+
+// For example:
+3.14
+2345.6789
+.333333333333333333
+6.02e23 // 6.02 × 10²³
+1.4738223E-32 // 1.4738223 × 10⁻³²
+
+//3.2.3 Arithmetic in JavaScript
+
+//JavaScript supports more complex mathematical operations through 
+//a set of functions and constants defined as properties of the Math object:
+Math.pow(2,53) // => 9007199254740992: 2 to the power 53
+Math.round(.6) // => 1.0: round to the nearest integer
+Math.ceil(.6) // => 1.0: round up to an integer
+Math.floor(.6) // => 0.0: round down to an integer
+Math.abs(-5) // => 5: absolute value
+Math.max(x,y,z) // Return the largest argument
+Math.min(x,y,z) // Return the smallest argument
+Math.random() // Pseudo-random number x where 0 <= x < 1.0
+Math.PI // π: circumference of a circle / diameter
+Math.E // e: The base of the natural logarithm
+Math.sqrt(3) // => 3**0.5: the square root of 3
+Math.pow(3, 1/3) // => 3**(1/3): the cube root of 3
+Math.sin(0) // Trigonometry: also Math.cos, Math.atan, etc.
+Math.log(10) // Natural logarithm of 10
+Math.log(100)/Math.LN10 // Base 10 logarithm of 100
+Math.log(512)/Math.LN2 // Base 2 logarithm of 512
+Math.exp(3) // Math.E cubed
+
+
+//ES6 defines more functions on the Math object:
+Math.cbrt(27) // => 3: cube root
+Math.hypot(3, 4) // => 5: square root of sum of squares of all arguments
+Math.log10(100) // => 2: Base-10 logarithm
+Math.log2(1024) // => 10: Base-2 logarithm
+Math.log1p(x) // Natural log of (1+x); accurate for very small x
+Math.expm1(x) // Math.exp(x)-1; the inverse of
+Math.log1p()
+Math.sign(x) // -1, 0, or 1 for arguments <, ==, or > 0
+Math.imul(2,3) // => 6: optimized multiplication of 32-bit integers
+Math.clz32(0xf) // => 28: number of leading zero bits in a 32-bit integer
+Math.trunc(3.9) // => 3: convert to an integer by truncating fractional part
+Math.fround(x) // Round to nearest 32-bit float number
+Math.sinh(x) // Hyperbolic sine. Also Math.cosh(),
+Math.tanh()
+Math.asinh(x) // Hyperbolic arcsine. Also Math.acosh(),
+Math.atanh()
+
+
+/*JavaScript predefines global constants Infinity and NaN to hold the
+positive infinity and not-a-number value, and these values are also
+available as properties of the Number object: */
+
+Infinity // A positive number too big to represent
+Number.POSITIVE_INFINITY // Same value 1/0 // => Infinity
+Number.MAX_VALUE * 2 // => Infinity; overflow
+-Infinity // A negative number too big to represent
+Number.NEGATIVE_INFINITY // The same value
+-1/0 // => -Infinity
+-Number.MAX_VALUE * 2 // => -Infinity
+NaN // The not-a-number value
+Number.NaN // The same value, written another way
+0/0 // => NaN
+Infinity/Infinity // => NaN
+Number.MIN_VALUE/2 // => 0: underflow
+-Number.MIN_VALUE/2 // => -0: negative zero
+-1/Infinity // -> -0: also negative 0
+-0
+
+
+// The following Number properties are defined in ES6
+Number.parseInt() // Same as the global parseInt() function
+Number.parseFloat() // Same as the global parseFloat() function
+Number.isNaN(x) // Is x the NaN value?
+Number.isFinite(x) // Is x a number and finite?
+Number.isInteger(x) // Is x an integer?
+Number.isSafeInteger(x) // Is x an integer -(2**53) < x < 2**53?
+Number.MIN_SAFE_INTEGER // => -(2**53 - 1)
+Number.MAX_SAFE_INTEGER // => 2**53 - 1
+Number.EPSILON // => 2**-52: smallest difference between numbers
+
+
+
+
+
+//3.3 Text
+//The JavaScript type for representing text is the string.
+
+//In ES6, strings are iterable, and if you use the for/of loop or ... operator 
+//with a string, it will iterate the actual characters of the string, 
+//not the 16-bit values.
+
+
+//3.3.1 String Literals
+//To include a string in a JavaScript program, enclose string with in ' or ".
+
+"" // The empty string: it has zero characters
+'testing'
+"3.14"
+'name="myform"'
+"Wouldn't you prefer O'Reilly's book?"
+"τ is the ratio of a circle's circumference to its radius"
+`"She said 'hi'", he said.`
+//allow JavaScript expressions to be embedded within (or interpolated into) the
+//string literal.
+
+//you can break a string literal across multiple lines by
+//ending each line but the last with a backslash (\).
+
+// A string representing 2 lines written on one line:
+'two\nlines'
+// A one-line string written on 3 lines:
+"one\
+long\
+line"
+
+// A two-line string written on two lines:
+`the newline character at the end of this line
+is included literally in this string`
+
+//you must use the backslash character (\) to “escape” any
+//apostrophes that appear in single-quoted strings
+
+//3.3.2 Escape Sequences in String Literals
+
+//  \ is conbined with the character that follow it, it represent that is not 
+//otherwise representable within the string 
+
+//Table 3-1. JavaScript escape sequences
+
+//Sequence             Character represented
+
+\0 //The NUL character (\u0000)
+\b //Backspace (\u0008)
+\t //Horizontal tab (\u0009)
+\n //Newline (\u000A)
+\v //Vertical tab (\u000B)
+\f //Form feed (\u000C)
+\r //Carriage return (\u000D)
+\" 
+//Double quote (\u0022)
+\'  
+//Apostrophe or single quote (\u0027)
+\\ //Backslash (\u005C)
+\xnn //The Unicode character specified by the two hexadecimal digits nn
+\unnnn //The Unicode character specified by the four hexadecimal digits nnnn
+\u{n
+}
+/*The Unicode character specified by the codepoint n, where n is one to six
+hexadecimal digits between 0 and 10FFFF (ES6) */
+
+
+
 
 
 //primitive types: number, strings ,Booleans 
@@ -54,12 +226,18 @@ x === y // => false: the two values are not the same!
 x === .1 // => false: .3-.2 is not equal to .1
 y === .1 // => true: .2-.1 is equal to .1
 
-// A string representing 2 lines written on one line:
-'two\nlines'
+
+
+//3.3.3 Working with Strings
+
+//If you use the + operator with numbers, it adds them. But if
+//you use this operator on strings, it join thme by appending the second to the 
+//first
 
 let msg = "Hello, " + "world"; // Produces the string "Hello, world"
 let greeting = "Welcome to my blog," + " " + name;
 
+//javascript provide  a rich API for working with strings
 
 let s = "Hello, world"; // Start with some text.
 // Obtaining portions of a string
@@ -93,29 +271,80 @@ s.codePointAt(0) // => 72: ES6, works for codepoints > 16 bits
 "x".padStart(3, "*") // => "**x": add stars on the left to a length of 3
 "x".padEnd(3, "-") // => "x--": add dashes on the right to a length of 3
 // Space trimming functions. trim() is ES5; others ES2019
-" test ".trim( // => "test": remove spaces at start and end
+" test ".trim() // => "test": remove spaces at start and end
 " test ".trimStart() // => "test ": remove spaces on left. Also trimLeft
 " test ".trimEnd() // => " test": remove spaces at right. Also trimRight
 // Miscellaneous string methods
 s.concat("!") // => "Hello, world!": just use + operator instead
 "<>".repeat(5) // => "<><><><><>": concatenate n copies. ES6
 
+//Remember that strings are immutable in JavaScript. Methods like
+//replace() and toUpperCase() return new strings:
+
+
 // a string using square brackets instead of the charAt() method:
-let s = "hello, world";
+let s = `hello world`;
 s[0] // => "h"
 s[s.length-1] // => "d"
 
-//template Literals 
+
+
+
+//3.3.4 Template Literals
+
+//string literals can be delimited with backticks:
+let s =`hello world`;
+//these template literals can include arbitrary JavaScript expressions.
+
+
+//converting the values of those expressions to strings and combining 
+//those computed strings with the literal characters within the backticks:
+
 let name = "Bill";
 let greeting = `Hello ${ name }.`; // greeting == "Hello Bill."
 
+//Everything between the ${ and the matching } is interpreted as a
+//JavaScript expression.
+
+//The expression inside the braces is evaluated and then converted 
+//to a string and inserted into the template, replacing the dollar sign,
+// the curly braces, and everything in between them.
+
+
+
+
+//The following template literal includes four JavaScript expressions, 
+//a Unicode escape sequence, and at least four newlines
+let errorMessage = `\
+\u2718 Test failure at ${filename}:${linenumber}:
+${exception.message}
+Stack trace:
+${exception.stack}
+`;
+
+//A template literal may include any number of expressions.
+
+//it can use any of the escape characters that normal string can,
+//it can span any number of lines, with no special escaping required.
+
 //TAGGED TEMPLATE LITERALS
+//if a function name (or “tag”) comes right before the opening backtick,
+//then the text and the values of the expressions within the template
+//literal are passed to the function.
 
 `\n`.length // => 1: the string has a single newline character
 String.raw`\n`.length // => 2: a backslash character and the letter n
 
 
-//pattern matching 
+//Note that even though the tag portion of a tagged template literal is a
+//function, there are no parentheses used in its invocation.
+
+
+
+//3.3.5 Pattern Matching
+//JavaScript defines a datatype known as a regular expression (or
+//RegExp) for describing and matching patterns in strings of text.
+
 
 /HTML/ // Match the letters H T M L at the start of a string
 /[1-9][0-9]*/; // Match a nonzero digit, followed by any # of digits`
@@ -131,7 +360,27 @@ text.replace(pattern, "#") // => "testing: #, #, #"
 text.split(/\D+/) // => ["","1","2","3"]: split on nondigits
 
 
-//Boolean Values    
+//3.4 Boolean Values
+//a Boolean is a logical data type that can have only the values true or false.
+
+
+//Boolean values are generally the result of comparisons you make in
+//your JavaScript programs.
+
+a === 4
+//if the value of a is equal to 4, result is the value "true"
+//whether, result is "false".
+
+
+
+
+
+
+
+//the if/else statement in JavaScript performs one action if 
+//a boolean value is true and another action if the value is false.
+//they are sometimes callued "falsy value".
+
 
 if (a === 4) {
     b = b + 1;
@@ -139,34 +388,105 @@ if (a === 4) {
     a = a + 1;
     }
 
-
+//The following values convert to, and therefore work like, false:
 undefined
 null
 0 -
 0
 NaN
 ""
-//The following values convert to, and therefore work like, false:
+
+//All other values, including all objects (and arrays) convert to, and work
+//like, true. false,
 
 if (o !== null) 
+//!== compares o to null and evaluates to either true or false.
 
+
+
+
+//you can omit the comparison and instead rely on the fact 
+//that null is falsy and objects are truthy:
+
+//it will execute the body of the if only if o is not false or any falsy value
+if (o)...
 
 if ((x === 0 && y === 0) || !(z === 0)) {
     // x and y are both zero or z is non-zero
     }
-    
 
 
-let strname = "string name"; // A string to use as a property name
-let symname = Symbol("propname"); // A Symbol to use as a property name
-typeof strname // => "string": strname is a string
-typeof symname // => "symbol": symname is a symbol
+//3.5 null and undefined
+
+//null 
+
+//null expresses a lack of identification, 
+//indicating that a variable points to no object.
+
+//"typeof" operator on "null" returns the string “object”,
+/* however, null is typically regarded as the sole member of its
+own type, and it can be used to indicate “no value” for numbers and
+strings as well as objects. */
+
+
+
+//undefined
+//undefined is a primitive value automatically assigned 
+//to variables that have just been declared, 
+//or to formal arguments for which there are no actual arguments.
+
+/* 초기화되지 않은 변수의 값과 존재하지 않는 객체 속성 또는 
+배열 요소의 값을 쿼리할 때 얻을 수 있는 값입니다. */
+
+
+/* The undefined value is also the return value of functions that
+do not explicitly return a value and the value of function parameters for
+which no argument is passed. */
+
+//undefined is a non-configurable, non-writable property, 
+
+
+//undefined to represent a system-level, unexpected, or  
+//error-like absence of value
+//null to represent a program-level, normal, or expected absence of value
+
+
+
+//3.6 Symbols
+Symbol()
+//Symbol is a built-in object whose constructor returns a symbol primitive
+
+/* To understand Symbols, you need to know that JavaScript’s
+fundamental Object type is an unordered collection of properties,
+where each property has a name and a value. 
+Property names are typically (and until ES6, were exclusively) strings.
+*/
+
+
+//To create a new primitive Symbol, you write Symbol() with an optional 
+//string as its description:
+let sym1 = Symbol()
+let sym2 = Symbol('foo')
+let sym3 = Symbol('foo')
+
+//The following syntax with the new operator will throw a TypeError:
+let sym = new Symbol()  // TypeError
+
+
+//If you really want to create a Symbol wrapper object, 
+//you can use the Object() function:
+let sym = Symbol('foo')
+typeof sym      // "symbol"
+let symObj = Object(sym)
+typeof symObj   // "object"
 let o = {}; // Create a new object
-o[strname] = 1; // Define a property with a string name
-o[symname] = 2; // Define a property with a\Symbol name
-o[strname] // => 1: access the stringnamed property
-o[symname] // => 2: access the symbolnamed property
+o[sym] = 1; // Define a property with a Symbol name
+o[symObj] = 2; // Define a property with a Object name
+o[sym] // => 1: access the symbol named property
+o[symObj] // => 2: access the Object named property
 
+
+//3.8 Immutable Primitive Values and Mutable Object References
 
 //Immutable Primitive Values
 
