@@ -1,11 +1,9 @@
-//Dynamic typing
-/* JavaScript is a loosely typed and dynamic language. 
-Variables in JavaScript are not directly associated with 
+/*Dynamic typing in JavaScript are not directly associated with 
 any particular value type, and any variable can be assigned (and re-assigned)
-values of all types: */
+values of all types:  */ 
 
 let foo = 42;    // foo is now a number
-foo     = 'bar'; // foo is now a string
+foo    = 'bar'; // foo is now a string
 foo     = true;  // foo is now a boolean
 
 //Primitive
@@ -21,7 +19,7 @@ foo     = true;  // foo is now a boolean
 instance also used as data structures: new Object, new Array, new Map, new Set,
 new WeakMap, new WeakSet, new Date and almost everything made with new keyword; */
 
-//Function : a non-data structure, though it also answers for typeof operator:
+//Function : a non-data structure, though it also answers for typeof operator:i
  typeof instance === "function". 
  /*This is merely a special shorthand for Functions, though every Function 
  constructor is derived from Object constructor. */
@@ -294,6 +292,7 @@ s[s.length-1] // => "d"
 
 //string literals can be delimited with backticks:
 let s =`hello world`;
+
 //these template literals can include arbitrary JavaScript expressions.
 
 
@@ -315,6 +314,7 @@ let greeting = `Hello ${ name }.`; // greeting == "Hello Bill."
 
 //The following template literal includes four JavaScript expressions, 
 //a Unicode escape sequence, and at least four newlines
+
 let errorMessage = `\
 \u2718 Test failure at ${filename}:${linenumber}:
 ${exception.message}
@@ -326,6 +326,7 @@ ${exception.stack}
 
 //it can use any of the escape characters that normal string can,
 //it can span any number of lines, with no special escaping required.
+
 
 //TAGGED TEMPLATE LITERALS
 //if a function name (or “tag”) comes right before the opening backtick,
@@ -370,10 +371,6 @@ text.split(/\D+/) // => ["","1","2","3"]: split on nondigits
 a === 4
 //if the value of a is equal to 4, result is the value "true"
 //whether, result is "false".
-
-
-
-
 
 
 
@@ -488,29 +485,51 @@ o[symObj] // => 2: access the Object named property
 
 //3.8 Immutable Primitive Values and Mutable Object References
 
+
+
 //Immutable Primitive Values
+
+//Primitives are immutable: there is no way to change a primive value.
 
 let s = "hello"; // Start with some lowercase text
 s.toUpperCase(); // Returns "HELLO", but doesn't alter s
 console.log(s) //undefined, null, booleans, numbers, and strings aren`t changed 
 
+/* If two distinct string values are compared, JavaScript treats
+them as equal if, and only if, they have the same length and if 
+the character at each index is the same. */
+
 
 //Mutable Object References
+
+/* Objects are not compared by value: two distinct objects are not equal
+even if they have the same properties and values */
+
+
+/* two distinct arrays are not equal even if they have 
+the same elements in the same order: */
 
 let o = { x: 1 }; // Start with an object
 o.x = 2; // Mutate it by changing the value of a property
 o.y = 3; // Mutate it again by adding a new property
+
 let a = [1,2,3]; // Arrays are also mutable
 a[0] = 0; // Change the value of an array element
 a[3] = 4; // Add a new array element
 
+/* Objects are not compared by value: two distinct objects are not equal
+even if they have the same properties and values */
+
+/* two distinct arrays are not equal even if they have 
+the same elements in the same order: */
 
 let o = {x: 1}, p = {x: 1}; // Two objects with the same properties
 o === p // => false: distinct objects are never equal
 let a = [], b = []; // Two distinct, empty arrays
 a === b // => false: distinct arrays are never equal
 
-
+//two object values are the same if and only if they refer to the same
+//underlying object.
 let a = []; // The variable a refers to an empty array.
 let b = a; // Now b refers to the same array.
 b[0] = 1; // Mutate the array referred to by variable b.
@@ -518,7 +537,8 @@ a[0] // => 1: the change is also visible through variable a.
 a === b // => true: a and b refer to the same object, so they are equal.
 
 
-
+//assigning an object (or array) to a variable is not create a new copy of 
+//the object.
 let a = ["a","b","c"]; // An array we want to copy
 let b = []; // A distinct array we'll copy into
 for(let i = 0; i < a.length; i++) { // For each index of a[]
@@ -526,16 +546,17 @@ for(let i = 0; i < a.length; i++) { // For each index of a[]
 }
 let c = Array.from(b); // In ES6, copy arrays with Array.from()
 
-//This code defines a function to compare two arrays:
 
+//if we want to compare two distinct objects or arrays, we
+//must compare their properties or elements.
 function equalArrays(a, b) {
     if (a === b) return true; // Identical arrays are equal
     if (a.length !== b.length) return false; // Differentsize arrays not equal
     for(let i = 0; i < a.length; i++) { // Loop through all elements
-    if (a[i] !== b[i]) return false; // If any differ, arrays not equal
+        if (a[i] !== b[i]) return false; // If any differ, arrays not equal
     }
     return true; // Otherwise they are equal
-    }
+}
 
 
 //Type Conversions
