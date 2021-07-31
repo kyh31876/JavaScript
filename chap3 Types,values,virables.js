@@ -559,43 +559,139 @@ function equalArrays(a, b) {
 }
 
 
-//Type Conversions
+//3.9 Type Conversions
 
-10+ "Hello"
 
+//Table 3-2. JavaScript type conversions
+//value             to String       to Number       to Boolean
+undefined    "undefined"     NaN     false
+null        "null"       0           false
+true        "true"       1
+false       "false"      0
+""(/*empty string*/)     0               false
+"1.2"(/*nonempty, numeric*/)        1.2   true
+"one"(/*nonempty, non-numeric*/)    NaN   true
+0           "0"                          false
+-0          "0"                         false
+1 (/*finite, non-zero*/)"1"             true
+Infinity    "Infinity"                  true
+-Infinity "-Infinity"                   true
+NaN         "NaN"                       false
+{} (/*any object*/)                     true
+[] (/*empty array*/) ""        0        true
+[9] (/*one numeric element*/) "9"   9      true
+['a'] (/*any other array*/) use join()method, NaN, true
+function(){} (/*any function*/) see §3.9.3, NaN, true
+
+
+10 + " objects" // => "10 objects": Number 10 converts to a string
+"7" * "4" // => 28: both strings convert to numbers
 let n = 1 - "x"; // n == NaN; string "x" can't convert to a number
+n + " objects" // => "NaN objects": NaN converts to string "NaN"
 
-//Conversions and Equality
+
+//3.9.1 Conversions and Equality
+
+//“strict equality operator,” ===, does not consider its operands to
+//be equal if they are not of the same type,
+
 
 null == undefined // => true: These two values are treated as equal.
 "0" == 0 // => true: String converts to a number before comparing.
 0 == false // => true: Boolean converts to number before comparing.
 "0" == false // => true: Both operands convert to 0 before comparing!
+//If "undefined" is used where a boolean value is expected, 
+//for example, it will convert to "false". But this does not mean 
+//that undefined == false.
 
-//Explicit Conversions
+
+//convertibility of one value to another does not imply
+//equality of those two values.
+
+
+//3.9.2 Explicit Conversions
+
+
+
+/* The simplest way to perform an explicit type conversion is to use the
+Boolean(), Number(), and String() functions */
 Number("3") // => 3
 String(false) // => "false": Or use false.toString()
 Boolean([]) // => true
 
-x+""// converts the other one to a string.
+//Any value other than null or undefined has a toString() method,
+//the result of this method is usually the same as that returnd by 
+//String() function
 
-!!x //! operator converts its operand to a boolean and negates
+//the Boolean(), Number(), and String() functions 
+//can also be invoked with "new" as constructor.
 
+//you’ll get a “wrapper” object that behaves just like a
+//primitive boolean, number, or string value.
+
+
+
+
+
+//Certain JavaScript operators perform implicit type conversions and are
+//sometimes used explicitly for the purpose of type conversion.
+
+x + "" // => String(x)
++x // => Number(x)
+x-0 // => Number(x)
+!!x // => Boolean(x): Note double !
+
+
+
+
+//The toString() method defined by the Number class accepts an
+//optional argument that specifies a radix, or base, for the conversion.
 let n = 17;
 let binary = "0b" + n.toString(2); // binary == "0b10001"
 let octal = "0o" + n.toString(8); // octal == "0o21"
 let hex = "0x" + n.toString(16); // hex == "0x11"
 
 
+//The Number class defines three methods for these kinds of 
+//number-to-string conversions. and It never uses exponential notation.
+
+
+//toFixed() Convert a number into a string, 
+//rounding after the decimal point.
+
+//and It never uses exponential notation.
 let n = 123456.789;
-n.toFixed(0) // => "123457" converts a number to a string with a specified number of digits
-n.toFixed(2) // => "123456.79"
-n.toFixed(5) // => "123456.78900"
-n.toExponential(1) // => "1.2e+5" converts a number to a string using exponential notation
-n.toExponential(3) // => "1.235e+5"
-n.toPrecision(4) // => "1.235e+5" converts a number to a string with the number of significant digits
-n.toPrecision(7) // => "123456.8"
-n.toPrecision(10) // => "123456.7890"
+n.toFixed(0);
+
+
+//toExponential() Converts a number into an exponential notation:
+//the argument represents the number of digits in the notation 
+//after the decimal point
+
+let n = 123456.789;
+n.toExponential(1);
+
+
+//toPrecision() is Formatting a number into a specified length:
+//the aregument represents The number of digits.
+let n = 123456.789;
+n.toPrecision(2)
+
+
+//The parseInt() function parses a string and returns an integer.
+
+parseInt("3 brind mice")
+
+
+//The parseFloat() function parses a string and 
+//returns a floating point number.
+
+
+
+
+
+
+
 
 //TOSTRING() AND VALUEOF() METHODS
 
