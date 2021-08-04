@@ -611,8 +611,6 @@ null == undefined // => true: These two values are treated as equal.
 
 //3.9.2 Explicit Conversions
 
-
-
 /* The simplest way to perform an explicit type conversion is to use the
 Boolean(), Number(), and String() functions */
 Number("3") // => 3
@@ -686,66 +684,156 @@ parseInt("3 brind mice")
 //The parseFloat() function parses a string and 
 //returns a floating point number.
 
+//all three methods round the trailing digits or pad with zeros as appropriate.
 
 
 
 
 
+//3.10 Variable Declaration and Assignment
 
-
-//TOSTRING() AND VALUEOF() METHODS
-
-({x: 1, y: 2}).toString() // => default toString() method does not return a very interesting value
-
-[1,2,3].toString() // => "1,2,3"
-(function(x) { f(x); }).toString() // => "function(x) {f(x); }"
-/\d+/g.toString() // => "/\\d+/g"
-let d = new Date(2020,0,1);
-d.toString() // => "Wed Jan 01 2020 00:00:00 GMT-0800(Pacific Standard Time)"
-
-let x=1;
-x.valueOf()
-
-
-//Variable Declaration and Assignment
-
-//“variable” implies that new values can be assigned
+//One of the most fundamental techniques of computer programming is
+//the use of names or identifiers to represent values
 
 //Declarations with let and const
-let i, sum; //You can also declare multiple variables in a single let statement
+let i;
+let sum;
 
+//You can also declare multiple variables in a single let statement:
+let i, sum;
 
+//It is a good programming practice to assign an initial value to your
+//variables when you declare them,
 let message = "hello";
 let i = 0, j = 0, k = 0;
 let x = 2, y = x*x; // Initializers can use previously declared variables
 
 
-//constants cannot have their values changed,
+//declaring a constant with "const"
 const H0 = 74; // Hubble constant (km/s/Mpc)
 const C = 299792.458; // Speed of light in a vacuum (km/s)
 const AU = 1.496E8;
 
 
-for(let i = 0, len = data.length; i < len; i++)console.log(data[i]);
-for(let datum of data) console.log(datum);
-for(let property in object) console.log(property);
+//VARIABLE AND CONSTANT SCOPE
 
-for(const datum of data) console.log(datum);
-for(const property in object) console.log(property); //const declaration
-//is just saying that the value is constant for the duration of one loop iteration:
+//The scope of a variable is the region of your program source code in
+//which it is defined.
+
+//Variables and constants declared with let and const are block scoped.
+//even if they technically appear outside of the curly braces.
+
+
+
 
 
 //REPEATED DECLARATIONS
+
+//It is a syntax error to use the same name with more than one let or
+//const declaration in the same scope.
+
 const x = 1; // Declare x as a global constant
 if (x === 1) {
-let x = 2; // Inside a block x can refer to a different value
-console.log(x); // Prints 2
+    let x = 2; // Inside a block x can refer to a different value
+    console.log(x); // Prints 2
 }
 console.log(x); // Prints 1: we're back in the global scope now
 let x = 3; // ERROR! Syntax error trying to redeclare x
 
+//DECLARATIONS AND TYPES
 
-//Variable Declarations with var
+//it is perfectly legal (but generally poor programming style) in
+//JavaScript to assign a number to a variable and then later assign a
+//string to that variable:
+
+let i = 10;
+i = "ten";
+
+
+
+//Scope
+
+
+//Global Scope
+
+//The area outside all the functions is consider the global scope 
+//and the variables defined inside the global scope can be accessed
+//and altered in any other scopes.
+
+var fruit = 'apple'
+console.log(fruit);        //apple
+
+function getFruit(){
+    console.log(fruit);    //fruit is accessible here
+}
+getFruit();                //apple
+
+//Local Scope
+
+/*Variables declared inside the functions become Local to the function
+ and are considered in the corresponding local scope. */
+
+
+//global scope
+function foo1(){
+    //local scope 1
+    function foo2(){
+        //local scope 2
+    }
+}
+
+//global scope
+function foo3(){
+    //local scope 3
+}
+
+
+//Function Scope
+
+//Whenever you declare a variable in a function, 
+//the variable is visible only within the function. 
+
+function foo(){
+    var fruit ='apple';
+    console.log('inside function: ',fruit);
+}
+
+foo();                    //inside function: apple
+console.log(fruit);       //error: fruit is not defined
+
+//Block Scope
+
+//let and const , These two keywords become to give Block Scope in JavaScript.
+
+
+//Variables declared inside {} block cannot be accessed from outside the block:
+function foo(){
+    if(true){
+        var fruit1 = 'apple';        //exist in function scope
+        const fruit2 = 'banana';     //exist in block scope
+        let fruit3 = 'strawberry';   //exist in block scope
+
+    }
+    console.log(fruit1);
+    console.log(fruit2);
+    console.log(fruit3);
+}
+
+foo();
+//result:
+//apple
+//error: fruit2 is not defined
+//error: fruit3 is not defined
+
+
+
+
+
+
+//3.10.2 Variable Declarations with var
+
+
+//The syntax of "var" is just like the syntax of "let":
 var x;
 var data = [], count = data.length;
 for(var i = 0; i < count; i++) console.log(data[i]);
@@ -753,65 +841,165 @@ for(var i = 0; i < count; i++) console.log(data[i]);
 
 
 
-//Destructuring Assignment
+//"var" and "let" are different in the way they work:
 
-//the value on the righthand side is an array or object (a “structured” value)
-//lefthand side specifies one or more variable names using a syntax that mimics array and
-//object literal syntax.
+//Variables declared with "var" do not have block scope.
+
+//If you use "var" outside of a function body, it declares a global variable.
+//Globals declared with "var" are implemented as properties of the global object
+
+//if you write var x = 2; outside of a function, 
+//it is like you wrote globalThis.x = 2;.
+var x =2 ; //undefined
+globalThis.x //2
+//the properties created with global var declarations cannot be deleted
+//with the delete operator
+
+//Global variables and constants declared with "let" and "const" 
+//are not properties of the global object.
+
+
+
+//Unlike variables declared with "let", it is legal to declare the
+//same variable multiple times with "var".
+let ak=1; //undefined
+let ak =2 ; //Uncaught SyntaxError: Identifier 'ak' has already been declared
+
+var m4 =1 ; //undefined
+var m4 =2; //undefined
+
+
+/*var variables have function scope instead of block scope, it is
+actually common to do this kind of redeclaration.
+The variable i is frequently used for integer values, and especially as the
+index variable of for loops. */
+
+
+
+//Hoisting
+
+/* When a variable is declared with "var", the declaration is lifted up 
+to the top of the enclosing function.*/
+
+/* The initialization of the variable remains where you wrote it, 
+but the definition of the variable moves to the top of the function. */
+
+
+
+
+
+
+
+
+//3.10.3 Destructuring Assignment
+
+/*The destructuring assignment syntax is a JavaScript expression 
+that makes it possible to unpack values from arrays, or properties from objects, 
+into distinct variables. */
+
+/* the value on the right of = is an array or object 
+and left side specifies one or more variable names using a syntax that 
+mimics array and object literalk syntax. */
+
 let [x,y] = [1,2]; // Same as let x=1, y=2
 [x,y] = [x+1,y+1]; // Same as x = x + 1, y = y + 1
 [x,y] = [y,x]; // Swap the value of the two variables
 [x,y] // => [3,2]: the incremented and swapped values
 
 
+//Notice how destructuring assignment makes it easy to work with
+//functions that return arrays of values:
+
 // Convert [x,y] coordinates to [r,theta] polar coordinates
 function toPolar(x, y) {
     return [Math.sqrt(x*x+y*y), Math.atan2(y,x)];
-    }
+}
 // Convert polar to Cartesian coordinates
 function toCartesian(r, theta) {
-return [r*Math.cos(theta), r*Math.sin(theta)];
+    return [r*Math.cos(theta), r*Math.sin(theta)];
 }
-let [r,theta] = toPolar(1.0, 1.0); // r == Math.sqrt(2);
-theta == Math.PI/4
+let [r,theta] = toPolar(1.0, 1.0); // r == Math.sqrt(2); theta == Math.PI/4
 let [x,y] = toCartesian(r,theta); // [x, y] == [1.0, 1,0]
 
-//a code that loops over the name/value pairs of all properties of an object
-//uses destructuring assignment to convert those pairs from two-element arrays into individual variables:
 
-let o = { x: 1, y: 2 }; // The object we'll loop over
-for(const [name, value] of Object.entries(o)) {
-console.log(name, value); // Prints "x 1" and "y 2"
+//Array destructuring
+
+// we have an array with the name and surname
+let arr = ["John", "Smith"]
+// destructuring assignment
+// sets firstName = arr[0]
+// and surname = arr[1]
+let [firstName, surname] = arr;
+alert(firstName); // John
+alert(surname);  // Smith
+//Now we can work with variables instead of array members.
+//It looks great when combined with split or other array-returning methods:
+
+let [firstName, surname] = "John Smith".split(' ');
+alert(firstName); // John
+alert(surname);  // Smith
+
+
+//“Destructuring” does not mean “destructive”.
+/*It’s called “destructuring assignment,” because it “destructurizes” 
+by copying items into variables. But the array itself is not modified. */
+
+// let [firstName, surname] = arr;
+let firstName = arr[0];
+let surname = arr[1];
+
+
+//Ignore elements using commas
+
+//Unwanted elements of the array can also be thrown away via an extra comma:
+// second element is not needed
+let [firstName, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+console.log(title); // Consul
+
+
+
+//Assign to anything at the left-side
+
+//We can use any “assignables” at the left side.
+let user = {};
+[user.name, user.surname] = "John Smith".split(' ');
+
+console.log(user.name); // John
+console.log(user.surname); // Smith
+
+//Looping with .entries()
+
+//We can use it with destructuring to loop over keys-and-values of an object:
+let user = {
+    name: "John",
+    age: 30
+};
+// loop over keys-and-values
+for (let [key, value] of Object.entries(user)) {
+    console.log(`${key}:${value}`); // name:John, then age:30
 }
 
 
-let [x,y] = [1]; // x == 1; y == undefined
-[x,y] = [1,2,3]; // x == 1; y == 2
-[,x,,y] = [1,2,3,4]; // x == 2; y == 4
+//The rest ‘…’
 
-let [a, [b, c]] = [1, [2,2.5], 3]; // a == 1; b == 2; c ==2.5
+//Usually, if the array is longer than the list at the left, 
+//the “extra” items are omitted.
 
-let [first, ...rest] = "Hello"; // first == "H"; rest ==["e","l","l","o"]
-
-let transparent = {r: 0.0, g: 0.0, b: 0.0, a: 1.0}; // A RGBA color
-let {r, g, b} = transparent; // r == 0.0; g == 0.0; b == 0.0
-
-// Same as const sin=Math.sin, cos=Math.cos, tan=Math.tan
-const {sin, cos, tan} = Math; //If the lefthand side of this assignment had included a variable whose name was not a property of
-//Math, that variable would simply be assigned undefined.
+let [name1, name2] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+console.log(name1,name2);
 
 
+//we can add one more parameter that gets “the rest” using three dots "...":
 
-//you may be better off just writing out your assignments 
-//explicitly with traditional code like let x1 = points.p1[0];.
-let points = { p1: [1,2], p2: [3,4] }; // An object with 2 array props
-let { p1: [x1, y1], p2: [x2, y2] } = points; //destructured into 4 vars
-(x1 === 1 && y1 === 2 && x2 === 3 && y2 === 4) // => true
+let [name1, name2, ...var1] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+var1 //[ 'Consul', 'of the Roman Republic' ] 
+//The value of rest is the array of the remaining array elements.
 
 
-// Start with a data structure and a complex destructuring
-let points = [{x: 1, y: 2}, {x: 3, y: 4}];
-let [{x: x1, y: y1}, {x: x2, y: y2}] = points;
-// Check your destructuring syntax by flipping the assignment around
-let points2 = [{x: x1, y: y1}, {x: x2, y: y2}]; // points2 == points
+//Object destructuring
 
+//The basic syntax is:
+let {var1, var2} = {var1:…, var2:…}
+/* We should have an existing object at the right side, that 
+we want to split into variables.
+The left side contains an object-like “pattern” for corresponding properties. */
