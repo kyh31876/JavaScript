@@ -980,20 +980,22 @@ for (let [key, value] of Object.entries(user)) {
 }
 
 
-//The rest ‘…’
+//The rest "..."
 
 //Usually, if the array is longer than the list at the left, 
 //the “extra” items are omitted.
 
 let [name1, name2] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
-console.log(name1,name2);
-
+name1 //'Julius'
+name2 //'Caesar'
 
 //we can add one more parameter that gets “the rest” using three dots "...":
 
 let [name1, name2, ...var1] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
 var1 //[ 'Consul', 'of the Roman Republic' ] 
 //The value of rest is the array of the remaining array elements.
+
+
 
 
 //Object destructuring
@@ -1003,3 +1005,67 @@ let {var1, var2} = {var1:…, var2:…}
 /* We should have an existing object at the right side, that 
 we want to split into variables.
 The left side contains an object-like “pattern” for corresponding properties. */
+
+
+let options = {
+    title: "Menu",
+    width: 100,
+    height: 200
+};
+
+let {title, width, height} = options;
+
+console.log(title);  // Menu
+console.log(width);  // 100
+console.log(height); // 200
+
+//The order does not matter. This works too:
+let {height, width, title} = { title: "Menu", height: 200, width: 100 }
+
+
+
+/* Just like with arrays or function parameters, default values can be 
+any expressions or even function calls. 
+They will be evaluated if the value is not provided. */
+
+//In the code below prompt asks for width, but not for title:
+
+let options = {
+  title: "Menu"
+};
+
+let {width = prompt("width?"), title = prompt("title?")} = options;
+
+
+console.log(title);  // Menu
+console.log(width);  // (whatever the result of prompt is)
+
+//We also can combine both the colon and equality:
+let options = {
+  title: "Menu"
+};
+
+let {width: w = 100, height: h = 200, title} = options;
+
+console.log(title);  // Menu
+console.log(w);      // 100
+console.log(h);      // 200
+
+
+
+
+//the rest pattern "..."
+
+let options = {
+    title: "Menu",
+    height: 200,
+    width: 100
+  };
+  
+// title = property named title
+// rest = object with the rest of properties
+blet {title, ...rest} = options;
+
+// now title="Menu", rest={height: 200, width: 100}
+rest.height;  // 200
+rest.width;   // 100
