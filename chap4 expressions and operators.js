@@ -1,10 +1,58 @@
-//Primary Expressions
+
+//expression
+//an expression is a snippet of code that evaluates to a value.
+//Wherever JavaScript expects a statement, you can write an expression.
+
+//The below code snippets are all expressions. They all evaluate to a value.
+0 // 0
+1 + 1 // 2
+'Hello' + ' ' + 'World' // 'Hello World'
+{ answer: 42 } // { answer: 42 }
+Object.assign({}, { answer: 42 }) // { answer: 42 }
+answer !== 42 ? 42 : answer // 42
+answer = 42 // 42
+
+
+
+//The below snippets are all statements. They do not evaluate to a value.
+
+// `if` statement
+if (answer !== 42) { answer = 42 }
+// `for` is a statement
+for (;;) { console.log('Hello, World'); }
+// Declaring a variable is a statement
+let answer = 42
+
+
+
+
+
+
+//4.1 Primary Expressions
+
 //Primary expressions in JavaScript are constant or literal values,
+
+
+
 
 //Literals are constant values that are embedded directly in your program.
 1.23 // A number literal
 "hello" // A string literal
 /pattern/ // A regular expression literal
+
+
+
+//Some of JavaScript’s reserved words are primary expressions:
+true // Evalutes to the boolean true value
+false // Evaluates to the boolean false value
+null // Evaluates to the null value
+this // Evaluates to the "current" object
+
+//The "this" keyword is used in object-oriented programming.
+
+//Within the body of a method, "this" evaluates 
+//to the object on which the method was invoked.
+
 
 //The this keyword is used to different values in different places in the program
 
@@ -12,20 +60,35 @@ i // Evaluates to the value of the variable i.
 sum // Evaluates to the value of the variable sum.
 undefined // The value of the "undefined" property of the global object
 
+
+
+
+
 //4.2 Object and Array Initializers
 
-// /An object initializer is enclosed in curly braces ({}).
-//These initializer expressions are sometimes called object literals and array literals.
+//Object and array initializers are expressions whose value is a newly
+//created object or array.
 
+//they are not primary expressions, because they include a number of
+//subexpressions that specify property and element values.
+
+
+//These initializer expressions are sometimes called 
+//"object literals" and "array literals".
+
+
+/*An array initializer is a comma-separated list of expressions contained
+within square brackets. */
 [] // An empty array: no expressions inside brackets means no elements
 [1+2,3+4] // A 2-element array. First element is 3, second is 7
 
+
+//they can arrange nested arrays:
 let matrix = [[1,2,3], [4,5,6], [7,8,9]];//the value of an array initializer 
 //expression may be different each time it is evaluated.
 
-let sparseArray = [1,,,,5]; //A single trailing comma is allowed after the last expression in an array
-//initializer and does not create an undefined element
-
+let sparseArray = [1,,,,5]; /*A single trailing comma is allowed after
+the last expression in an array initializer and does not create an undefined element */
 
 let p = { x: 2.3, y: -1.2 }; // An object with 2 properties
 let q = {}; // An empty object with no properties
@@ -40,19 +103,33 @@ let rectangle = {
 //4.3 Function Definition Expressions
 
 //a function definition expression is a “function literal” in the same way
+//that an object initializer is an “object literal.”
+
+
 // This function returns the square of the value passed to it.
 let square = function(x) { return x * x; };
 
+
+
+
+
+
+
+
 //4.4 Property Access Expressions
 
-//JavaScript defines two syntaxes for property access:
-expression . identifier
-expression [ expression ]
+/* A property access expression evaluates to the value of an object
+property or an array element. */
+
+object.property
+object['property']
+
+
+//In the object.property syntax, the property must be a valid JavaScript identifier.
 
 
 let o = {x: 1, y: {z: 3}}; // An example object
-let a = [o, 4, [5, 6]]; // An example array that contains
-the object
+let a = [o, 4, [5, 6]]; // An example array that contains the object
 o.x // => 1: property x of expression o
 o.y.z // => 3: property z of expression o.y
 o["x"] // => 1: property x of object o
@@ -60,20 +137,36 @@ a[1] // => 4: element at index 1 of expression a
 a[2]["1"] // => 6: element at index 1 of expression a[2]
 a[0].x // => 1: property x of expression a[0]
 
+//If the object expression is followed by another expression in square
+//brackets, that second expression is evaluated and converted to a string
 
 //If the value is null or undefined, the expression throws a TypeError
 
+
+
+
 //4.4.1 Conditional Property Access
-expression ?. identifier
-expression ?.[ expression ]
 
-a?.b //If a is null or undefined, then the expression evaluates to undefined without any attempt to access the
-//property b
+/*The optional chaining ?. stops the evaluation if the value before ?. is undefined 
+or null and returns undefined. */
 
-let a = { b: null };
-a.b?.c.d // => undefined
+//we’ll be saying that something “exists” if it’s not null and not undefined.
 
-let a = { b: {} }; //object has no property named c, then a.b?.c.d will again throw a TypeError
+object?.property
+//returns obj.prop if obj exists, otherwise undefined.
+object?['property']
+//returns obj['prop'] if obj exists, otherwise undefined.
+
+
+
+var a = {b:null}
+a?.b //If a is null or undefined, then the expression evaluates 
+//to undefined without any attempt to access the property b
+
+
+let a = { b: {} }; //object has no property named c, then a.b?.c.d 
+//will again throw a TypeError
+
 a.b?.c?.d // => undefined
 
 
@@ -84,13 +177,17 @@ a?.b.c//value of a is null or undefined, then the entire expression immediately 
 let a; // Oops, we forgot to initialize this variable!
 let index = 0;
 try {
-a[index++]; // Throws TypeError
+    a[index++]; // Throws TypeError
 } catch(e) {
-index // => 1: increment occurs before TypeError is thrown
+    index // => 1: increment occurs before TypeError is thrown
 }
 a?.[index++] // => undefined: because a is undefined
 index // => 1: not incremented because ?.[] shortcircuits
 a[index++] // !TypeError: can't index undefined.
+
+
+
+
 
 //4.5 Invocation Expressions
 
@@ -102,23 +199,31 @@ f(0) // f is the function expression; 0 is the argument expression.
 Math.max(x,y,z) // Math.max is the function; x, y, and z are the arguments.
 a.sort() // a.sort is the function; there are no arguments.
 
-//If that expression is a property access expression, 
-//then the invocation is known as a method invocation.
+
+
+
 
 //4.5.1 Conditional Invocation
 
+
+/* instead of (), you can invoke a function using ?.() 
+With the new ?.() invocation syntax, if the expression to the left of the ?. 
+evaluates to null or undefined, then the entire invocation expression evaluates 
+to undefined and no exception is thrown. */
+
 function square(x, log) { // The second argument is an optional function
     if (log) { // If the optional function is passed
-    log(x); // Invoke it
+        log(x); // Invoke it
     }
-    return x * x; // Return the square of the argument
-    }
+return x * x; // Return the square of the argument
+}
 
 //you can simply write the function invocation using ?.(),
+
 function square(x, log) { // The second argument is an optional function
     log?.(x); // Call the function if there is one
     return x * x; // Return the square of the argument
-    }
+}
 //Note, however, that ?.() only checks whether the lefthand side is null or undefined.
 
 
@@ -126,39 +231,115 @@ function square(x, log) { // The second argument is an optional function
 //then none of the argument expressions within the parentheses are evaluated:
 let f = null, x = 0;
 try {
-f(x++); // Throws TypeError because f is null
+    f(x++); // Throws TypeError because f is null
 } catch(e) {
-x // => 1: x gets incremented before the exception is thrown
+    x // => 1: x gets incremented before the exception is thrown
 }
 f?.(x++) // => undefined: f is null, but no exception thrown
 x // => 1: increment is skipped because of shortcircuiting
 
+/* A method invocation also involves property access, 
+it is worth taking a moment to make sure you understand 
+the difference between the following expressions. */ 
 
 o.m() // Regular property access, regular invocation
+// o must be a function 
 o?.m() // Conditional property access, regular invocation
+//if o is null or undefined then the expression evaluates to undefined. 
+//if o has any other value, then it must have a property m whose value is a function.
+
 o.m?.() // Regular property access, conditional invocation
+//o must not be null or undefined. 
+//if it doesn`t have a property m or value of property is null
+//then the entire expression evaluates to undefined.
+
+
+
+
+
 
 
 //4.6 Object Creation Expressions
 
-//An object creation expression creates a new object and invokes a
-//function (called a constructor) to initialize the properties of that object.
+//An object creation expression creates a new object and invokes a function 
+//(called a constructor) to initialize the properties of that object.
 
+/* Object creation expression are like invocation expressions except that 
+they are prefixed with the keyword "new" */
 new Object()
 new Point(2,3)
 
-//If no arguments are passed to the constructor function in an object
-//creation expression, the empty pair of parentheses can be omitted:
+/*If no arguments are passed to the constructor function in an object
+creation expression, the empty pair of parentheses can be omitted: */
 
 new Object
 new Date
 
+
+//4.7 Operator Overview
+
+
+
+
+
+//Table 4-1. JavaScript operators
+
+
+/*Operator   Operation    A    N     Types
+++  Pre- or post-increment R 1 lval→num
+--  Pre- or post-decrement R 1 lval→num
+-   Negate number R 1 num→num
++   Convert to number   R 1 any→num
+~   Invert bits R 1 int→int
+!   Invert boolean value R 1 bool→bool
+delete   Remove a property R 1 lval→bool
+typeof  Determine type of operand   R 1 any→str
+void    Return undefined value      R 1 any→undef
+**      Exponentiate    R 2 num,num→num
+*, /, %     Multiply, divide, remainder     L 2 num,num→num
++, -    Add, subtract L 2 num,num→num
++       Concatenate strings         L  2  str,str→str
+<<      Shift left L 2 int,int→int
+>>      Shift right with sign extension     L 2 int,int→int
+>>>     Shift right with zero extension     L 2 int,int→int
+<, <=,>, >=     Compare in numeric order    L 2 num,num→bool
+<, <=,>, >=     Compare in alphabetical order   L 2 str,str→bool
+instanceof      Test object class       L 2 obj,func→bool
+in      Test whether property exists    L 2 any,obj→bool
+==      Test for non-strict equality    L 2 any,any→bool
+!=      Test for non-strict inequality  L 2 any,any→bool
+===     Test for strict equality        L 2 any,any→bool
+!==     Test for strict inequality      L 2 any,any→bool
+&       Compute bitwise AND         L 2 int,int→int
+^       Compute bitwise XOR         L 2 int,int→int
+|       Compute bitwise OR          L 2 int,int→int
+&&      Compute logical AND         L 2 any,any→any
+||      Compute logical OR          L 2 any,any→any
+??      Choose 1st defined operand      L 2 any,any→any
+?:      Choose 2nd or 3rd operand       R 3 bool,any,any→any
+=       Assign to a variable or property      R 2 lval,any→any
+
+**=, *=, /=, %=, Operate and assign R 2 lval,any→any
++=, -=, &=, ^=,
+|=,
+<<=, >>=, >>>=
+
+
+,   Discard 1st operand,return 2nd      L 2 any,any→any
+*/
+
+
+
+
+
+
+
 //4.7.3 Operator Side Effects
 
-//side effects, and their evaluation may affect the result of future evaluations. 
-//No other JavaScript operators have side effects, but function invocation
-//and object creation expressions will have side effects if any of the
-//operators used in the function or constructor body have side effects.
+/*side effects, and their evaluation may affect the result of future evaluations. 
+No other JavaScript operators have side effects, but function invocation
+and object creation expressions will have side effects if any of the
+operators used in the function or constructor body have side effects. */
 
 
 //4.7.4 Operator Precedence

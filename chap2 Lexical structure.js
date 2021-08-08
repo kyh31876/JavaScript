@@ -7,8 +7,8 @@
 
 //2.3 Literals
 
-//A "literal" is a data value that appears directly in a program. 
-//The following are all literals:
+
+//Fixed values are called Literals.
 
 12 // The number twelve
 1.2 // The number one point two
@@ -21,10 +21,7 @@ null // Absence of an object
 
 //2.4 Identifiers and Reserved Words
 
-//An "identifier" is simply a name.
-
-//identifiers are used to name constants, variables, properties, functions, and
-//classes and to provide labels for certain loops in JavaScript code.
+//identifiers are used to name variables (and keywords, and functions, and labels).
 
 //A JavaScript identifier must begin with a letter, 
 //an underscore (_), or a dollar sign ($).
@@ -33,10 +30,13 @@ null // Absence of an object
 but sometimes it is possible to parse strings into identifiers. */
 
 //These are all legal identifiers:
-i my_variable_name
+i 
+my_variable_name
 v13
 _dummy
 $str
+
+
 
 //2.4.1 Reserved Words
 /*Many of these (such as if, while, and for) are reserved keywords that must
