@@ -25,22 +25,16 @@ let answer = 42
 
 
 
-
-
-
 //4.1 Primary Expressions
 
 //Primary expressions in JavaScript are constant or literal values,
-
-
+//Basic keywords and general expressions in JavaScript.
 
 
 //Literals are constant values that are embedded directly in your program.
 1.23 // A number literal
 "hello" // A string literal
 /pattern/ // A regular expression literal
-
-
 
 //Some of JavaScript’s reserved words are primary expressions:
 true // Evalutes to the boolean true value
@@ -59,6 +53,31 @@ this // Evaluates to the "current" object
 i // Evaluates to the value of the variable i.
 sum // Evaluates to the value of the variable sum.
 undefined // The value of the "undefined" property of the global object
+
+
+
+this //The this keyword refers to a special property of an execution context.
+
+function //The function keyword defines a function expression.
+
+class //The class keyword defines a class expression.
+
+function* //The function* keyword defines a generator function expression.
+
+yield //Pause and resume a generator function.
+
+yield* //Delegate to another generator function or iterable object.
+
+async function //The async function defines an async function expression.
+
+await //Pause and resume an async function and wait for the promise's resolution/rejection.
+
+[] //Array initializer/literal syntax.
+
+{} //Object initializer/literal syntax.
+
+/ab+c/i //Regular expression literal syntax.
+( ) //Grouping operator.
 
 
 
@@ -108,10 +127,6 @@ let rectangle = {
 
 // This function returns the square of the value passed to it.
 let square = function(x) { return x * x; };
-
-
-
-
 
 
 
@@ -326,9 +341,8 @@ in      Test whether property exists    L 2 any,obj→bool
 
 
 ,   Discard 1st operand,return 2nd      L 2 any,any→any
+
 */
-
-
 
 
 
@@ -336,21 +350,94 @@ in      Test whether property exists    L 2 any,obj→bool
 
 //4.7.3 Operator Side Effects
 
-/*side effects, and their evaluation may affect the result of future evaluations. 
-No other JavaScript operators have side effects, but function invocation
-and object creation expressions will have side effects if any of the
-operators used in the function or constructor body have side effects. */
+
+/* Evaluating a simple expression like 2 * 3 never affects the state of
+your program,and any future computation your program performs will
+be unaffected by that evaluation. */
+
+
+/* Some expression have side effects, 
+and their evaluation may affect the result of future evaluations. */
+
+
+/* The assignment operators = are the most obvious example: 
+if you assign a value to a variable or property, that changes the value of
+any expression that uses that variable or property. */
+
+/* The delete operator also has side effects:
+deleting a property is like (but not the same as) assigning undefined
+to the property. */
 
 
 //4.7.4 Operator Precedence
 
-// my is an object with a property named functions whose value is an
-// array of functions. We invoke function number x, passing it argument
-// y, and then we ask for the type of the value returned.
-typeof my.functions[x](y)
+//Precedence	Operator type	Associativity	Individual operators
+/*
+21	            Grouping	    n/a	            ( … )
+20	            Member Access	left-to-right	… . …
+                Computed Member Access	left-to-right	… [ … ]
+                new(with argument list)	n/a	    new … ( … )
+                Function Call	left-to-right	… ( … )
+                Optional chaining	left-to-right	        ?.
+19	            new (without argument list)	    right-to-left	    new …
+18	            Postfix Increment	            n/a     … ++
+                Postfix Decrement	                    … --
+17	            Logical NOT(!)  right-to-left	! …
+                Bitwise NOT(~)	                ~ …
+                Unary plus(+)	                + …
+                Unary negation(-)	            - …
+                Prefix Increment	            ++ …
+                Prefix Decrement	            -- …
+                typeof	                        typeof …
+                void	                        void …
+                delete	                        delete …
+                await                       	await …
+16	            Exponentiation(**)	right-to-left	… ** …
+15	            Multiplication(*)	left-to-right	… * …
+                Division (/)	… / …
+                Remainder (%)	… % …
+14	            Addition (+)	left-to-right	… + …
+                Subtraction (-)	… - …
+13	            BitwiseLeftShift(<<)	left-to-right	… << …
+                Bitwise Right Shift(>>)	                … >> …
+                Bitwise Unsigned Right Shift(>>>)	    … >>> …
+12	            LessThan(<)	        left-to-right	    … < …
+                LessThan Or Equal(<=)	                … <= …
+                Greater Than(>)	                        … > …
+                GreaterThan Or Equal(>=)	            … >= …
+                in	                                … in …
+                instanceof	                        … instanceof …
+11	            Equality(==)	left-to-right	    … == …
+                Inequality(!=)	                    … != …
+                StrictEquality(===)	                … === …
+                StrictInequality(!==)	            … !== …
+10	            Bitwise AND(&)	left-to-right	    … & …
+9	            Bitwise XOR(^)	left-to-right	… ^ …
+8	            Bitwise OR(|)	left-to-right	… | …
+7	            Logical AND(&&)	left-to-right	… && …
+6	            Logical OR(||)	left-to-right	… || …
+5	 Nullish coalescing operator(??)	left-to-right	… ?? …
+4	Conditional (ternary) operator	right-to-left	… ? … : …
+3	            Assignment	    right-to-left	    … = …
+                                                    … += …
+                                                    … -= …
+                                                    … **= …
+                                                    … *= …
+                                                    … /= …
+                                                    … %= …
+                                                    … <<= …
+                                                    … >>= …
+                                                    … >>>= …
+                                                    … &= …
+                                                    … ^= …
+                                                    … |= …
+                                                    … &&= …
+                                                    … ||= …
+                                                    … ??= …
+2	            yield	right-to-left	            yield …
+                yield*	                            yield* …
+1	            Comma/Sequence	left-to-right	    … , …
 
-//array index, and function invocation, all of which have higher priority
-//than operators.
 
 //4.7.5 Operator Associativity      
 
@@ -375,6 +462,32 @@ q = a?b:(c?d:(e?f:g));
 //4.8.1 The + Operator
 
 //binary + operator adds numeric operands or concatenates string operands:
+1 + 2 // => 3
+"hello" + " " + "there" // => "hello there"
+"1" + "2" // => "12"
+
+
+
+/* The conversion rules for + give priority to string concatenation: 
+if either of the operands is a string or an object that converts to a string,
+the other operand is converted to a string and concatenation is performed. */
+
+//Addition is performed only if neither operand is string-like.
+
+
+
+
+/* Date objects are converted by their toString() method, 
+and all other objects are converted via valueOf(),
+if that method returns a primitive value. However, most objects 
+do not have a useful valueOf() method, so they are
+converted via toString() as well. */
+
+
+
+/* After object-to-primitive conversion, if either operand is a string, 
+the other is converted to a string and concatenation is performed. */
+
 1 + 2 // => 3: addition
 "1" + "2" // => "12": concatenation
 "1" + 2 // => "12": concatenation after number-tostring
@@ -383,43 +496,62 @@ true + true // => 2: addition after boolean-to-number
 2 + null // => 2: addition after null converts to 0
 2 + undefined // => NaN: addition after undefined converts to NaN
 
+
+
+
+//when the + operator is used with strings and numbers, it may not be associative.
 1 + 2 + " blind mice" // => "3 blind mice"
 1 + (2 + " blind mice") // => "12 blind mice"
+
+
 
 //4.8.2 Unary Arithmetic Operators
 
 //the unary operators all have high precedence and are all right-associative
 
+//the arithmetic unary operators descirbed for (+,-,++,--) all convert 
+//their single operand to a number if necessary.
+
+
 
 //Unary plus (+)
-    //The unary plus operator converts its operand to a number (or to NaN) 
-    //and returns that converted value.
-    //When used with an operand that is already a number, it doesn’t do anything
+
+/* The unary plus operator converts its operand to a number (or to
+NaN) and returns that converted value.
+
+
 
 //Unary minus (-)
-    //it converts its operand to anumber, 
-    //if necessary, and then changes the sign of the result.
+/*it converts its operand to anumber,
+if necessary, and then changes the sign of the result. */
 
 
 //Increment (++)
-    // /The return value of the ++ operator depends on its position relative 
-    //to the operand
+/* The ++ operator increments (i.e., adds 1 to) its single operand,
+which must be an lvalue (a variable, an element of an array, or a
+property of an object). */
 
-    let i = 1, j = ++i; //it is known as the pre-increment operator, 
-    //it increments the operand and evaluates to the incremented value of that operand.
+let i = 1, j = ++i;  //i and j are both 2 
+/*it is known as the pre-increment operator, 
+it increments the operand and evaluates to the incremented value of that operand.*/
 
-    let n = 1, m = n++; //is known as the post-increment operator, it
-    //increments its operand but evaluates to the unincremented value of that operand.
+let n = 1, m = n++;  //n is 2, m is 1 
+//is known as the post-increment operator, it
+//increments its operand but evaluates to the unincremented value of that operand.
 
-//Note that the expression x++ is not always the same as x=x+1.
-//The ++ operator never performs string concatenation
+//The ++ operator never performs string concatenation:
+//It always convers it operand to a number and increments it. 
+//IF x is the string "1" ,++ x is the numver 2 , but x+1 is "11"
+
+var x = String(1);
+
+++x //2
+x+1 //'11'
+
 
 //Decrement (--)
-    //Like the ++ operator, the return value of
-    //-- depends on its position relative to the operand.
-
-
-
+//Like the ++ operator, the return value of
+//-- depends on its position relative to the operand.
 1 + 2 // => 3: addition.
 "1" + "2" // => "12": concatenation.
 "1" + 2 // => "12": 2 is converted to "2".
@@ -429,8 +561,131 @@ true + true // => 2: addition after boolean-to-number
 "one" < 3 // => false: numeric comparison, "one" converted to NaN.
 
 
+
+
+
+
+//4.9 Relational Expressions
+
+
+//4.9.1 Equality and Inequality Operators
+
+/* equality operator (==) checks whether its two operands are equal, 
+returning a Boolean result. 
+it attempts to convert and compare operands that are of different types.*/
+
+//Comparison with no type conversion
+1 == 1;              // true
+"hello" == "hello";  // true
+
+//Comparison with type conversion
+"1" ==  1;            // true
+1 == "1";             // true
+0 == false;           // true
+0 == null;            // false
+0 == undefined;       // false
+0 == !!null;          // true, look at Logical NOT operator
+0 == !!undefined;     // true, look at Logical NOT operator
+null == undefined;    // true
+
+const number1 = new Number(3);
+const number2 = new Number(3);
+number1 == 3;         // true
+number1 == number2;   // false
+
+//Comparison of objects
+const object1 = {"key": "value"}
+const object2 = {"key": "value"};
+
+object1 == object2 // false
+object2 == object2 // true
+
+
+/* nequality operator (!=) checks whether its two operands are not equal,
+returning a Boolean result.
+it attempts to convert and compare operands that are of different types. */
+
+//the following two lines will always give the same result:
+
+x != y
+!(x == y)
+
+//STRICT EQUALITY
+
+/* strict equality operator === evaluates its operands, then compares
+the two values as follows, performing no type conversion: */
+
+
+
+//Comparing operands of the same type
+console.log("hello" === "hello");   // true
+console.log("hello" === "hola");    // false
+
+console.log(3 === 3);               // true
+console.log(3 === 4);               // false
+
+console.log(true === true);         // true
+console.log(true === false);        // false
+
+console.log(null === null);         // true
+
+//Comparing operands of different types
+console.log("3" === 3);           // false
+
+console.log(true === 1);          // false
+
+console.log(null === undefined);  // false
+
+Comparing objects
+const object1 = {
+  name: "hello"
+}
+
+const object2 = {
+  name: "hello"
+}
+console.log(object1 === object2);  // false
+console.log(object1 === object1);  // true
+
+
+
+//4.9.2 Comparison Operators
+
+//The comparison operators test the relative order 
+//(numerical or alphabetical) of their two operands:
+
+
+
+/* Both the + operator and the comparison operators behave differently
+for numeric and string operands. */
+
+/* + favors strings: it performs concatenation if either operand is a string. 
+The comparison operators favor numbers and only perform string comparison 
+if both operands are strings: */
+1 + 2 // => 3: addition.
+"1" + "2" // => "12": concatenation.
+"1" + 2 // => "12": 2 is converted to "2".
+11 < 3 // => false: numeric comparison.
+"11" < "3" // => true: string comparison.
+"11" < 3 // => false: numeric comparison, "11" converted to 11.
+"one" < 3 // => false: numeric comparison, "one" converted to NaN.
+
+
+
+
 //4.9.3 The in Operator
-// a left-side operand that is a string, symbol, or value that can be converted to a string
+/* "in" operator returns true if the specified property 
+is in the specified object or its prototype chain. */
+
+prop
+//A string or symbol representing a property name or array index 
+
+object
+//Object to check if it (or its prototype chain) contains 
+//the property with specified name (prop).
+
+prop in object 
+
 let point = {x: 1, y: 1}; // Define an object
 "x" in point // => true: object has property named "x"
 "z" in point // => false: object has no "z" property.
@@ -441,8 +696,21 @@ let data = [7,8,9]; // An array with elements (indices) 0, 1, and 2
 3 in data // => false: no element 3
 
 
+
+
 //4.9.4 The instanceof Operator
-// that is an object and a right-side operand that identifies a class of objects.
+/* instanceof operator tests to see if the prototype property of a constructor appears anywhere in the prototype chain of an object. The return value is a boolean value. */
+
+object instanceof constructor
+
+
+
+object
+//The object to test.
+
+constructor
+//Function to test against
+
 
 let d = new Date(); // Create a new object with the Date() constructor
 d instanceof Date // => true: d was created with Date()
@@ -458,7 +726,21 @@ a instanceof RegExp // => false: arrays are not regular expressions
 
 
 
+
 //4.10.1 Logical AND (&&)
+/*The logical AND (&&) operator (logical conjunction) for a set of operands is true if and only if all of its operands are true. */
+
+
+expr1 && expr2
+
+//Examples of expressions that can be converted to false are:
+null;
+NaN;
+0;
+empty string ("" or '' or ``);
+undefined
+
+
 x === 0 && y === 0 // true if, and only if, x and y are both 0
 
 let o = {x: 1};
@@ -470,44 +752,92 @@ if (a === b) stop(); // Invoke stop() only if a === b
 (a === b) && stop(); // This does the same thing
 
 
+
 //4.10.2 Logical OR (||)
-// If maxWidth is truthy, use that. Otherwise, look for a value in
-// the preferences object. If that is not truthy, use a hardcoded constant.
-let max = maxWidth || preferences.maxWidth || 500;
+/*The logical OR (||) operator (logical disjunction) for a set of operands is true if and only if one or more of its operands is true. */
+
+expr1 || expr2
+
 
 //4.10.3 Logical NOT (!)
+//Returns false if its single operand can be converted to true; otherwise, return true.
 
-// DeMorgan's Laws
-!(p && q) === (!p || !q) // => true: for all values of p and q
-!(p || q) === (!p && !q) // => true: for all values of p and q
 
 //4.11 Assignment Expressions
 
 //JavaScript uses the = operator to assign a value to a variable or property.
 
+
 i = 0; // Set the variable i to 0.
 o.x = 1; // Set the property x of object o to 1.
+
+//The = operator expects its left-side operand to be an l-value
+//It expects its right-side operand to be an arbitrary value of any type.
+
+/* As a side effect, the = operator assigns the value on the 
+right to the variable or property on the left so that future references 
+to the variable or property evaluate to the value. */
+
+/* The assignment operator has right-to-left associativity, 
+which means that when multiple assignment operators appear in an expression, 
+they are evaluated from right to left. */
+i=j=k=0;
+
 
 
 //4.11.1 Assignment with Operation
 
-total += salesTax;  //the += operator performs addition and assignment.
-total = total + salesTax; //equivalent to this one 
+//Table 4-2. Assignment operators
+/*Operator Example Equivalent
++=      a += b      a = a + b
+-=      a -= b      a = a - b
+*=      a *= b      a = a * b
+/=      a /= b      a = a / b
+%=      a %= b      a = a % b
+**=     a **= b     a = a ** b
+<<=     a <<= b     a = a << b
+>>=     a >>= b     a = a >> b
+>>>=    a >>>= b    a = a >>> b
+&=      a &= b      a = a & b
+|=      a |= b      a = a | b
+^=      a ^= b      a = a ^ b
+*/
 
-// two assignments are not the same:
-data[i++] *= 2;
-data[i++] = data[i++] * 2;
+
+
+
+//In most cases, the expression 
+a op= b 
+// is equivalent to the expression 
+a = a op b 
+//the expression a is evaluated once. In the second, it is evaluated twice.
+//the two cases will differ only if a includes side effects such as a function 
+//call or an increment operator.
 
 
 //4.12 Evaluation Expressions
-
 //4.12.1 eval()
 
-eval("x=1")
+eval(string)
+//The eval() function evaluates or executes an argument.
 
 
-eval("var y = 3;") //it declares a new local variable y.
-eval("function f() { return x+1; }"); //function can declare a local function with code like this:
+//Return value
+
+/*The completion value of evaluating the given code. If the completion value is empty,
+undefined is returned.*/
+
+eval(new String('2 + 2')); // returns a String object containing "2 + 2"
+eval('2 + 2');             // returns 4
+
+
+eval("var y=3;") //undefined
+//if the function calls eval("var y = 3;"), it declares a new local variable y.
+
+eval("let x=3;")
+/* if the evaluated string uses let or const, the variable or constant 
+declared will be local to the evaluation and will not be defined in the calling
+environment. */
 
 //4.12.2 Global eval()
 
@@ -525,6 +855,11 @@ return y; // Return unchanged local variable
 }
 console.log(f(), x); // Local variable changed: prints "localchanged global":
 console.log(g(), y); // Global variable changed: prints "local globalchanged":
+
+
+
+
+
 
 
 //4.13 Miscellaneous Operators

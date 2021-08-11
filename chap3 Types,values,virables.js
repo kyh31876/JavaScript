@@ -563,7 +563,7 @@ function equalArrays(a, b) {
 
 
 //Table 3-2. JavaScript type conversions
-//value             to String       to Number       to Boolean
+//value      to String     to Number   to Boolean
 undefined    "undefined"     NaN     false
 null        "null"       0           false
 true        "true"       1
@@ -613,6 +613,7 @@ null == undefined // => true: These two values are treated as equal.
 
 /* The simplest way to perform an explicit type conversion is to use the
 Boolean(), Number(), and String() functions */
+
 Number("3") // => 3
 String(false) // => "false": Or use false.toString()
 Boolean([]) // => true
