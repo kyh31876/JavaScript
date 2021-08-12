@@ -827,6 +827,10 @@ eval(string)
 /*The completion value of evaluating the given code. If the completion value is empty,
 undefined is returned.*/
 
+
+//the String constructor is specified and eval() returns a String object 
+//rather than evaluating the string.
+
 eval(new String('2 + 2')); // returns a String object containing "2 + 2"
 eval('2 + 2');             // returns 4
 
@@ -839,24 +843,45 @@ eval("let x=3;")
 declared will be local to the evaluation and will not be defined in the calling
 environment. */
 
-//4.12.2 Global eval()
+//Using eval
 
-const geval = eval; // Using another name does a global eval
-let x = "global", y = "global"; // Two global variables
-function f() { // This function does a local eval
-let x = "local"; // Define a local variable
-eval("x += 'changed';"); // Direct eval sets local variable
-return x; // Return changed local variable
-}
-function g() { // This function does a global eval
-let y = "local"; // A local variable
-geval("y += 'changed';"); // Indirect eval sets global variable
-return y; // Return unchanged local variable
-}
-console.log(f(), x); // Local variable changed: prints "localchanged global":
-console.log(g(), y); // Global variable changed: prints "local globalchanged":
+var x = 2;
+var y = 39;
+var z = '42';
+eval('x + y + 1'); // returns 42
+eval(z);           // returns 42
+
+//The first evaluates the string "x + y + 1"; the second evaluates the string "42".
 
 
+
+//Using eval to evaluate a string of JavaScript statements
+
+/*This string consists of JavaScript statements that assigns z a value of 42 
+if x is five, and assigns 0 to z otherwise.
+When the second statement is executed, eval() will cause these statements
+to be performed, and it will also evaluate the set of statements 
+and return the value that is assigned to z. */
+
+
+var x = 5;
+var str = "if (x == 5) {console.log('z is 42'); z = 42;} else z = 0;";
+
+console.log('z is ', eval(str)); // z is 42
+
+
+//Last expression is evaluated
+
+var str = 'if ( a ) { 1 + 1; } else { 1 + 2; }';
+var a = true;
+var b = eval(str);  // returns 2
+
+console.log('b is : ' + b);
+
+a = false;
+b = eval(str);  // returns 3
+
+console.log('b is : ' + b);
 
 
 
@@ -866,9 +891,29 @@ console.log(g(), y); // Global variable changed: prints "local globalchanged":
 
 //4.13.1 The Conditional Operator (?:)
 
-//first goes before the ?, the second goes between the ? and the :
+condition ? exprIfTrue : exprIfFalse
 
-x > 0 ? x : -x // The absolute value of x
+condition //An expression whose value is used as a condition.
+
+exprIfTrue //An expression which is evaluated if the condition evaluates to a truthy value 
+//(one which equals or can be converted to true).
+
+exprIfFalse //An expression which is executed if the condition is falsy 
+//(that is, has a value which can be converted to false).
+
+
+
+//Besides false, possible falsy expressions are: 
+//null, NaN, 0, the empty string (""), and undefined.
+
+
+var x =0;
+x > 0 ? x : -x; // -0
+
+var age = 26;
+var beverage = (age >= 21) ? "Beer" : "Juice";
+console.log(beverage); // "Beer"
+
 
 greeting = "hello " + (username ? username : "there");
 
@@ -883,26 +928,35 @@ greeting += "there";
 
 //4.13.2 First-Defined (??) ,nullish coalescing
 
-//evaluates to its first defined operand: 
-//if its left operand is not null and not undefined, it returns that value.
+/*The nullish coalescing operator (??) is a logical operator
+that returns its right-hand side operand when its left-hand side operand 
+is null or undefined, and otherwise returns its left-hand side operand. */
+
+leftExpr ?? rightExpr
+
+
+
+
+
+/*  If the expression a has no side effects, 
+then the expression a ?? b is equivalent to: */
 
 a ?? b //is equivalent to:
 (a !== null && a !== undefined) ? a : b
 
-// If maxWidth is truthy, use that. Otherwise, look for a value in
-// the preferences object. If that is not truthy, use a hardcoded constant.
-let max = maxWidth || preferences.maxWidth || 500;
-
-let max = maxWidth ?? preferences.maxWidth ?? 500;
 
 
-let options = { timeout: 0, title: "", verbose: false, n:
-null };
-options.timeout ?? 1000 // => 0: as defined in the object
-options.title ?? "Untitled" // => "": as defined in the object
-options.verbose ?? true // => false: as defined in the object
-options.quiet ?? false // => false: property is not defined
-options.n ?? 10 // => 10: property is null
+/* e to || being a boolean logical operator, the left hand-side operand 
+was coerced to a boolean for the evaluation and 
+any falsy value (0, '', NaN, null, undefined) was not returned.  */
+let count = 0;
+let text = "";
+
+let qty = count || 42;
+let message = text || "hi!";
+console.log(qty);     // 42 and not 0
+console.log(message); // "hi!" and not ""
+
 
 
 (a ?? b) || c // ?? first, then ||
@@ -910,25 +964,52 @@ a ?? (b || c) // || first, then ??
 a ?? b || c // SyntaxError: parentheses are required
 
 
+
 //4.13.3 The typeof Operator
 
-typeof(undefinded) //'undefined'
+
+//The typeof operator returns a string indicating the type of the unevaluated operand.
+
+typeof operand
+typeof(operand)
+
+
+
+typeof(undefined) //'undefined'
 typeof(null) //'object'
 typeof(true) && typeof(false) //'boolean'
 typeof(NaN) //'number'
-typeof(string) //'string'
+typeof(Number(1)); //'number'
+typeof(String()) //'string'
+typeof(Function(a)) //'function'
+typeof(Object())  //'object'
+
 
 // If the value is a string, wrap it in quotes, otherwise, convert
 (typeof value === "string") ? "'" + value + "'" : value.toString()
 
+
+
+
 //4.13.4 The delete Operator
 
-//delete is a unary operator that attempts to delete the object property
-//or array element specified as its operand.
+//delete operator removes a property from an object; 
+
+
+delete expression
+// Where expression should evaluate to a property reference, e.g.:
+
+delete object.property
+delete object['property']
+
+
+object //The name of an object, or an expression evaluating to an object.
+
 
 let o = { x: 1, y: 2}; // Start with an object
 delete o.x; // Delete one of its properties
 "x" in o // => false: the property does not exist anymore
+
 let a = [1,2,3]; // Start with an array
 delete a[2]; // Delete the last element of the array
 2 in a // => false: array element 2 doesn't exist anymore
@@ -946,13 +1027,20 @@ delete Object.prototype;
 
 
 //4.13.7 The comma Operator (,)
-//operands may be of any type.
-i=0, j=1, k=2;
-//The lefthand expression is always evaluated, but its value is discarded,
 
-// The first comma below is part of the syntax of the let statement
-// The second comma is the comma operator: it lets us squeeze 2 
-// expressions (i++ and j--) into a statement ( the for loop) that expects 1.
-for(let i=0,j=10; i < j; i++,j--) {
-console.log(i+j);
-}
+/*The comma operator (,) evaluates each of its operands (from left to right)
+ and returns the value of the last operand.  */
+ 
+expr1, expr2, expr3...
+//One or more expressions,the lastof which 
+//is returned as the value of the compound expression.
+
+
+var x = 1;
+x = (x++, x);
+console.log(x); // expected output: 2
+
+
+i=0, j=1, k=2;
+//basically equivalent to:
+i = 0; j = 1; k = 2;
