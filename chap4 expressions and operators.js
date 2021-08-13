@@ -968,7 +968,7 @@ a ?? b || c // SyntaxError: parentheses are required
 //4.13.3 The typeof Operator
 
 
-//The typeof operator returns a string indicating the type of the unevaluated operand.
+//The type of operator returns a string indicating the type of the unevaluated operand.
 
 typeof operand
 typeof(operand)
