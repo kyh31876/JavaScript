@@ -5,7 +5,7 @@
 
 //Conditionals : Statements like "if" and "switch"
 
-//Loops: Statements like "while" and "for" that execute other statements repetitively
+//Loops: Statements like "while" and "of" that execute other statements repetitively
 
 //Jumps: Statements like 'break', 'return', 'throw' that cause the interpreter to jump
 //to another program
@@ -18,7 +18,7 @@ greeting = "Hello " + name;
 i *= 3;
 
 counter++;//These have the side effect of changing a variable value, 
-//just as if an assignment had been performed:
+//just as if an assignment had been perofmed:
 
 
 
@@ -26,7 +26,7 @@ counter++;//These have the side effect of changing a variable value,
 Math.cos(x);
 
 
-//But you might well compute the value and assign it to a variable for future use:
+//But you might well compute the value and assign it to a variable of future use:
 cx =Math.cos(x);
 
 
@@ -44,11 +44,8 @@ is in JavaScript functions: */
     cx = Math.cos(x);
     console.log("cos(π) = " + cx);
 }
-/* ther are a few thing to note, 
-it does not end with a semicolon. 
+/* ther are a few thing to note, it does not end with a semicolon. 
 than the lines inside the block are indented relative to the curly braces */
-
-
 
 
 /* A compound statement allows you to use multiple statement where syntax exprect a 
@@ -66,11 +63,45 @@ although the JavaScript syntax would expect one. */
 //The JavaScript interpreter takes no action when it executes an empty statement.
 
 
+//Semicolons in JavaScript
+
+
+//1 when the following line begins with code that breaks the previous one\
+
+const hey = 'hey';
+const you = 'hey';
+const heyYou = hey + ' ' + you['h', 'e', 'y'].ofEach((letter) => console.log(letter))
+
+//2 when the next line starts with a }, closing the current block
+
+
+//3 when the end of the source code file is reached
+
+
+
+
+
+//4 when there is a return statement on its own line
+
+//5 when there is a break statement on its own line
+
+//6 when there is a throw statement on its own line
+
+//7 when there is a continue statement on its own line
+
+
+
+
+//When Should  Not Use Semicolons
+//of 
+//if else
+//while
+
+
 
 //Empty loop body
-
 let arr = [1, 2, 3]; // Assign all array values to 0
-for (let i = 0; i < arr.length; arr[i++] = 0) /* empty statement */ ;
+of (let i = 0; i < arr.length; arr[i++] = 0) /* empty statement */ ;
 console.log(arr); // [0, 0, 0]
 
 //The empty statement is sometimes used with loop statements.
@@ -111,6 +142,9 @@ if (hour < 18) {
 //default an "else" clause is part of the nearest "if" statement.
 
 
+/* the inner if statement ofms the single statement 
+allowed by the syntax of the outer if statement. */
+var i,j,k=1;
 if (i === j) {
     if (j === k) {
         console.log("i equals k");
@@ -121,15 +155,13 @@ if (i === j) {
 
 
 
-
-
 //The else if statement specifies a new condition if the first condition is false:
 if (condition1) {
     // block of code to be executed if condition1 is true
 } else if (condition2) {
     // block of code to be executed if the condition1 is false and condition2 is true
 } else {
-    // block of code to be executed if the condition1 is false and condition2 is false
+    // block of code to be executed if the condition1 and condition2 are false
 }
 
 
@@ -155,9 +187,8 @@ else {
 
 /* The "switch" statement evaluates an expression, 
 matching the expression's value to a case clause, 
-and executes statements associated with that case, 
+and executes statements associated with that case,
 as well as statements in cases that follow the matching case. */
-
 
 expression
 //An expression whose result is matched against each case clause.
@@ -170,7 +201,6 @@ are executed until either the end of the switch statement or a break. */
 default //Optional
 /*A 'default' clause; if provided, this clause is executed 
 if the value of expression doesn't match any of the case clauses. */
-
 
 
 //Syntax
@@ -202,11 +232,11 @@ switch (expression) {
 
 
 
-//What happens if I forgot a break?
+//What happens if I ofgot a break?
 
 
 /* If you forget a "break" then the script will run from the "case" 
-where the criterion is met and will run the "cases" 
+where the criterion is met and will run the "cases"
 after that regardless if a criterion was met. */
 
 var foo = 0;
@@ -275,112 +305,147 @@ switch (foo) {
 //5.4.1 while
 
 //Syntax
+
 while (condition)
   statement
 
-condition
-/*An expression evaluated before each pass through the loop. 
-If this condition evaluates to true, statement is executed. 
-When condition evaluates to false, execution continues with the statement 
-after the while loop. */
+/* the interpreter first evaluates expression.
+if value of the expression is falsy, then skip over the statement of loop body 
+and moves onto the next statement.*/
 
-statement
-/*An optional statement that is executed as long as the condition evaluates to true. 
-To execute multiple statements within the loop, use a block statement ({ ... }) 
-to group those statements. */
-  
+//an expression that starts off truthy would never change, and the loop would never end
 
-//5.4.2 do/while
-do {
-    // code block to be executed
-  }
-while (condition);
-
-let text ="", i=0;
-do {
+while (i < 10) {
     text += "The number is " + i;
     i++;
-    console.log(text);
-}
-while (i < 10);
+  }
 
-
-const cars = ["BMW", "Volvo", "Saab", "Ford"];
-let i = 0;
-let text = "";
-
-while (cars[i]) {
-  text = text + cars[i];
+//the expression become false, while statement finishes 
+var cars = ["BMW", "Volvo", "Saab", "Ford"];
+var text = "";
+var i = 0;
+while (i < cars.length) {
+  text += cars[i] + "<br>";
   i++;
-  console.log(cars[i]);
 }
 
 
+//5.4.2 do/while
 
-function printArray(a) {
-    let len = a.length, i = 0;
-    if (len === 0) {
-        console.log("Empty Array");
-    } else {
-        do {    
-            console.log(a[i]);
-        } while(++i < len);
-    }
-}   
+/* The "do...while" statement creates a loop that executes a specified statement 
+until the test condition evaluates to false. */
 
+
+
+//Syntax
+do
+   statement
+while (condition);
+
+statement
+/* A statement that is executed at least once and 
+is re-executed each time the condition evaluates to true. */
+
+
+condition 
+/* An expression evaluated after each pass through the loop. 
+If condition evaluates to true, the statement is re-executed. 
+When condition evaluates to false, control passes to the statement  
+following the do...while. */
+
+
+
+
+
+/*  the do...while loop iterates at least once and reiterates 
+until i is no longer less than 5. */
+var result = '';
+var i = 0;
+do {
+   i += 1;
+   result += i + ' ';
+}
+while (i > 0 && i < 5);
+// Despite i == 0 this will still loop as it starts off without the test
+console.log(result);
 
 
 
 
 //5.4.3 for
 
-for (initialize; test; increment) {
-    // code block to be executed
-  }
 
-//equivalent while loop:
-initialize;
-while(test) {
-    statement
-    increment;
+
+
+//Syntax 
+
+for(initialExpression; condition; updateExpression) {
+    // for loop body
 }
+//The initialExpression initializes and/or declares variables and executes only once.
 
+//The condition is evaluated.
 
-//print the numbers from 0 to 9 with a for loop
-for(let count = 0; count < 10; count++) {
-    console.log(count);
+//If the condition is false, the for loop is terminated.
+//if the condition is true, the block of code inside of the for loop is executed.
+
+//The updateExpression updates the value of initialExpression when the condition is true.
+
+//The condition is evaluated again.This process continues until the condition is false.
+
+for (let i = 0; i < 9; i++) {
+    console.log(i);
+    // more statements
 }
+//0 1 2 3 4 5 6 7 8
 
+//All three expressions in the head of the for loop are optional.
 
-let i, j, sum = 0;
-for(i = 0, j = 10 ; i < 10 ; i++, j--) {
-    sum += i * j;
+//in the initialization block it is not required to initialize variables:
+var i = 0;
+for (; i < 9; i++) {
+    console.log(i);
+    // more statements
 }
+//0 1 2 3 4 5 6 7 8
+
+
+
 
 //5.4.4 for/of
 
-//The JavaScript for of statement loops through the values 
-//of an iterable object.
-for (variable of iterable) {
-    // code block to be executed
+/**The for...of statement creates a loop iterating over iterable objects, including: 
+ * built-in String, Array, array-like objects (e.g., arguments or NodeList), 
+ * TypedArray, Map, Set, and user-defined iterables. */
+
+
+
+//Syntax
+for (element of iterable) {
+    // body of for...of
 }
 
-let data = [1, 2, 3, 4, 5, 6, 7, 8, 9], sum = 0;
-for(let element of data) {
+iterable  //iterable object (array, set, strings, etc).
+element //items in the iterable
+
+var data = [1, 2, 3, 4, 5, 6, 7, 8, 9], sum = 0;
+for(var element of data) {
     sum += element;
 }
 sum // => 45
-//the parentheses contain a variable declaration
-//followed by the of keyword and an expression that evaluates to an iterable object,
+//the parentheses contain a variable declaration followed by the of keyword and 
+//an expression that evaluates to an iterable object,
 
 data.push(sum)//an infinite loop because the iteration can never reach the last
 //element of the array.
+
 
 //FOR/OF WITH OBJECTS
 let o = { x: 1, y: 2, z: 3 };
 for(let element of o) { // Throws TypeError because o is not iterable
     console.log(element);
 }
+
 
 let o = { x: 1, y: 2, z: 3 };
 let keys = "";
@@ -406,11 +471,10 @@ for(let [k, v] of Object.entries(o)) {
 }
 pairs // => "x1y2z3"
 
-
 //FOR/OF WITH STRINGS
 
-let frequency = {};
-for(let letter of "mississippi") {
+var frequency = {};
+for(var letter of "mississippi") {
     if (frequency[letter]) {
         frequency[letter]++;
     } else {
@@ -419,7 +483,10 @@ for(let letter of "mississippi") {
 }
 frequency // => {m: 1, i: 4, s: 4, p: 2}
 
+
+
 //FOR/OF WITH SET AND MAP
+
 let text = "Na na na na na na na na Batman!";
 let wordSet = new Set(text.split(" "));
 let unique = [];
@@ -437,105 +504,294 @@ for(let [key, value] of m) {
 
 
 //5.4.5 for/in
-//The for/in statement loops through the property names of a specified object.
-for (var in object) {
-    //code block to be executed
-  }
 
+/*The for..in loop in JavaScript allows you to iterate over 
+all property keys of an object. */
 
-for(let p in o) { // Assign property names of o to variable p
-    console.log(o[p]); // Print the value of each property
+//Syntax
+for (key in object) {
+    // body of for...in
 }
 
-let o = { x: 1, y: 2, z: 3 };
-let a = [], i = 0;
-for(a[i++] in o) /* empty */;
-
-//object properties that can be enumerated with a for/in loop
-for(let i in a) console.log(i);
+//In each iteration of the loop, a key is assigned to the key variable.
+// The loop continues for all object properties.
 
 
 
-const object = { a: 1, b: 2, c: 3 };
-for (const property in object) {
-  console.log(`${property}: ${object[property]}`);
+key
+//A different property name is assigned to variable on each iteration.
+
+object
+//Object whose non-Symbol enumerable properties are iterated over.
+
+
+//Iterate Through an Object
+const student = {
+    name: 'Monica',
+    class: 7,
+    age: 12
 }
+
+// using for...in
+for ( let key in student ) {
+
+    // display the properties
+    console.log(`${key} => ${student[key]}`);
+}
+
+/* the for...in loop is used to iterate over the student object 
+and print all its properties. */
+
+
+
+//Update Values of Properties
+var salaries= {
+    Jack : 24000,
+    Paul : 34000,
+    Monica : 55000
+}
+// using for...in
+for (let i in salaries) {
+    // add a currency symbol
+    let salary = "$" + salaries[i];
+    // display the values
+    console.log(`${i} : ${salary}`);
+}
+
+/* the for...in loop is used to iterate over the properties of the salaries object. 
+Then, the string $ is added to each value of the object. */
+
+
+//for...in with Strings
+
+const string = 'code';
+// using for...in loop
+for (let i in string) {
+    console.log(string[i]);
+}
+
+
+//for...in with Arrays
+
+// define array
+const arr = [ 'hello', 1, 'JavaScript' ];
+
+// using for...in loop
+for (let x in arr) {
+    console.log(arr[x]);
+}
+
+//One of the better ways to iterate over an array is using the for...of loop.
+
+
+
+
+
+
+
+//Difference between for...of and for...in
+
+//for..in iterates over all enumerable property keys of an object
+
+//for..of iterates over the values of an iterable object. 
+
+
+let arr = ['el1', 'el2', 'el3'];
+arr.addedProp = 'arrProp';
+
+// elKey are the property keys
+for (let elKey in arr) {
+  console.log(elKey);
+} //0 1 2 addedProp
+
+// elValue are the property values
+for (let elValue of arr) {
+  console.log(elValue)
+}//el1 el2 el3
 
 
 
 //5.5 Jumps
 
 //5.5.1 Labeled Statements
-identifier: statement
-//you give it a name that you can use to refer to it elsewhere in your program.
+
+//It is prefixing a statement with an identifier which you can refer to.
+//The label is applied to a block of code or a statement.
 
 
-//break and continue are the only JavaScript statements that use statement labels;
-mainloop: while(token !== null) {
-    // Code omitted...
-    continue mainloop; // Jump to the next iteration of thenamed loop
-    // More code omitted...
+//Syntax
+label : statement
+
+label
+//Any JavaScript identifier that is not a reserved word.
+
+statement
+//A JavaScript statement. 'break' can be used with any labeled statement,
+//and 'continue' can be used with looping labeled statements.
+
+
+
+
+
+
+//Using a labeled continue with for loops
+let i, j;
+
+loop1:
+for (i = 0; i < 3; i++) {      //The first for statement is labeled "loop1"
+   loop2:
+   for (j = 0; j < 3; j++) {   //The second for statement is labeled "loop2"
+      if (i === 1 && j === 1) {
+         continue loop1;
+      }
+      console.log('i = ' + i + ', j = ' + j);
+   }
+}
+
+
+//Using a labeled continue statement
+
+/*Given an array of items and an array of tests, this example counts
+the number of items that passes all the tests. */
+let itemsPassed = 0;
+let i, j;
+
+top:
+for (i = 0; i < items.length; i++) {
+  for (j = 0; j < tests.length; j++) {
+    if (!tests[j].pass(items[i])) {
+      continue top;
     }
+  }
+  itemsPassed++;
+}
+
+//Using a labeled break statement
+
+/* Given an array of items and an array of tests, this example determines 
+whether all items pass all tests. */
+let allPass = true;
+let i, j;
+
+top:
+for (i = 0; i < items.length; i++) {
+  for (j = 0; j < tests.length; j++) {
+    if (!tests[j].pass(items[i])) {
+      allPass = false;
+      break top;
+    }
+  }
+}
 
 
 //5.5.2 break
-break;
 
-//this form of the break statement is legal only 
-//if it appears inside one of these statements.
+/* The break statement terminates the current loop, switch, or label statement 
+and transfers program control to the statement following the terminated statement. */
 
+//Syntax
+break [label];
 
-for(let i = 0; i < a.length; i++) {
-    if (a[i] === target) break;
-}
+label //Optional
+/*Identifier associated with the label of the statement. 
+If the statement is not a loop or switch, this is required. */
 
-
-
-break labelname;
-
-//When break is used with a label, it jumps to the end of, or terminates,
-//the enclosing statement that has the specified label.
-
-
-let matrix = getData(); // Get a 2D array of numbers from somewhere
-// Now sum all the numbers in the matrix.
-let sum = 0, success = false;
-// Start with a labeled statement that we can break out of if errors occur
-computeSum: if (matrix) {
-    for(let x = 0; x < matrix.length; x++) {    
-        let row = matrix[x];
-        if (!row) break computeSum;
-        for(let y = 0; y < row.length; y++) {
-            let cell = row[y];
-            if (isNaN(cell)) break computeSum;
-            sum += cell;
-        }   
+//break with for Loop
+for (let i = 1; i <= 5; i++) {
+    // break condition     
+    if (i == 3) {
+        break;
     }
-    success = true;
+    console.log(i);
 }
-// The break statements jump here. If we arrive here with
-//success == false
-// then there was something wrong with the matrix we were
-//given.
-// Otherwise, sum contains the sum of all cells of the matrix.
+
+
+
+//break in switch statements
+const food = "sushi";
+
+switch (food) {
+  case "sushi":
+    console.log("Sushi is originally from Japan.");
+    break;
+  case "pizza":
+    console.log("Pizza is originally from Italy.");
+    break;
+  default:
+    console.log("I have never heard of that dish.");
+    break;
+}
+
+
+
+//break with while Loop
+
+/*program to find the sum of positive numbers
+if the user enters a negative numbers, break ends the loop
+the negative number entered is not added to sum */
+
+let sum = 0, number;
+while(true) {
+    // take input again if the number is positive
+    number = parseInt(prompt('Enter a number: '));
+    // break condition
+    if(number < 0) {
+        break;
+    }
+    // add all positive numbers
+    sum += number;
+}
+// display the sum
+console.log(`The sum is ${sum}.`);
+
+
+
+
+//break with Nested Loop
+
+//first loop
+for (let i = 1; i <= 3; i++) {
+
+    //second loop
+    for (let j = 1; j <= 3; j++) {
+        if (i == 2) {
+          break;
+        }
+        console.log(`i = ${i}, j = ${j}`);
+    }
+}
+
+
+//break in labeled blocks
+
+/* The following code uses break statements with labeled blocks. 
+A break statement must be nested within any label it references. */
+outer_block: {
+    inner_block: { //Notice that inner_block is nested within outer_block.
+      console.log('1');
+      break outer_block; // breaks out of both inner_block and outer_block
+      console.log(':-('); // skipped
+    }
+    console.log('2'); // skipped
+}
+
+
+
+
 
 //5.5.3 continue
 
-//continue restarts a loop at the next iteration.
-continue;
+/* The continue statement is used to skip the current iteration of the loop
+ and the control flow of the program goes to the next iteration. */
 
-//With a label reference, the break statement can be used 
-//to jump out of any code block:
-continue labelname;
 
-//can be used only within the body of a loop.
+//Syntax
+continue [label];
 
-//an unlabeled continue statement being used to skip 
-//the rest of the current iteration of a loop when an error occurs:
-for(let i = 0; i < data.length; i++) {
-    if (!data[i]) continue; // Can't proceed with undefined data
-    total += data[i];
-}
+label //Optional
+//Identifier associated with the label of the statement
+
+
 
 //5.5.4 return
 //The return statement ends function execution 
