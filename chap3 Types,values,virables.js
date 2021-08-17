@@ -2,34 +2,36 @@
 any particular value type, and any variable can be assigned (and re-assigned)
 values of all types:  */ 
 
-let foo = 42;    // foo is now a number
+let foo=42;    // foo is now a number
 foo    = 'bar'; // foo is now a string
 foo     = true;  // foo is now a boolean
 
 //Primitive
 
-//a primitive (primitive value, primitive data type) is data 
-//that is not an object and has no methods. 
-
+/* a primitive (primitive value, primitive data type) is data  
+that is not an object and has no methods.*/
 
 
 //Structural Types:
- typeof instance === "object". 
+
+typeof instance === "object" 
 /*Object : Special non-data but Structural type for any constructed object 
 instance also used as data structures: new Object, new Array, new Map, new Set,
 new WeakMap, new WeakSet, new Date and almost everything made with new keyword; */
 
 //Function : a non-data structure, though it also answers for typeof operator:i
- typeof instance === "function". 
+typeof instance === 'function'
  /*This is merely a special shorthand for Functions, though every Function 
  constructor is derived from Object constructor. */
 
 
 //Primitive values
+
 //All types except objects define immutable values
-// We refer to values of these types as "primitive values".
+//We refer to values of these types as "primitive values".
 
 //Undefined type
+
 //A variable that has not been assigned a value has the value undefined.
 var x; //create a variable but assign it no value
 
@@ -40,8 +42,12 @@ console.log("x's value is", x) //logs "x's value is undefined"
 
 
 
-//3.2 Numbers
 
+
+
+
+
+//3.2 Numbers
 
 
 //3.2.1 Integer Literals
@@ -51,10 +57,12 @@ console.log("x's value is", x) //logs "x's value is undefined"
 3 
 10000000
 
+
+
 //3.2.2 Floating-Point Literals
 //Floating-point literals can have a decimal point;
 
-[digits][.digits][(E|e)[(+|-)]digits]
+//[digits][.digits][(E|e)[(+|-)]digits]
 
 // For example:
 3.14
@@ -181,33 +189,31 @@ is included literally in this string`
 
 //3.3.2 Escape Sequences in String Literals
 
-//  \ is conbined with the character that follow it, it represent that is not 
+//  '\' is conbined with the character that follow it, it represent that is not 
 //otherwise representable within the string 
 
 //Table 3-1. JavaScript escape sequences
 
-//Sequence             Character represented
-
-\0 //The NUL character (\u0000)
-\b //Backspace (\u0008)
-\t //Horizontal tab (\u0009)
-\n //Newline (\u000A)
-\v //Vertical tab (\u000B)
-\f //Form feed (\u000C)
-\r //Carriage return (\u000D)
+/*Sequence             Character represented
+\0                      //The NUL character (\u0000)
+\b                      //Backspace (\u0008)
+\t                      //Horizontal tab (\u0009)
+\n                      //Newline (\u000A)
+\v                      //Vertical tab (\u000B)
+\f                      //Form feed (\u000C)
+\r                      //Carriage return (\u000D)
 \" 
-//Double quote (\u0022)
+                        //Double quote (\u0022)
 \'  
-//Apostrophe or single quote (\u0027)
-\\ //Backslash (\u005C)
+                        //Apostrophe or single quote (\u0027)
+\\                      //Backslash (\u005C)
 \xnn //The Unicode character specified by the two hexadecimal digits nn
 \unnnn //The Unicode character specified by the four hexadecimal digits nnnn
 \u{n
 }
+*/
 /*The Unicode character specified by the codepoint n, where n is one to six
 hexadecimal digits between 0 and 10FFFF (ES6) */
-
-
 
 
 
@@ -275,6 +281,8 @@ s.codePointAt(0) // => 72: ES6, works for codepoints > 16 bits
 // Miscellaneous string methods
 s.concat("!") // => "Hello, world!": just use + operator instead
 "<>".repeat(5) // => "<><><><><>": concatenate n copies. ES6
+
+
 
 //Remember that strings are immutable in JavaScript. Methods like
 //replace() and toUpperCase() return new strings:
@@ -564,25 +572,25 @@ function equalArrays(a, b) {
 
 //Table 3-2. JavaScript type conversions
 //value      to String     to Number   to Boolean
-undefined    "undefined"     NaN     false
+/*undefined    "undefined"     NaN     false
 null        "null"       0           false
 true        "true"       1
 false       "false"      0
-""(/*empty string*/)     0               false
-"1.2"(/*nonempty, numeric*/)        1.2   true
-"one"(/*nonempty, non-numeric*/)    NaN   true
+""(empty string)     0               false
+"1.2"(nonempty, numeric)        1.2   true
+"one"(nonempty, non-numeric)    NaN   true
 0           "0"                          false
 -0          "0"                         false
-1 (/*finite, non-zero*/)"1"             true
+1 (finite, non-zero)"1"             true
 Infinity    "Infinity"                  true
 -Infinity "-Infinity"                   true
 NaN         "NaN"                       false
-{} (/*any object*/)                     true
-[] (/*empty array*/) ""        0        true
-[9] (/*one numeric element*/) "9"   9      true
-['a'] (/*any other array*/) use join()method, NaN, true
-function(){} (/*any function*/) see §3.9.3, NaN, true
-
+{} (any object)                     true
+[] (empty array) ""        0        true
+[9] (one numeric element) "9"   9      true
+['a'] (any other array) use join()method, NaN, true
+function(){} (any function) see §3.9.3, NaN, true
+*/
 
 10 + " objects" // => "10 objects": Number 10 converts to a string
 "7" * "4" // => 28: both strings convert to numbers
@@ -726,8 +734,6 @@ const AU = 1.496E8;
 
 
 
-
-
 //REPEATED DECLARATIONS
 
 //It is a syntax error to use the same name with more than one let or
@@ -838,7 +844,6 @@ foo();
 var x;
 var data = [], count = data.length;
 for(var i = 0; i < count; i++) console.log(data[i]);
-
 
 
 
@@ -1002,7 +1007,7 @@ var1 //[ 'Consul', 'of the Roman Republic' ]
 //Object destructuring
 
 //The basic syntax is:
-let {var1, var2} = {var1:…, var2:…}
+let {var1, var2} = {var1:'',var2:''}
 /* We should have an existing object at the right side, that 
 we want to split into variables.
 The left side contains an object-like “pattern” for corresponding properties. */

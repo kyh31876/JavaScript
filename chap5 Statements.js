@@ -11,8 +11,6 @@
 //to another program
 
 
-
-
 //5.1 Expression Statements
 greeting = "Hello " + name;
 i *= 3;
@@ -746,9 +744,7 @@ console.log(`The sum is ${sum}.`);
 
 
 
-
 //break with Nested Loop
-
 //first loop
 for (let i = 1; i <= 3; i++) {
 
@@ -782,7 +778,7 @@ outer_block: {
 //5.5.3 continue
 
 /* The continue statement is used to skip the current iteration of the loop
- and the control flow of the program goes to the next iteration. */
+and the control flow of the program goes to the next iteration. */
 
 
 //Syntax
@@ -793,12 +789,94 @@ label //Optional
 
 
 
+
+
+
+//continue with :for Loop
+
+/* In a for loop, continue skips the current iteration 
+and control flow jumps to the updateExpression. */
+
+
+// program to print the value of i
+for (let i = 1; i <= 5; i++) {
+
+    // condition to continue    
+    if (i == 3) {
+        continue;
+    }
+    console.log(i);
+}
+
+
+//continue with :while Loop 
+/* In a while loop, continue skips the current iteration and control 
+flow of the program jumps back to the while condition. */
+
+
+
+// program to calculate positive numbers only
+// if the user enters a negative number, that number is skipped from calculation
+
+// negative number -> loop terminate
+// non-numeric character -> skip iteration
+
+let sum = 0;
+let number = 0;
+
+while (number >= 0) {
+    // add all positive numbers
+    sum += number;
+    // take input from the user
+    number = parseInt(prompt('Enter a number: '));
+    // continue condition
+    if (isNaN(number)) {
+        console.log('You entered a string.');
+        number = 0; // the value of number is made 0 again
+        continue;
+    }
+}
+// display the sum
+console.log(`The sum is ${sum}.`);
+
+
+
+//continue with Nested Loop
+
+/* When continue is used inside of two nested loops, 
+continue skips the current iteration of the inner loop. */
+// nested for loops
+
+// first loop
+for (let i = 1; i <= 3; i++) {
+    // second loop
+    for (let j = 1; j <= 3; j++) {
+        if (j == 2) {
+          continue;
+        }
+        console.log(`i = ${i}, j = ${j}`);
+    }
+}
+
+
+
+
 //5.5.4 return
-//The return statement ends function execution 
-//and specifies a value to be returned to the function caller.
+
+/*The return statement ends function execution and specifies a value 
+to be returned to the function caller.*/
 
 
-return expression;
+
+//Syntax
+return [expression]; 
+
+
+expression
+
+/* The expression whose value is to be returned. If omitted, 
+undefined is returned instead. */
+
 
 //A return statement may appear only within the body of a function. 
 //It is a syntax error for it to appear anywhere else.
@@ -820,107 +898,66 @@ function displayObject(o) {
 //5.5.5 yield
 //The yield keyword is used to pause and resume a generator function 
 
-function* range(from, to) {
-    for(let i = from; i <= to; i++) {
-        yield i;
+
+//Syntax
+[rv] = yield [expression]
+
+
+expression //Optional
+/*Defines the value to return from the generator function via the iterator protocol. 
+If omitted, undefined is returned instead. */
+
+rv //Optional
+/*Retrieves the optional value passed to the generator's next() method 
+to resume its execution. */
+
+function* countAppleSales () {
+    let saleList = [3, 7, 5]
+    for (let i = 0; i < saleList.length; i++) {
+      yield saleList[i]
     }
-}
+  }
+//Once a generator function is defined, it can be used by constructing 
+//an iterator as shown.
+let appleStore = countAppleSales()  // Generator { }
+console.log(appleStore.next())      // { value: 3, done: false }
+console.log(appleStore.next())      // { value: 7, done: false }
+console.log(appleStore.next())      // { value: 5, done: false }
+console.log(appleStore.next())      // { value: undefined, done: true }
+
+
 
 //5.5.6 throw
+// /The throw statement lets you create custom errors.
+//throw statement handles user-defined exceptions. 
 
+
+//Syntax
 throw expression;
-//An exception is a signal that indicates that some sort of exceptional
-//condition or error has occurred. 
 
+expression
+//The expression to throw.
 
+/*Use the throw statement to throw an exception. 
+When you throw an exception, expression specifies the value of the exception. */
 
-function factorial(x) {
-    // If the input argument is invalid, throw an exception!
-    if (x < 0) throw new Error("x must not be negative");
-    // Otherwise, compute a value and return normally
-    let f;
-    for(f = 1; x > 1; f *= x, x--) /* empty */ ;
-    return f;
-    }
-factorial(4) // => 24
-
+throw 'Error2'; // generates an exception with a string value
+throw 42;       // generates an exception with the value 42
+throw true;     // generates an exception with the value true
+throw new Error('Required');  // generates an error object with the message of Required
 
 
 //5.5.7 try/catch/finally
-//The try clause of this statement simply defines 
-//the block of code whose exceptions are to be handled
 
-//Both the catch and finally blocks are optional, 
-//but a try block must be accompanied by at least one of these blocks.
-try {
-    // Normally, this code runs from the top of the block to the bottom
-    // without problems. But it can sometimes throw an exception,
-    // either directly, with a throw statement, or indirectly, by calling
-    // a method that throws an exception.
-    }
-    catch(e) {
-    // The statements in this block are executed if, and only
-    if, the try
-    // block throws an exception. These statements can use the local variable
-    // e to refer to the Error object or other value that was thrown.
-    // This block may handle the exception somehow, may ignore the
-    // exception by doing nothing, or may rethrow the exception with throw.
-    }
-    finally {
-    // This block contains statements that are always executed, regardless of
-    // what happens in the try block. They are executed whether the try
-    // block terminates:
-    // 1) normally, after reaching the bottom of the block
-    // 2) because of a break, continue, or return statement
-    // 3) with an exception that is handled by a catch clause above
-    // 4) with an uncaught exception that is still propagating
-    }
+//The "try" statement lets you test a block of code for errors.
 
-    try {
-        // Ask the user to enter a number
-        let n = Number(prompt("Please enter a positive integer",""));
-        // Compute the factorial of the number, assuming the input is valid
-        let f = factorial(n);
-        // Display the result
-        alert(n + "! = " + f);
-        }
-        catch(ex) { // If the user's input was not valid, we end up here
-            alert(ex); // Tell the user what the error is
-        }
+//The "catch" statement lets you handle the error.
 
-//If an exception occurs in the try block and there is an associated
-//catch block to handle the exception, the interpreter first executes the
-//catch block and then the finally block.
-
-//try and finally can be used together without a catch clause
-// Simulate for(initialize ; test ;increment ) body; initialize ;
-while( test ) {
-    try { body ; }
-    finally { increment ; }
-}
+/* The "finally" statement lets you execute code, after try and catch, 
+regardless of the result. */
 
 
-//5.6 Miscellaneous Statements
-
-//5.6.1 with
-//The with statement runs a block of code as if the properties of a
-//specified object were variables in scope for that code
-
-with (object)
-statement
-
-//This statement creates a temporary scope with the properties of object
-//as variables and then executes statement within that scope.
-with(document.forms[0]) {
-    // Access form elements directly here. For example:
-    name.value = "";
-    address.value = "";
-    email.value = "";
-    }
 
 
-//5.7 Declarations
-//The keywords const, let, var, function, class, import, and export are not technically statements, 
-//but they look a lot like statements,
 
 
