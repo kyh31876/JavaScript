@@ -1,28 +1,59 @@
+
+
+
 //6.1 Introduction to Objects
 
-//it aggregates multiple values (primitivevalues or other objects) 
-//and allows you to store and retrieve those values by name.
+/* JavaScript object is a non-primitive data-type 
+that allows you to store multiple collections of data. */
 
-//An object is an unordered collection of properties,
-//each of which has a name and a value.
 
-//JavaScript object also inherits the properties
-//of another object, known as its “prototype.”
+// object
+const student = {
+    firstName: 'ram',
+    class: 10
+};
+//student is an object that stores values such as strings and numbers.
 
 //A property has a name and a value.
 
 //A property name may be any string, including the empty string (or any Symbol), 
 //but no object may have two properties with the same name.
 
+
 //each property has three property attributes:
-    //The writable attribute specifies whether the value of the
-    //property can be set.
 
-    //The enumerable attribute specifies whether the property name
-    //is returned by a for/in loop.
+//The 'writable' attribute specifies whether the value of the property can be set.
 
-    //The configurable attribute specifies whether the property can
-    //be deleted and whether its attributes can be altered.
+//The 'enumerable' attribute specifies whether the property name
+//is returned by a for/in loop.
+
+//The 'configurable' attribute specifies whether the property can
+//be deleted and whether its attributes can be altered.
+
+
+//Attributes of a data property
+
+/*Attribute	        Type	Description                             	Default value
+[[Value]]	                Any type The value retrieved 
+                            by a get access of the property.	        undefined
+
+[[Writable]]	Boolean	    If false, the property's 
+                            [[Value]] cannot be changed.	            false
+
+
+[[Enumerable]]	Boolean	                                                false
+                            If true, the property will be enumerated 
+                            in for...in loops.
+                            See also Enumerability and ownership of properties.
+
+                            
+
+[[Configurable]] Boolean	If false, the property cannot be deleted,   false
+                            cannot be changed to an accessor property, 
+                            and attributes other than 
+                            [[Value]] and [[Writable]] cannot be changed.	
+*/
+
 
 
 
@@ -36,20 +67,49 @@
 //null
 //undefined
 
+
+
+
 //6.2 Creating Objects
 
 //6.2.1 Object Literals
 
 //an object literal is a commaseparated list of colon-separated name:value pairs,
-//enclosed within curly braces.
+//enclosed within curly braces({}).
 
-//A property name is a JavaScript identifier or a string literal
+/*
+A property of an object can be explained as a variable that is attached to the object. */
+objectName.propertyName
+
+
+//A property name(Key) is a JavaScript identifier or a string literal
 //A property value is any JavaScript expression; 
 //the value of the expression becomes the value of the property.
 
+
+
+//The syntax to declare an object is:
+var object_name = {
+    key1: value1,
+    key2: value2
+}
+
+//Unassigned properties of an object are undefined 
+object_name.key3 //undefined
+
+
+
+
+
+
+/*an object object_name is defined. Each member of an object is a key: value
+pair separated by commas and enclosed in curly braces {}.*/
+
 let empty = {}; // An object with no properties
-let point = { x: 0, y: 0 }; // Two numeric properties
+let point = {x: 0, y: 0 }; // Two numeric properties
 let p2 = { x: point.x, y: point.y+1 }; // More complex values
+
+
 let book = {
     "main title": "JavaScript", // These property names include spaces,
     "sub-title": "The Definitive Guide", // and hyphens, so use string literals.
@@ -65,14 +125,104 @@ let book = {
 
 
 
+//Property accessors
+/* Property accessors provide access to an object's properties 
+by using the dot notation or the bracket notation. */
 
-//6.2.2 Creating Objects with new
+
+//Syntax
+object.property
+object['property']
+//The keys in this array are the names of the object's properties.
 
 
-//The new keyword must be followed by a function invocation.
 
-//A function used in this way is called a constructor 
+//Dot notation
+
+//In the object.property syntax, the property must be a valid JavaScript identifier.
+
+
+
+/* If you use a method for a numeric literal, and the numeric literal 
+has no exponent and no decimal point, you should leave white-space(s) 
+before the dot preceding the method call, */
+77 .toExponential()
+// or
+77
+.toExponential()
+// or
+;(77).toExponential()
+// or
+77..toExponential()
+
+
+
+//Bracket notation
+
+/* In the object[property_name] syntax, the property_name is just a string or Symbol */
+const variable = object[property_name]
+object[property_name] = value;
+
+document['createElement']('pre')
+document.createElement('pre') // it just same thing 
+
+
+
+//Property names
+
+/*Property names are string or Symbol. Any other value, including a number, 
+is coerced to a string. This outputs 'value', since 1 is coerced into '1'. */
+var object = {}
+object['1'] = 'value'
+console.log(object[1])
+
+/* This also outputs 'value', since both 'foo' and 'bar' 
+are converted to the same string. */
+
+var foo = {unique_prop: 1}, bar = {unique_prop: 2}, object = {};
+object[foo] = 'value'
+console.log(object[bar])
+
+//Function objects:
+stringify(function (){}) //-> [object Function]
+
+//Array objects:
+stringify([]) //-> [object Array]
+
+//RegExp objects
+stringify(/x/) //-> [object RegExp]
+
+//Date objects
+stringify(new Date)  //-> [object Date]
+
+//and Object objects!
+stringify({}) //-> [object Object]
+
+
+
+
+
+
+
+//6.2.2 Object() constructor
+
+//The Object constructor creates an object wrapper for the given value.
+
+
+/* If the value is null or undefined, it will create and return an empty object.
+
+Otherwise, it will return an object of a Type that corresponds to the given value.
+
+If the value is an object already, it will return the value.  */
+
+//Syntax
+new Object()
+new Object(value)
+
+
+//A function used in this way is called a 'constructor' 
 //and serves to initialize a newly created object.
+
 let o = new Object(); // Create an empty object: same as {}.
 let a = new Array(); // Create an empty array: same as [].
 let d = new Date(); // Create a Date object representing the current time
@@ -80,30 +230,30 @@ let r = new Map(); // Create a Map object for key/value mapping
 
 
 
-//6.2.3 Prototypes
-//Almost every JavaScript object has a second JavaScript object associated with it.
 
-//This second object is known as a prototype, 
-//and the first object inherits properties from the prototype.
-
-//So the object created by new Object() inherits from Object.prototype, 
-//just as the object created by {} does.
-
-//Remember: almost all objects have a prototype, but only a relatively 
-//small number of objects have a prototype property.
-
-
-//Object.prototype is one of the rare objects that has no prototype:
 
 //6.2.4 Object.create()
+
 //The Object.create() method creates a new object,
 //using an existing object as the prototype of the newly created object.
+
 Object.create(proto)
 Object.create(proto, propertiesObject)
 
 
-let o1 = Object.create({x: 1, y: 2}); // o1 inherits properties x and y.
+
+//proto
+//The object which should be the prototype of the newly-created object.
+
+/* propertiesObject //Optional
+
+it is optional parameter. It specifies the enumerable properties 
+to be added to the newly created object.*/
+
+var o1 = Object.create({x: 1, y: 2}); // o1 inherits properties x and y.
 o1.x + o1.y // => 3
+
+let o1 = obe
 
 //You can pass null to create a new object that does not have a prototype,
 //but if you do this, the newly created object will not inherit anything,
@@ -114,35 +264,40 @@ let o2 = Object.create(null); // o2 inherits no props or methods.
 let o3 = Object.create(Object.prototype); // o3 is like {} or new Object().
 
 
-
 //Instead of passing the object directly to the function,
 //you can pass an object that inherits from it. 
 
 //If the function reads properties of that object, it will see the inherited values.
 let o = { x: "don't change this value" };
+
 library.function(Object.create(o)); // Guard against accidental modifications
+
 
 
 
 
 //6.3 Querying and Setting Properties
 
-//If using the dot operator, 
-//the righthand side must be a simple identifier that names the property.
 
-//If using square brackets, the value within the brackets must be an
-//expression that evaluates to a string that contains the desired property name:
+//The lefthand side should be an expression whose value is an object.
+
+//If using the dot operator(.),the righthand side must be a simple identifier 
+//that names the property.
 
 let author = book.author; // Get the "author" property of the book.
 let name = author.surname; // Get the "surname" property of the author.
-let title = book["main title"]; // Get the "main title" property of the book.
+
+//If using square brackets, the value within the brackets must be an expression 
+//that evaluates to a string that contains the desired property name:
+
+let title = book["main title"]; // Get the "main title" property of the book
 
 
+//To create or set a property, use a dot or square brackets as you would
+//to query the property,
 book.edition = 7; // Create an "edition" property of book.
 book["main title"] = "ECMAScript"; // Change the "main title" property.
 
-//When using square bracket notation, we’ve said that the expression
-//inside the square brackets must evaluate to a string.
 
 
 //6.3.1 Objects As Associative Arrays
@@ -150,127 +305,245 @@ book["main title"] = "ECMAScript"; // Change the "main title" property.
 //the following two JavaScript expressions have the same value:
 object.property
 object["property"]
-
-//When you use the . operator to access a property of an object,
-//h4owever, the name of the property is expressed as an identifier.
+//Properties of JavaScript objects can also be accessed or set using a []
 
 
-//hand, when you access a property of an object with the [] array notation, 
-//the name of the property is expressed as a string.
+/* Objects are sometimes called 'associative arrays' 
+,since each property is associated with a string value that can be used to access. */
+
+myCar['make'] = 'Ford';
+myCar['model'] = 'Mustang';
+myCar['year'] = 1969;
+
+/* a property name that has a space or a - , or that starts with a number)
+can only be accessed using the [].  */
+
+
+
+/*On the other hand, when you access a property of an object with the []
+array notation, the name of the property is expressed as a string. Strings
+are JavaScript datatypes,*/
+
 
 let addr = "";
 for(let i = 0; i < 4; i++) {
     addr += customer[`address${i}`] + "\n";
 }
-//This code reads and concatenates the address0, address1,
-//address2, and address3 properties of the customer object.
+/*This code reads and concatenates the address0, address1,
+address2, and address3 properties of the customer object. */
+
+
+/* This brief example demonstrates the flexibility of using array notation
+to access properties of an object with string expressions. This code
+could be rewritten using the dot notation, but there are cases in which
+only the array notation will do. */
 
 
 
+//Own properties
 
-//Part of this program might be a function for adding a new stock to the portfolio:
-function addstock(portfolio, stockname, shares) {
-    portfolio[stockname] = shares;
-}
+var myObject = {
+    myProp: 'Value'
+};
+myObject.myProp; // => 'Value'
 
-//Since you can’t know the property names when you write the program, 
-//there is no way you can use the . operator to access the properties of the portfolio object.
+// The property myProp is defined directly on myObject, being an 'own property'.
 
-//You can use the [] operator, however, because it uses a string value
+/*To list the own properties of an object use the built-in utility function 
+Object.getOwnPropertyNames(object) */
+
+const myObject = {
+    myProp: 'Value'
+};
+  
+Object.getOwnPropertyNames(myObject); // => ['myProp']
+
+/* Object.getOwnPropertyNames(myObject) returns an array having one 
+own property name: ['myProp']. */
 
 
-
-
-
-//Here is how you would use it when computing the total value of a portfolio:
-function computeValue(portfolio) {
-    let total = 0.0;
-    for(let stock in portfolio) { // For each stock in the portfolio:
-        let shares = portfolio[stock]; // get the number of `shares
-        let price = getQuote(stock); // look up share price
-        total += shares * price; // add stock value to total value
-    }
-    return total; // Return total value.
-}
 
 //6.3.2 Inheritance
-//that every time you create an instance of a class with new, 
-//you are creating an object that inherits properties from a prototype object.
 
-//If o does not have an own property with that name, 
-//the prototype object of o is queried for the property x.
+//inherited properties
 
-//This continues until the property x is found
-// or until an object with a null prototype is searched.
+/* All objects inherit from at least one other object. 
+The object being inherited from is calles the 'prototype' , 
+and the inherited properties can be found in the prototype object of the constructor.  
+*/
 
-//the prototype attribute of an object creates a chain or linked list
-//from which properties are inherited:
+var myObject = {
+    myProp: 'Value'
+};
+  
+myObject.toString; // => function() {...}
 
-let o = {}; // o inherits object methods from Object.prototype
-o.x = 1; // and it now has an own property x.
-let p = Object.create(o); // p inherits properties from o and Object.prototype
-p.y = 2; // and has an own property y.
-let q = Object.create(p); // q inherits properties from p, o, and...
-q.z = 3; // ...Object.prototype and has an own property z.
-let f = q.toString(); // toString is inherited from Object.prototype
-q.x + q.y // => 3; x and y are inherited from o and p 1
+//The property accessor myObject.toString evaluates to a function.
+
+/* toString is an inherited property. 
+In other words, myObject inherits toString property from its prototype object. */
 
 
-let unitcircle = { r: 1 }; // An object to inherit from
-let c = Object.create(unitcircle); // c inherits the property r
-c.x = 1; c.y = 1; // c defines two properties of its own
-c.r = 2; // c overrides its inherited property
-unitcircle.r // => 1: the prototype is not affected
+/* When JavaScript evaluates the expression myObject.toString, 
+first, it tries to find the property toString within the own properties -
+however it cannot find one (myObject has just one own property myProp).
 
-//There is one exception to the rule that a property assignment either
-//fails or creates or sets a property in the original object.
+Then JavaScript looks inside the prototype object of myObject, 
+and finally finds a property toString. */
+
+/* Inherited toString property of myObject equals 
+to the same property access directly from the prototype object: */
+
+var myObject = {
+    myProp: 'Value'
+};
+  
+const myObjectProto = Object.getPrototypeOf(myObject);
+  
+myObject.toString === myObjectProto.toString; // => true
+/*Object.getPrototypeOf(object) is an utility function 
+that returns the object’s prototype. */
+
+
+
+
+//Own vs inherited
+
+const myObject = {
+    myProp: 'Value',
+    toString() {
+        return `[object MyObject]`;
+    }
+};
+const myObjectProto = Object.getPrototypeOf(myObject);
+myObject.toString === myObjectProto.toString; // => false
+
+/* Because myObject has an own property toString, 
+the object does no longer inherit toString from the prototype object.
+
+When an object has an own property and inherits a property with the same name, 
+the own property takes precedence over the inherited one. */
+
+
+//If an own property gets deleted, then the inheritance re-activates:
+var myObject = {
+    myProp: 'Value',
+    toString() {
+      return `[object MyObject]`;
+    }
+};
+
+
+// Own properties
+myObject.toString(); // => '[object MyObject]'
+myObject.myProp;     // => 'Value'
+
+delete myObject.toString;
+delete myObject.myProp;
+
+/* invocating myObject.toString() uses the own property. 
+Then delete myObject.toString deletes the own property. */
+
+
+// Inherited property
+myObject.toString(); // => '[object Object]'
+// No inherited property
+myObject.myProp;     // => undefined
+
+/* invocating myObject.toString(), even having the own property toString deleted, 
+uses the inherited toString property from the prototype object. */
+
+
+
+//JavaScript Prototype
+
+//every function and object has a property named prototype by default.
+function Person () {
+    this.name = 'John',
+    this.age = 23
+}
+const person = new Person();
+
+// checking the prototype value
+console.log(Person.prototype); // { ... }
+//Since the prototype property has no value at the moment, 
+//it shows an empty object { ... }.
+
+
+
+
+
+//Prototype Inheritance
+
+/* a prototype can be used to add properties and methods to a constructor function. 
+And objects inherit properties and methods from a prototype. */
+
+
+// constructor function
+function Person () {
+    this.name = 'John',
+    this.age = 23
+}
+
+// creating objects
+const person1 = new Person();
+const person2 = new Person();
+
+// adding property to constructor function
+Person.prototype.gender = 'male';
+
+// prototype value of Person
+console.log(Person.prototype); //{ gender: 'male' }  undefined
+
+// inheriting the property from prototype
+console.log(person1.gender); //male undefined
+console.log(person2.gender); //male undefined
+
+
+//we have added a new property gender to the Person constructor function using:
+Person.prototype.gender = 'male';
+
+/*Then object person1 and person2 inherits the property gender from 
+the prototype property of Person constructor function.
+Hence, both objects person1 and person2 can access the gender property. */
+
+
+// The syntax to add the property to an object constructor function 
+objectConstructorName.prototype.key = 'value';
+
+/* Prototype is used to provide additional property to all 
+the objects created from a constructor function. */
+
+
 
 
 //6.3.3 Property Access Errors
 
-//If the property x is not found as an own property or an inherited property of o, 
-//the property access expression o.x evaluates to undefined. 
-//Recall that our book object has a “sub-title” property, but not a “subtitle” property:
-
-book.subtitle // => undefined: property doesn't exist
-
-let len = book.subtitle.length; // !TypeError: undefined doesn't have length
-//Property access expressions will fail if the lefthand side of the . is null or undefined.
-
-// A verbose and explicit technique
-let surname = undefined;
-if (book) {
-    if (book.author) {
-        surname = book.author.surname;
-    }
-}
-// A concise and idiomatic alternative to get surname or null or undefined
-surname = book && book.author && book.author.surname;
-
-let surname = book?.author?.surname;
-//?., which allows us to rewrite the previous assignment expression as:
-
 
 //An attempt to set a property p of an object o fails in these circumstances:
 
-//o has an own property p that is read-only: it is not possible to
-//set read-only properties.
+/* o has an own property p that is read-only:
 
-//o has an inherited property p that is read-only: 
-//it is not possible to hide an inherited read-only property with an own
-//property of the same name.
+o has an inherited property p that is read-only
+
+o does not have an own property p; o does not inherit a
+property p with a setter method, and o’s extensible attribute is false. */
 
 
 
 //6.4 Deleting Properties
+
 delete book.author; // The book object now has no author property.
 delete book["main title"]; // Now it doesn't have "main title", either.
 
+//The delete operator only deletes own properties, not inherited ones.
 
-//The delete operator only deletes own properties
+/* A delete expression evaluates to 'true' if the delete succeeded or 
+if the delete had no effect.
+delete also evaluates to true when used (meaninglessly) with an
+expression that is not a property access expression: */
 
-// /A delete expression evaluates to true if the delete succeeded or 
-//if the delete had no effect
+
 
 let o = {x: 1}; // o has own property x and inherits property toString
 delete o.x // => true: deletes property x
@@ -280,11 +553,12 @@ delete 1 // => true: nonsense, but true anyway
 
 //delete does not remove properties that have a configurable attribute of false.
 
+
 //Certain properties of built-in objects are non-configurable,
 //as are properties of the global object created by variable declaration 
 //and function declaration.
 
-// In strict mode, all these deletions throw TypeError instead of returning false
+//In non strict mode, all these deletions throw TypeError instead of returning false
 delete Object.prototype // => false: property is nonconfigurable
 var x = 1; // Declare a global variable
 delete globalThis.x // => false: can't delete this property
@@ -307,58 +581,116 @@ delete globalThis.x; // This works
 
 
 //6.5 Testing Properties
-//JavaScript objects can be thought of as sets of properties, 
-//and it is often useful to be able to test for membership in the set
-
-//The in operator expects a property name on its left side and an object
-//on its right.
-
-let o = { x: 1 };
-"x" in o // => true: o has an own property "x"
-"y" in o // => false: o doesn't have a property "y"
-"toString" in o // => true: o inherits a toString property
-
-//The hasOwnProperty() method of an object tests,
-//It returns false for inherited properties:
-
-let o = { x: 1 };
-o.hasOwnProperty("x") // => true: o has an own property x
-o.hasOwnProperty("y") // => false: o doesn't have a property y
-o.hasOwnProperty("toString") // => false: toString is an inherited property
+    
+//hasOwnProperty() method
 
 
+/*Every JavaScript object has a special method object.hasOwnProperty('myProp') 
+that returns a boolean indicating whether object has a property myProp. */
 
-let o = { x: 1 };
-o.propertyIsEnumerable("x") // => true: o has an own enumerable property x
-o.propertyIsEnumerable("toString") // => false: not an own property
-Object.prototype.propertyIsEnumerable("toString") // => false: not enumerable
-//It returns true only if the named property is an own 
-//property and its enumerable attribute is true.
-//Certain built-in properties are not enumerable.
+const hero = {
+    name: 'Batman'
+};
+
+hero.hasOwnProperty('name');     // => true
+hero.hasOwnProperty('realName'); // => false
+
+/* hero.hasOwnProperty('name') returns 'true' because the property name 
+exists in the object */
+
+/*The method name hasOwnProperty() suggests that it looks in 
+the own properties of the object. 
+The own properties are those defined directly upon the object. */
+
+//Because of that hasOwnProperty() doesn’t detect the inherited toString property:
+const hero = {
+    name: 'Batman'
+};
+  
+hero.toString; // => function() {...}
+hero.hasOwnProperty('toString'); // => false
+  
+//in operator
+
+const hero = {
+    name: 'Batman'
+};
+
+'name' in hero;     // => true
+'realName' in hero; // => false
+//  " 'name' in hero   " evaluates to true because 'hero' has a property name.
+
+/* in contrast to hasOwnProperty(), the 'in' operator 
+detects that 'hero' object contains the inherited property toString: */
+
+const hero = {
+    name: 'Batman'
+};
+hero.toString; // => function() {...}
+
+'toString' in hero;              // => true
+hero.hasOwnProperty('toString'); // => false
 
 
 
-//Instead of using the in operator
-let o = { x: 1 };
-o.x !== undefined // => true: o has a property x
-o.y !== undefined // => false: o doesn't have a property y
-o.toString !== undefined // => true: o inherits a toString property
+//Comparing with undefined
+
+//Accessing a non-existing property from an object results in 'undefined':
+
+const hero = {
+    name: 'Batman'
+};
+
+hero.name;     // => 'Batman'
+hero.realName; // => undefined
+
+// 'hero.realName' evaluates to 'undefined' because 'realName' property is missing.
 
 
-//in can distinguish between properties that do not exist 
-//and properties that exist but have been set to undefined.
-let o = { x: undefined }; // Property is explicitly set to undefined
-o.x !== undefined // => false: property exists but is undefined
-o.y !== undefined // => false: property doesn't even exist
-"x" in o // => true: the property exists
-"y" in o // => false: the property doesn't exist
-delete o.x; // Delete the property x
-"x" in o // => false: it doesn't exist anymore
+const hero = {
+    name: 'Batman'
+};
+
+hero.name !== undefined;     // => true
+hero.realName !== undefined; // => false
+
+/* "hero.name !== undefined"  evaluates to true, 
+which shows the existence of property. */
+
+
+/* be aware of false-negatives. 
+If the property exists, but has undefined value (case, however, rarely happening), 
+comparing against undefined evaluates incorrectly to false: */
+
+const hero = {
+    name: undefined
+};
+
+hero.name !== undefined; // => false
+
+/* Even if the property name exists (but has undefined value),
+"hero.name !== undefined" evaluates to false: 
+w hich incorrectly indicates a missing property. */
+
+
 
 
 //6.6 Enumerating Properties
 
-let o = {x: 1, y: 2, z: 3}; // Three enumerable own properties
+
+/* Instead of testing for the existence of individual properties, 
+wesometimes want to iterate through or obtain a list of all the properties
+of an object. */
+
+
+
+
+/* 'for/in' loop runs the body of the loop once for each enumerable property 
+(own or inherited) of the specified object, assigning the name of the property 
+to the loop variable. Built-in methods that objects inherit are not enumerable,
+but the properties that your code adds to objects are enumerable by default. */
+
+var  o = {x: 1, y: 2, z: 3}; // Three enumerable own properties
 o.propertyIsEnumerable("toString") // => false: not enumerable
 for(let p in o) { // Loop through theproperties
     console.log(p); // Prints x, y, and z, but not toString
@@ -366,184 +698,417 @@ for(let p in o) { // Loop through theproperties
 
 
 
-//To guard against enumerating inherited properties with for/in, 
+//To guard against enumerating inherited properties with 'for/in' , 
 //you can add an explicit check inside the loop body:
 
 for(let p in o) {
     if (!o.hasOwnProperty(p)) continue; // Skip inherited properties
-    }
+}
+
 for(let p in o) {
     if (typeof o[p] === "function") continue; // Skip all methods
-    }
+}
+
+
+
+
 
 
 //There are four functions you can use to get an array of property names:
-    //Object.keys() returns an array of the names 
-    //of the enumerable own properties of an object. 
-
-    //Object.getOwnPropertyNames() works like
-    //Object.keys() but returns an array of the names of nonenumerable
-    //own properties as well, as long as their names are strings.
-
-    //Object.getOwnPropertySymbols() returns own
-    //properties whose names are Symbols, whether or not they are enumerable.
 
 
-    //Reflect.ownKeys() returns all own property names, both
-    //enumerable and non-enumerable, and both string and Symbol.
+
+
+//Object.keys() 
+
+
+//returns an array of the names  of the enumerable own properties of an object. 
+
+//Syntax
+Object.keys(obj)
+
+obj
+//The object of which the enumerable's own properties are to be returned.
+
+//Return value
+
+/* An array of strings 
+that represent all the enumerable properties of the given object. */
+
+
+
+
+
+
+
+//Object.getOwnPropertyNames() 
+
+
+/*working like Object.keys() but returns an array of the names of nonenumerable
+own properties as well, as long as their names are strings. */
+
+//Syntax
+Object.getOwnPropertyNames(obj)
+
+obj
+//The object whose enumerable and non-enumerable properties are to be returned.
+
+//Return value
+
+/*An array of strings that corresponds to the properties found directly 
+in the given object. */
+
+
+
+//Object.getOwnPropertySymbols() 
+
+//returns own properties whose names are Symbols, whether or not they are enumerable.
+
+
+//Syntax
+Object.getOwnPropertyNames(obj)
+
+obj 
+//The object whose enumerable and non-enumerable properties are to be returned.
+
+//Return value
+/*An array of strings that corresponds to the properties found directly 
+in the given object. */
+
+
 
 
 
 //6.7 Extending Objects
 
-//A common operation in JavaScript programs is needing to copy the
-//properties of one object to another object.
-
+/* A common operation in JavaScript programs is needing to copy the
+properties of one object to another object. */
 let target = {x: 1}, source = {y: 2, z: 3};
 for(let key of Object.keys(source)) {
     target[key] = source[key];
 }
 target // => {x: 1, y: 2, z: 3}
 
-//Object.assign() expects two or more objects as its arguments.
-//It modifies and returns the first argument, which is the target object,
-//but does not alter the second or any subsequent arguments, which are the
-//source objects.
+
+//Object.assign() 
+
+/* copy all enumerable own properties from one or more source objects 
+to a target object. It returns the modified target object. */
+
+//Syntax
+Object.assign(target, ...sources)
+
+target
+//what to apply the sources’ properties to, which is returned after it is modified.
+
+sources
+//objects containing the properties you want to apply.
+
+//Return value
+//The target object.
 
 
-//Object.assign() copies properties with ordinary property 
-//get and set operations,
-
-Object.assign(o, defaults); // overwrites everything in o with defaults
-
-//what you can do is to create a new object, copy the defaultsinto it, 
-//and then override those defaults with the properties in o:
-
-o = Object.assign({}, defaults, o);
-// Like Object.assign() but doesn't override existing properties
-// (and also doesn't handle Symbol properties)
-function merge(target, ...sources) {
-    for(let source of sources) {
-        for(let key of Object.keys(source)) {
-            if (!(key in target)) { // This is different than Object.assign()
-                target[key] = source[key];
-            }
-        }
-    }
-    return target;
-}
-Object.assign({x: 1}, {x: 2, y: 2}, {y: 3, z: 4}) // => {x:2, y: 3, z: 4}
-merge({x: 1}, {x: 2, y: 2}, {y: 3, z: 4}) // => {x: 1, y: 2, z: 4}
+//Using JavaScript Object.assign() to clone an object
 
 
+let widget = {
+    color: 'red'
+};
 
-//6.8 Serializing Objects
-//Object serialization is the process of converting an object’s state to a
-//string from which it can later be restored.
+let clonedWidget = Object.assign({}, widget);
 
-
-let o = {x: 1, y: {z: [false, null, ""]}}; // Define a test object
-let s = JSON.stringify(o); // s == '{"x":1,"y":{"z":[false,null,""]}}'
-let p = JSON.parse(s); // p == {x: 1, y: {z: [false, null, ""]}}
+console.log(clonedWidget); //{ color: 'red' }
 
 
-//JSON syntax is a subset of JavaScript syntax, and it cannot represent
-//all JavaScript values. Objects, arrays, strings, finite numbers, true,
-///false, and null are supported and can be serialized and restored.
+//Using JavaScript Object.assign() to merge objects
 
-//If a property value cannot be serialized, 
-//that property is simply omitted from the stringified output.
+let box = {
+    height: 10,
+    width: 20
+};
+let style = {
+    color: 'Red',
+    borderStyle: 'solid'
+};
+
+let styleBox = Object.assign({}, box, style);
+console.log(styleBox); 
+/* {
+    height: 10,
+    width: 20,
+    color: 'Red',
+    borderStyle: 'solid'
+} */
 
 
 
 //6.9 Object Methods
 
-//all JavaScript objects (except those explicitly
-//created without a prototype) inherit properties from Object.prototype.
 
-//These inherited properties are primarily methods, 
-//and because they are universally available,
+/* Object Methods in JavaScript can be accessed by using functions. 
+Functions in JavaScript are stored as property values. 
+The objects can also be called without using bracket().  */
+
+
+//Accessing Object Methods
+//You create an object method with the following syntax:
+methodName : function() { /*code lines*/ }
+
+//You access an object method with the following syntax:
+objectName.methodName()
+
+/* You will typically describe fullName() as a method of the person object, 
+and fullName as a property. */
+
+//This example accesses the fullName() method of a person object:
+name = person.fullName();
+
+/* If you access the fullName property, without (), 
+it will return the function definition: */
+name = person.fullName;
+
+
+
+
 
 //6.9.1 The toString() Method
 
-//The toString() method takes no arguments;
-//the following line of code simply evaluates to the string “[object Object]”:
-let s = { x: 1, y: 1 }.toString(); // s == "[object Object]"
+//The JavaScript Object toString() method returns the object as a string.
 
+//Syntax
+obj.toString()
 
-//when an array is converted to a string, you obtain a list of the
-//array elements, themselves each converted to a string, and when a
-//function is converted to a string,you obtain the source code for the function.
+//Return value
+//Returns a string representing the object.
 
-let point = {
-    x: 1,
-    y: 2,
-    toString: function() { return `(${this.x}, ${this.y})`; }
-    };
-String(point) // => "(1, 2)": toString() is used for string conversions
+/*Every object descended from Object inherits toString() 
+and if not overridden, it returns "[object <type>]" */
+
+//The toString() method does not take any parameters.
+
+/*Every object has a toString() method that is automatically called 
+when the object is to be represented as a text value or 
+when an object is referred to in a manner in which a string is expected. */
+
+// built-in objects
+let num = 10;
+
+// number takes in optional radix argument (numeral base)
+console.log(num.toString(2)); // "1010" in binary
+console.log(new Date().toString()); // Thu Aug 06 2020 12:08:44 GMT+0545 (Nepal Time)
+
+// overriding default toString(), custom object
+function Dog(name, breed, sex) {
+  this.name = name;
+  this.breed = breed;
+  this.sex = sex;
+}
+
+dog1 = new Dog("Daniel", "bulldog", "male");
+console.log(dog1.toString()); // [object Object]
+
+Dog.prototype.toString = function dogToString() {
+  return `${this.name} is a ${this.sex} ${this.breed}.`;
+};
+
+console.log(dog1.toString()); // Daniel is a male bulldog.
 
 
 
 //6.9.2 The toLocaleString() Method
 
-//In addition to the basic toString() method, objects all have a
-//toLocaleString().
+/*The JavaScript Object toLocaleString() method returns 
+a string representing the object. */
+
+//Syntax
+obj.toLocaleString()
+
+//locales Optional. 
+//Which language specific format to use.
+
+//options	Optional. 
+//An object were you can set some properties.
+
+// toLocaleString for Array
+const arr = [4, 7, 10];
+let string = arr.toLocaleString("fr", { style: "currency", currency: "EUR" });
+console.log(string); // 4,00 €,7,00 €,10,00 €
+
+// toLocaleString for Number
+const num = 123456.789;
+// India uses thousands/lakh/crore separators
+console.log(num.toLocaleString("en-IN")); // 1,23,456.789
+
+// toLocaleString for Date
+const date = new Date(Date.now());
+console.log(date); // Wed Jul 29 2020 15:37:00 GMT+0545 (Nepal Time)
+
+let dateStr = date.toLocaleString("de");
+console.log(dateStr); // 29.7.2020, 15:37:00
+
+/* Object's toLocaleString returns the result of calling toString(). 
+This method is meant to be overridden by derived objects 
+for locale-specific purposes, even though all may not use it. */
 
 
-//The purpose of this method is to return a localized 
-//string representation of the object.
 
-
-
-//The Date and Number classes define customized versions of
-//toLocaleString() that attempt to format numbers, dates, and
-//times according to local conventions.
-
-
-let point = {
-    x: 1000,
-    y: 2000,
-    toString: function() { return `(${this.x}, ${this.y})`;
-},
-    toLocaleString: function() {
-        return `(${this.x.toLocaleString()},
-${this.y.toLocaleString()})`;
-    }
-};
-point.toString() // => "(1000, 2000)"
-point.toLocaleString() // => "(1,000, 2,000)": note thousands separators
 
 
 //6.9.3 The valueOf() Method
 
-//it is called when JavaScript needs to convert an object to some
-//primitive type other than a string—typically, a number.
+//The valueOf() method returns the primitive value of the specified object.
 
-//JavaScript calls this method automatically 
-//if an object is used in a context where a primitive value is required.
+//Syntax
+obj.valueOf()
 
 
-let point = {
-    x: 3,
-    y: 4,
-    valueOf: function() { return Math.hypot(this.x, this.y);
+//Return value 
+//Returns the primitive value of the specified object.
+
+
+/* For objects of type Object, there is no primitive value, 
+so valueOf() method simply returns the object itself.
+For objects of type Number, Boolean, or String, however, 
+valueOf() returns the primitive value represented by the corresponding object. */
+
+//Custom valueOf()
+function customNum(n, fact) {
+    this.number = n;
+    this.fact = fact;
 }
+customNum.prototype.valueOf = function () {
+return this.number;
 };
-Number(point) // => 5: valueOf() is used for conversions to numbers
-point > 4 // => true
-point > 5 // => false 
+var num1 = new customNum(2, "First Prime Number");
+console.log(num1 + 3); // 5
 
 
-//6.9.4 The toJSON() Method
+// built-in valueOf()
+const num = 5;
+// string.toString() changes string to number
+console.log(+"5" + num); // 10
+console.log(+[1] + num); // 6
+console.log(+true + num); // 6
+console.log(+false + num); // 5
+console.log(+undefined + num); // NaN
+console.log(+null + num); // 5
 
-let point = {
-    x: 1,
-    y: 2,
-    toString: function() { return `(${this.x}, ${this.y})`;
-},
-    toJSON: function() { return this.toString(); }
-};
-JSON.stringify([point]) // => '["(1, 2)"]'
+
+
+
+
+//6.9.4 JSON.stringify() method
+
+/* The JSON.stringify() method converts a object or value to a JSON string, 
+optionally replacing values if a replacer function is specified or 
+optionally including only the specified properties if a replacer array is specified. */
+
+
+//Syntax
+JSON.stringify(value)
+JSON.stringify(value, replacer)
+JSON.stringify(value, replacer, space)
+
+
+//Parameters
+value
+//The value to convert to a JSON string.
+
+//replacer Optional
+/* A function that alters the behavior of the stringification process, 
+or an array of String and Number that serve as an allowlist 
+for selecting/filtering the properties of the value object 
+to be included in the JSON string. */
+
+//space Optional
+/* A String or Number object that's used to insert white space 
+into the output JSON string for readability purposes. */
+
+JSON.stringify({});                    // '{}'
+JSON.stringify(true);                  // 'true'
+JSON.stringify('foo');                 // '"foo"'
+JSON.stringify([1, 'false', false]);   // '[1,"false",false]'
+JSON.stringify([NaN, null, Infinity]); // '[null,null,null]'
+JSON.stringify({ x: 5 });              // '{"x":5}'
+
+JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)) // '"2006-01-02T15:04:05.000Z"'
+
+JSON.stringify({ x: 5, y: 6 }); // '{"x":5,"y":6}'
+JSON.stringify([new Number(3), new String('false'), new Boolean(false)]);
+// '[3,"false",false]'
+
+// String-keyed array elements are not enumerable and make no sense in JSON
+let a = ['foo', 'bar'];
+a['baz'] = 'quux';      // a: [ 0: 'foo', 1: 'bar', baz: 'quux' ]
+JSON.stringify(a);
+// '["foo","bar"]'
+
+JSON.stringify({ x: [10, undefined, function(){}, Symbol('')] });
+// '{"x":[10,null,null,null]}'
+
+// Standard data structures
+JSON.stringify([new Set([1]), new Map([[1, 2]]), 
+new WeakSet([{a: 1}]), new WeakMap([[{a: 1}, 2]])]);
+// '[{},{},{},{}]'
+
+
+
+
+
+//The replacer parameter
+
+//The replacer parameter can be either a function or an array.
+
+
+/* As a function, it takes two parameters: 
+the key and the value being stringified. 
+The object in which the key was found is provided as the replacer's this parameter. */
+
+/* You cannot use the replacer function to remove values from an array. 
+If you return undefined or a function then null is used instead. */
+
+//Example replacer, as a function
+function replacer(key, value) {
+  // Filtering out properties
+  if (typeof value === 'string') {
+    return undefined;
+  }
+  return value;
+}
+
+var foo = {foundation: 'Mozilla', model: 'box', 
+week: 45, transport: 'car', month: 7};
+JSON.stringify(foo, replacer);
+// '{"week":45,"month":7}'
+
+
+//Example replacer, as an array
+
+/* If replacer is an array, the array's values indicate the names of the properties 
+in the object that should be included in the resulting JSON string. */
+
+JSON.stringify(foo, ['week', 'month']);
+// '{"week":45,"month":7}', only keep "week" and "month" properties
+
+
+
+
+
+//The space argument
+
+//The space argument may be used to control spacing in the final string.
+
+/*If it is a number, successive levels in the stringification 
+will each be indented by this many space characters (up to 10).
+
+If it is a string, successive levels will be indented by this string 
+(or the first ten characters of it). */ 
+
+
+JSON.stringify({ a: 2 }, null, ' ');
+// '{
+//  "a": 2
+// }'
 
 
 
