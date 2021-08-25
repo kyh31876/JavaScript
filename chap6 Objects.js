@@ -2,14 +2,6 @@
 
 // an 'object' is a value in memory which is possibly referenced by an identifier.
 
-/* Properties
-With the object literal, a limited set of properties are initialized;
-then properties can be added and removed. 
-Property values can be values of any type, including other objects, 
-which enables building complex data structures. 
-Properties are identified using key values. 
-A key value is either a String value or a Symbol value.*/
-
 
 
 
@@ -22,11 +14,22 @@ var student = {
     class: 10
 };
 
+// Properties
+//"key: value" pairs are called properties. For example,
+let person = { 
+    name: 'John',
+    age: 20
+};
+//Here, name: 'John' and age: 20 are properties.
+
 //A property has a name and a value.
 
 /*A property name may be any string, including the empty string (or any Symbol), 
 but no object may have two properties with the same name. */
 
+
+//Data property
+//Associates a key with a value, and has the following attributes:
 
 //Attributes of a data property
 
@@ -50,6 +53,35 @@ but no object may have two properties with the same name. */
                             [[Value]] and [[Writable]] cannot be changed.	
 */
 
+//Accessor property
+/*Associates a key with one of two accessor functions (get and set) 
+to retrieve or store a value. */
+
+/*Note: It’s important to recognize it’s accessor property — not accessor method. We can give a JavaScipt object class-like accessors by using a function as a value — but that doesn't make the object a class.
+
+An accessor property has the following attributes:
+
+Attribute	        Type	        Description	                        Default value
+[[Get]]	        Function object     The function is called              undefinded
+                or undefined        with an empty argument list
+                                    and retrieves the property value 
+                                    whenever a get access to the value 
+                                    is performed. 
+
+
+[[Set]]	        Function object     The function is called with an argument  undefined
+                or undefined        that contains the assigned value and is 
+                                    executed whenever a specified property is 
+                                    attempted to be changed. 	
+
+
+[[Enumerable]]	Boolean	If true,    the property will be 
+                                    enumerated in for...in loops.	        false
+
+[[Configurable]] Boolean If false, the property can't be deleted and        false
+                                   can't be changed to a data property.
+*/
+
 
 
 
@@ -70,25 +102,22 @@ but no object may have two properties with the same name. */
 
 //6.2.1 Object Literals
 
-//an object literal is a commaseparated list of colon-separated name:value pairs,
+//an object literal is a comma separated list of colon-separated name:value pairs,
 //enclosed within curly braces({}).
 
-/*
-A property of an object can be explained as a variable that is attached to the object. */
-objectName.propertyName
-
-
-//A property name(Key) is a JavaScript identifier or a string literal
-//A property value is any JavaScript expression; 
-//the value of the expression becomes the value of the property.
-
-
-
-//The syntax to declare an object is:
-var object_name = {
+//JavaScript Object Declaration
+const object_name = {
     key1: value1,
     key2: value2
-}
+ }
+/* an object 'object_name' is defined. 
+Each member of an object is a key: value pair separated by commas 
+and enclosed in curly braces {}. */
+
+/*A property name(Key) is a JavaScript identifier or a string literal
+A property value is any JavaScript expression; 
+the value of the expression becomes the value of the property. */
+
 
 //Unassigned properties of an object are undefined 
 object_name.key3 //undefined
@@ -101,7 +130,7 @@ object_name.key3 //undefined
 /*an object object_name is defined. Each member of an object is a key: value
 pair separated by commas and enclosed in curly braces {}.*/
 
-let empty = {}; // An object with no properties
+var empty = {}; // An object with no properties
 let point = {x: 0, y: 0 }; // Two numeric properties
 let p2 = { x: point.x, y: point.y+1 }; // More complex values
 
@@ -122,38 +151,30 @@ let book = {
 
 
 //Property accessors
-/* Property accessors provide access to an object's properties 
-by using the dot notation or the bracket notation. */
+//You can access the 'value' of a property by using its 'key'.
+
+//Using dot Notation
+objectName.key
+
+var person = { 
+    name: 'John', 
+    age: 20, 
+};
+// accessing property
+console.log(person.name); // John
 
 
-//Syntax
-object.property
-object['property']
-//The keys in this array are the names of the object's properties.
+//Using bracket Notation
+objectName["propertyName"]
 
+var person = { 
+    name: 'John', 
+    age: 20, 
+};
 
+// accessing property
+console.log(person["name"]); // John
 
-//Dot notation
-
-//In the object.property syntax, the property must be a valid JavaScript identifier.
-
-
-
-/* If you use a method for a numeric literal, and the numeric literal 
-has no exponent and no decimal point, you should leave white-space(s) 
-before the dot preceding the method call, */
-77 .toExponential()
-// or
-77
-.toExponential()
-// or
-;(77).toExponential()
-// or
-77..toExponential()
-
-
-
-//Bracket notation
 
 /* In the object[property_name] syntax, the property_name is just a string or Symbol */
 const variable = object[property_name]
@@ -202,14 +223,14 @@ stringify({}) //-> [object Object]
 
 //6.2.2 Object() constructor
 
+
+
 //The Object constructor creates an object wrapper for the given value.
-
-
 /* If the value is null or undefined, it will create and return an empty object.
 
 Otherwise, it will return an object of a Type that corresponds to the given value.
 
-If the value is an object already, it will return the value.  */
+If the value is an object already, it will return the value. */
 
 //Syntax
 new Object()
@@ -223,6 +244,72 @@ let o = new Object(); // Create an empty object: same as {}.
 let a = new Array(); // Create an empty array: same as [].
 let d = new Date(); // Create a Date object representing the current time
 let r = new Map(); // Create a Map object for key/value mapping
+
+
+
+//a constructor function is used to create objects. For example,
+// constructor function
+function Person () {
+    this.name = 'John',
+    this.age = 23
+}
+
+// create an object
+const person = new Person();
+
+/*function 'Person()' is an object constructor function.
+To create an object from a constructor function, we use the 'new' keyword. */
+
+
+//'this' Keyword
+
+/*  when 'this' keyword is used in a constructor function, 
+this refers to the object when the object is created. For example,*/
+// constructor function
+function Person () {
+    this.name = 'John',
+}
+// create object
+const person1 = new Person();
+// access properties
+console.log(person1.name);  // John
+
+/* when an object accesses the properties, 
+it can directly access the property as 'person1.name' */
+
+
+
+//Constructor Function Parameters
+
+//You can also create a constructor function with parameters. For example,
+// constructor function
+function Person (person_name, person_age, person_gender) {
+    // assigning  parameter values to the calling object
+    this.name = person_name,
+    this.age = person_age,
+    this.gender = person_gender,
+    this.greet = function () {
+        return ('Hi' + ' ' + this.name);
+    }
+}
+// creating objects
+const person1 = new Person('John', 23, 'male');
+const person2 = new Person('Sam', 25, 'female');
+// accessing properties
+console.log(person1.name); // "John"
+console.log(person2.name); // "Sam"
+
+
+/* we have passed arguments to the constructor function 
+during the creation of the object. */
+
+const person1 = new Person('John', 23, 'male');
+const person2 = new Person('Sam', 25, 'male');
+//This allows each object to have different properties. As shown above,
+console.log(person1.name); //gives John
+console.log(person2.name); //gives Sam
+
+
 
 
 

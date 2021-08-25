@@ -496,7 +496,7 @@ Symbol('foo') === Symbol('foo')  // false
 
 //new Symbol(...)
 //The following syntax with the new operator will throw a TypeError:
-let sym = new Symbol()  // TypeError
+let sym = new Symbol()  // TypeErrorÂ
 
 
 
@@ -1077,7 +1077,7 @@ let options = {
   
 // title = property named title
 // rest = object with the rest of properties
-blet {title, ...rest} = options;
+let {title, ...rest} = options;
 
 // now title="Menu", rest={height: 200, width: 100}
 rest.height;  // 200
