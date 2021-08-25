@@ -1,34 +1,31 @@
-
-
-
 //6.1 Introduction to Objects
+
+// an 'object' is a value in memory which is possibly referenced by an identifier.
+
+/* Properties
+With the object literal, a limited set of properties are initialized;
+then properties can be added and removed. 
+Property values can be values of any type, including other objects, 
+which enables building complex data structures. 
+Properties are identified using key values. 
+A key value is either a String value or a Symbol value.*/
+
+
+
 
 /* JavaScript object is a non-primitive data-type 
 that allows you to store multiple collections of data. */
 
-
-// object
-const student = {
+//'student' is an object that stores values such as strings and numbers.
+var student = {
     firstName: 'ram',
     class: 10
 };
-//student is an object that stores values such as strings and numbers.
 
 //A property has a name and a value.
 
-//A property name may be any string, including the empty string (or any Symbol), 
-//but no object may have two properties with the same name.
-
-
-//each property has three property attributes:
-
-//The 'writable' attribute specifies whether the value of the property can be set.
-
-//The 'enumerable' attribute specifies whether the property name
-//is returned by a for/in loop.
-
-//The 'configurable' attribute specifies whether the property can
-//be deleted and whether its attributes can be altered.
+/*A property name may be any string, including the empty string (or any Symbol), 
+but no object may have two properties with the same name. */
 
 
 //Attributes of a data property
@@ -44,10 +41,9 @@ const student = {
 [[Enumerable]]	Boolean	                                                false
                             If true, the property will be enumerated 
                             in for...in loops.
-                            See also Enumerability and ownership of properties.
-
                             
 
+                            
 [[Configurable]] Boolean	If false, the property cannot be deleted,   false
                             cannot be changed to an accessor property, 
                             and attributes other than 
@@ -677,7 +673,10 @@ w hich incorrectly indicates a missing property. */
 
 //6.6 Enumerating Properties
 
-
+JSON.stringify({ a: 2 }, null, ' ');
+// '{
+//  "a": 2
+// }'
 /* Instead of testing for the existence of individual properties, 
 wesometimes want to iterate through or obtain a list of all the properties
 of an object. */
@@ -915,6 +914,7 @@ console.log(dog1.toString()); // Daniel is a male bulldog.
 
 
 
+
 //6.9.2 The toLocaleString() Method
 
 /*The JavaScript Object toLocaleString() method returns 
@@ -953,7 +953,6 @@ for locale-specific purposes, even though all may not use it. */
 
 
 
-
 //6.9.3 The valueOf() Method
 
 //The valueOf() method returns the primitive value of the specified object.
@@ -961,10 +960,8 @@ for locale-specific purposes, even though all may not use it. */
 //Syntax
 obj.valueOf()
 
-
 //Return value 
 //Returns the primitive value of the specified object.
-
 
 /* For objects of type Object, there is no primitive value, 
 so valueOf() method simply returns the object itself.
@@ -1092,8 +1089,6 @@ JSON.stringify(foo, ['week', 'month']);
 
 
 
-
-
 //The space argument
 
 //The space argument may be used to control spacing in the final string.
@@ -1105,7 +1100,7 @@ If it is a string, successive levels will be indented by this string
 (or the first ten characters of it). */ 
 
 
-JSON.stringify({ a: 2 }, null, ' ');
+JSON.stringify({ a: 2 }, null,'');
 // '{
 //  "a": 2
 // }'
@@ -1114,59 +1109,129 @@ JSON.stringify({ a: 2 }, null, ' ');
 
 //6.10 Extended Object Literal Syntax
 
+/* Recent versions of JavaScript have extended the syntax for object
+literals in a number of useful ways. */
+
+
+
+
 //6.10.1 Shorthand Properties
 
+//an object literal is a collection of name-value pairs. like that: 
+function createMachine(name, status) {
+    return {
+        name: name,
+        status: status
+    };
+}
+
+/* The createMachine() function takes two arguments 'name' and 'status' 
+and returns a new object literal with two properties: 'name' and 'status'.*/
+
+/* 'name' and 'status' properties take the values of the name and status parameters.
+This syntax looks redundant because 'name' and 'status' mentioned twice 
+in both the name and value of properties. */
 
 
-//With basic object literal syntax, 
-//you’d end up repeating each identifier twice:
-let x = 1, y = 2;
-let o = {
-    x: x,
-    y: y
+//you can rewrite the createMachine() function 
+function createMachine(name, status) {
+    return {
+        name,
+        status
+    };
+}
+/* the JavaScript engine assigns the name and status property 
+values of the 'name' and 'status' arguments. */
+
+
+//you can construct an object literal from local variables
+let name = 'Computer',
+    status = 'On';
+let machine = {
+   name,
+   status
 };
 
-//In ES6 and later,
-let x = 1, y = 2;
-let o = { x, y };
-o.x + o.y // => 3
+
+
+
 
 
 //6.10.2 Computed Property Names
 
-//the name of that property is not a compile-time constant that you can
-//type literally in your source code.
+/* you could use the ([]) to enable the 'computed property names' 
+for the properties on objects.
 
+The square brackets allow you to use the string literals and variables as the property names. 
+*/
 
-//You can’t use a basic object literal for this kind of property.
-//Instead, you have to create an object and then add the desired
-//properties as an extra step:
-
-const PROPERTY_NAME = "p1";
-function computePropertyName() { return "p" + 2; }
-
-let o = {};
-o[PROPERTY_NAME] = 1;
-o[computePropertyName()] = 2;
-
-//It is much simpler to set up an object like this with an ES6 feature
-//known as computed properties
-
-const PROPERTY_NAME = "p1";
-function computePropertyName() { return "p" + 2; }
-
-let p = {
-    [PROPERTY_NAME]: 1,
-    [computePropertyName()]: 2
+let name = 'machine name';
+let machine = {
+    [name]: 'server',
+    'machine hours': 10000
 };
 
-p.p1 + p.p2 // => 3
-c
+console.log(machine[name]); // server
+console.log(machine['machine hours']); // 10000
+
+/* The 'name' variable was initialized to a value of 'machine name'. 
+Since both properties of the machine object contains a space, 
+you can only reference them using the square brackets. */
+
+/*When a property name is placed inside [] , 
+the JavaScript engine evaluates it as a string. 
+It means that you can use an expression as a property name.  */
+
+let prefix = 'machine';
+let machine = {
+    [prefix + ' name']: 'server',
+    [prefix + ' hours']: 10000
+};
+
+console.log(machine['machine name']); // server
+console.log(machine['machine hours']); // 10000
+
+/* The machine object’s properties evaluate to 'machine name' and 'machine hours', 
+therefore you can reference them as the properties of the machine object. */
+
+
+
+//Concise Method
+/*Prior to ES6, when defining a method for an object literal, 
+you need to specify the name and full function definition as shown 
+in the following example:  */
+
+let server = {
+	name: "Server",
+	restart: function () {
+		console.log("The" + this.name + " is restarting...");
+	}
+};
+
+
+/* ES6 makes the syntax for making a method of the object literal 
+more succinct by removing the colon (:) and the function keyword. */
+let server = {
+    name: 'Server',
+    restart() {
+        console.log("The" + this.name + " is restarting...");
+    }
+};
+
+//the method 'starting up' has spaces in its name. 
+//To call the method, you use the following syntax:
+object_name['property name']();
+
+
+
 
 //6.10.3 Symbols as Property Names
 
-//If you assign a symbol to a variable or constant, then you can
-//use that symbol as a property name using the computed property syntax:
+//property names can be strings or symbols.
+
+
+/* If you assign a symbol to a variable or constant, then you can
+use that symbol as a property name using the computed property syntax: */
 
 const extension = Symbol("my extension symbol");
 let o = {
@@ -1181,40 +1246,116 @@ o[extension].x = 0; // This won't conflict with other properties of o
 
 //6.10.4 Spread Operator
 
-//you can copy the properties of an existing object into 
-//a new object using the “spread operator” ... inside an object literal:
+/* The spread operator ... is used to expand or spread an iterable or an array. */
+const arrValue = ['My', 'name', 'is', 'Jack'];
 
-let position = { x: 0, y: 0 };
-let dimensions = { width: 100, height: 75 };
-let rect = { ...position, ...dimensions };
-rect.x + rect.y + rect.width + rect.height // => 175
+console.log(arrValue);   // ["My", "name", "is", "Jack"]
+console.log(...arrValue); // My name is Jack
 
+console.log(...arrValue)
+//is equivalent to:
+console.log('My', 'name', 'is', 'Jack');
 
+//Copy Array Using Spread Operator
 
-//the properties of the position and dimensions objects 
-//are “spread out” into the rect object literal as if they had been
-//written literally inside those curly braces.
+//You can also use the spread syntax ... to copy the items into a single array.
 
+const arr1 = ['one', 'two'];
+const arr2 = [...arr1, 'three', 'four', 'five'];
 
-let o = { x: 1 };
-let p = { x: 0, ...o };
-p.x // => 1: the value from object o overrides the initial value
-let q = { ...o, x: 2 };
-q.x // => 2: the value 2 overrides the previous value from o.
+console.log(arr2); //  ["one", "two", "three", "four", "five"]
 
 
+//Clone Array Using Spread Operator
+//objects are assigned by reference and not by values.
+let arr1 = [ 1, 2, 3];
+let arr2 = arr1;
 
-//the spread operator only spreads the own properties of
-//an object, not any inherited ones:
-let o = Object.create({x: 1}); // o inherits the property x
-let p = { ...o };
-p.x // => undefined
+console.log(arr1); // [1, 2, 3]
+console.log(arr2); // [1, 2, 3]
+
+// append an item to the array
+arr1.push(4);
+console.log(arr1); // [1, 2, 3, 4]
+console.log(arr2); // [1, 2, 3, 4]
+
+
+/* both variables 'arr1' and 'arr2 are referring to the same array.
+Hence the change in one variable results in the change in both variables*/
+
+
+
+/*  if you want to copy arrays so that they do not refer to the same array,
+you can use the spread operator.
+This way, the change in one array is not reflected in the other.*/
+
+let arr1 = [ 1, 2, 3];
+// copy using spread syntax
+let arr2 = [...arr1];
+console.log(arr1); // [1, 2, 3]
+console.log(arr2); // [1, 2, 3]
+
+// append an item to the array
+arr1.push(4);
+console.log(arr1); // [1, 2, 3, 4]
+console.log(arr2); // [1, 2, 3]
+
+
+//Spread Operator with Object
+
+//You can also use the spread operator with object literals.
+const obj1 = { x : 1, y : 2 };
+const obj2 = { z : 3 };
+// add members obj1 and obj2  to obj3
+const obj3 = {...obj1, ...obj2};
+
+console.log(obj3); // {x: 1, y: 2, z: 3}
+//both 'obj1' and 'obj2' properties are added to obj3 using the spread operator.
+
+
+//Rest Parameter
+//When the spread operator is used as a parameter, it is known as the rest parameter.
+let func = function(...args) {
+    console.log(args);
+}
+//Using the rest parameter will pass the arguments as array elements.
+func(3); // [3]
+func(4, 5, 6); // [4, 5, 6]
+
+
+/*When a single argument is passed to the 'func()' function,
+the rest parameter takes only one parameter.
+
+When three arguments are passed, the rest parameter takes all three parameters. */
+
+function sum(x, y ,z) {
+    console.log(x + y + z);
+}
+
+const num1 = [1, 3, 4, 5];
+
+sum(...num1); // 8
+/* If you pass multiple arguments using the spread operator, 
+the function takes the required arguments and ignores the rest. */
+
+
+
 
 
 //6.10.5 Shorthand Methods
 
-//When a function is defined as a property of an object, we call that
-//function a method.
+/*When a function is defined as a property of an object,  
+we call that function a 'method'.  */
+
+
+let square = {
+    area: function() { return this.side * this.side; },
+    side: 10
+};
+square.area() // => 100
+
+/* the object literal syntax has been extended to allow a shortcut
+where the function keyword and the colon are omitted, resulting in code like this: */
 
 let square = {
     area() { return this.side * this.side; },
@@ -1222,154 +1363,164 @@ let square = {
 };
 square.area() // => 100
 
-//The shorthand syntax makes it clearer that area()
-//is a method and not a data property like side.
-
-//the property name can take any of the forms that
-// are legal in an object literal:
+/* The shorthand syntax makes it clearer that area() is a method 
+and not a data property like side. */
 
 
-const METHOD_NAME = "m";
-const symbol = Symbol();
-let weirdMethods = {
-    "method With Spaces"(x) { return x + 1; },
-    [METHOD_NAME](x) { return x + 2; },
-    [symbol](x) { return x + 3; }
-};
-weirdMethods["method With Spaces"](1) // => 2
-weirdMethods[METHOD_NAME](1) // => 3
-weirdMethods[symbol](1) // => 4
+
+
 
 
 //6.10.6 Property Getters and Setters
 
-//JavaScript also supports accessor properties,which do not have 
-//a single value but instead have one or two accessor methods:
+//here are two kinds of object properties:
+
+//Data properties
+//Accessor properties
+
+
+//Data properties
+//Here's an example of data property
+var student = {
+    // data property
+    firstName: 'Monica';
+};
+
+
+//Accessor Property
+
+/*accessor properties are methods that get or set the value of an object. 
+For that, we use these two keywords:
+
+get - to define a getter method to get the property value
+set - to define a setter method to set the property value */
+
+
 
 //getter (passing no arguments).
-//the get syntax binds an object property to a function 
-//that will be called when that property is looked up.
 
+/*Syntax
 {get prop() { ... } }
-{get [expression]() { ... } }
+{get [expression]() { ... } } */
 
 
-const obj = {
-    log: ['a', 'b', 'c'],
-    get latest() {
-      if (this.log.length === 0) {
-        return undefined;
-      }
-      return this.log[this.log.length - 1];
+//Parameters
+
+//prop
+//The name of the property to bind to the given function.
+
+//expression
+/*you can also use expressions for a computed property name 
+to bind to the given function. */
+
+
+//getter methods are used to access the properties of an object. For example,
+var student = {
+    // data property
+    firstName: 'Monica',
+    // accessor property(getter)
+    get getName() {
+        return this.firstName;
     }
 };
-  
-  console.log(obj.latest);
-  // expected output: "c"
-  
 
-//When a program sets the value of an accessor property, JavaScript
-//invokes the setter method, passing the value of the righthand side of the
-//assignment.
+// accessing data property
+console.log(student.firstName); // Monica
+//also when accessing the value, we access the value as a property.
+console.log(student.getName); // Monica
 
+//When you try to access the value as a method, an error occurs.
+console.log(student.getName()); // error
 
-//This method is responsible for “setting,” in some sense, the property value. 
-//The return value of the setter method is ignored.
+//a getter method 'getName()' is created to access the property of an object.
 
-
-//If a property has both a getter and a setter method, it is a read/write
-//property.
-
+get getName() {
+    return this.firstName;
+}
+// To create a getter method, the 'get' keyword is used.
 
 
-//If it has only a getter method, it is a read-only property. 
 
-//And if it has only a setter method, it is a write-only property, 
-//and attempts to read it always evaluate to undefined.
+
+
 
 //setter 
-//The set syntax binds an object property to a function to be called
-//when there is an attempt to set that property.
 
+//setter methods are used to change the values of an object. For example
+
+/* Syntax
 {set prop(val) { . . . }}
 {set [expression](val) { . . . }}
 
-const language = {
-    set current(name) {
-      this.log.push(name);
-    },
-    log: []
-    };
-  
-language.current = 'EN';
-language.current = 'FA';
-  
-console.log(language.log);
-// expected output: Array ["EN", "FA"]
+Parameters
+prop
+The name of the property to bind to the given function.
 
+val
+An alias for the variable that holds the value attempted to be assigned to prop.
 
-let o = {
-    // An ordinary data property
-    dataProp: value,
-    // An accessor property defined as a pair of functions.
-    get accessorProp() { return this.dataProp; },
-    set accessorProp(value) { this.dataProp = value; }
-};
+expression
+you can also use expressions for a computed property name to bind 
+to the given function. */
 
-
-//Accessor properties are defined as one or two methods whose name is
-//the same as the property name.
-
-
-
-//The accessor methods defined above simply get and set the value of a
-//data property, and there is no reason to prefer the accessor property
-//over the data property.
-
-
-let p = {
-    // x and y are regular read-write data properties.
-    x: 1.0,
-    y: 1.0,
-    // r is a read-write accessor property with getter and setter.
-    // Don't forget to put a comma after accessor methods.
-    get r() { return Math.hypot(this.x, this.y); },
-    set r(newvalue) {
-        let oldvalue = Math.hypot(this.x, this.y), ratio = newvalue/oldvalue;
-        this.x *= ratio; //this refers to the point object p.
-        this.y *= ratio;
-    },
-    // theta is a read-only accessor property with getter only.
-    get theta() { return Math.atan2(this.y, this.x); }
-};
-p.r // => Math.SQRT2
-p.theta // => Math.PI / 4
-
-//Accessor properties are inherited
-let q = Object.create(p); // A new object that inherits getters and setters
-q.x = 3; q.y = 4; // Create q's own data properties
-q.r // => 5: the inherited accessor properties work
-q.theta // => Math.atan2(4, 3)
-
-
-//The code above uses accessor properties to define an API that provides
-//two representations (Cartesian coordinates and polar coordinates) of a
-//single set of data.
-
-
-// This object generates strictly increasing serial numbers
-const serialnum = {
-    // This data property holds the next serial number.
-    // The _ in the property name hints that it is for internal use only.
-    _n: 0,
-    // Return the current value and increment it
-    get next() { return this._n++; },
-    // Set a new value of n, but only if it is larger than current
-    set next(n) {
-        if (n > this._n) this._n = n;
-        else throw new Error("serial number can only be set to a larger value");
+const student = {
+    firstName: 'Monica',  
+    //accessor property(setter)
+    set changeName(newName) {
+        this.firstName = newName;
     }
 };
-serialnum.next = 10; // Set the starting serial number
-serialnum.next // => 10
-serialnum.next // => 11: different value each time we get next  
+console.log(student.firstName); // Monica
+// change(set) object property using a setter
+student.changeName = 'Sarah';
+console.log(student.firstName); // Sarah
+
+
+//the setter method is used to change the value of an object.
+set changeName(newName) {
+    this.firstName = newName;
+}
+//To create a setter method, the 'set' keyword is used.
+//the value of firstName is Monica.
+
+//Then the value is changed to Sarah.
+student.chageName = 'Sarah';
+//Setter must have exactly one formal parameter.
+
+
+
+//Object.defineProperty()
+/* you can also use 'Object.defineProperty()' method 
+to add getters and setters. */
+
+
+//Syntax
+Object.defineProperty(obj, prop, descriptor)
+
+/*The first argument is the objectName.
+The second argument is the name of the property.
+The third argument is an object that describes the property. */
+
+const student = {
+    firstName: 'Monica'
+}
+
+// getting property
+Object.defineProperty(student, "getName", {
+get : function () {
+        return this.firstName;
+    }
+});
+// setting property
+Object.defineProperty(student, "changeName", {
+    set : function (value) {
+        this.firstName = value;
+    }
+});
+
+console.log(student.firstName); // Monica
+// changing the property value
+student.changeName = 'Sarah';
+
+console.log(student.firstName); // Sarah
+Object.defineProperty() is used to access and change the property of an object.

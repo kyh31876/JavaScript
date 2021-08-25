@@ -458,8 +458,8 @@ which no argument is passed. */
 
 
 //3.6 Symbols
-Symbol()
-//Symbol is a built-in object whose constructor returns a symbol primitive
+]
+//Symbol is a built-in object whose constructor returns a symbol 'primitive'
 
 /* To understand Symbols, you need to know that JavaScript’s
 fundamental Object type is an unordered collection of properties,
@@ -467,33 +467,42 @@ where each property has a name and a value.
 Property names are typically (and until ES6, were exclusively) strings.
 */
 
+//Symbol() constructor
 
-//To create a new primitive Symbol, you write Symbol() with an optional 
-//string as its description:
+/* The Symbol() constructor returns a value of type symbol, 
+but is incomplete as a constructor because it does not support 
+the syntax "new Symbol()" and it is not intended to be subclassed.  */
+
+//Syntax
+Symbol()
+Symbol(description)
+
+//description Optional
+/* A string. A description of the symbol which can be used for debugging 
+but not to access the symbol itself. */
+
+//Creating symbols
+
+/* To create a new primitive symbol, you write Symbol() 
+with an optional string as its description: */
 let sym1 = Symbol()
 let sym2 = Symbol('foo')
 let sym3 = Symbol('foo')
 
+
+/* Note that Symbol("foo") does not coerce the string "foo" into a symbol. 
+It creates a new symbol each time: */
+Symbol('foo') === Symbol('foo')  // false
+
+//new Symbol(...)
 //The following syntax with the new operator will throw a TypeError:
 let sym = new Symbol()  // TypeError
 
 
-//If you really want to create a Symbol wrapper object, 
-//you can use the Object() function:
-let sym = Symbol('foo')
-typeof sym      // "symbol"
-let symObj = Object(sym)
-typeof symObj   // "object"
-let o = {}; // Create a new object
-o[sym] = 1; // Define a property with a Symbol name
-o[symObj] = 2; // Define a property with a Object name
-o[sym] // => 1: access the symbol named property
-o[symObj] // => 2: access the Object named property
+
 
 
 //3.8 Immutable Primitive Values and Mutable Object References
-
-
 
 //Immutable Primitive Values
 
@@ -581,14 +590,14 @@ false       "false"      0
 "one"(nonempty, non-numeric)    NaN   true
 0           "0"                          false
 -0          "0"                         false
-1 (finite, non-zero)"1"             true
+1 (finite, non-zero)"1"                 true
 Infinity    "Infinity"                  true
 -Infinity "-Infinity"                   true
 NaN         "NaN"                       false
-{} (any object)                     true
-[] (empty array) ""        0        true
-[9] (one numeric element) "9"   9      true
-['a'] (any other array) use join()method, NaN, true
+{}(any object)                        true
+[](empty array) ""        0            true
+[9](one numeric element) "9"   9      true
+['a'](any other array) use join()method, NaN, true
 function(){} (any function) see §3.9.3, NaN, true
 */
 
@@ -627,8 +636,7 @@ String(false) // => "false": Or use false.toString()
 Boolean([]) // => true
 
 //Any value other than null or undefined has a toString() method,
-//the result of this method is usually the same as that returnd by 
-//String() function
+//the result of this method is usually the same as that returnd by String() function
 
 //the Boolean(), Number(), and String() functions 
 //can also be invoked with "new" as constructor.
@@ -669,6 +677,8 @@ let hex = "0x" + n.toString(16); // hex == "0x11"
 //and It never uses exponential notation.
 let n = 123456.789;
 n.toFixed(0);
+
+
 
 
 //toExponential() Converts a number into an exponential notation:
@@ -760,7 +770,6 @@ i = "ten";
 
 //Scope
 
-
 //Global Scope
 
 //The area outside all the functions is consider the global scope 
@@ -836,7 +845,6 @@ foo();
 
 
 
-
 //3.10.2 Variable Declarations with var
 
 
@@ -889,7 +897,6 @@ to the top of the enclosing function.*/
 
 /* The initialization of the variable remains where you wrote it, 
 but the definition of the variable moves to the top of the function. */
-
 
 
 
