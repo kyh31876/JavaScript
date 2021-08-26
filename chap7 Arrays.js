@@ -1,20 +1,25 @@
 //7.1 Creating Arrays
 
+//An array is an object that can store multiple elements. For example,
+const myArray = ['hello', 'world', 'welcome'];
+
+
+
+
 //7.1.1 Array Literals
 
-//which is simply a comma-separated list of array elements within square brackets.
+//The easiest way to create an array is by using an array literal []. 
 
-let empty = []; // An array with no elements
-let primes = [2, 3, 5, 7, 11]; // An array with 5 numeric elements
-let misc = [ 1.1, true, "a", ]; // 3 elements of various types + trailing comma
+var empty = []; // An array with no elements
+var primes = [2, 3, 5, 7, 11]; // An array with 5 numeric elements
+var misc = [ 1.1, true, "a", ]; // 3 elements of various types + trailing comma
 
 //Array literals can contain object literals or other array literals:
-let b = [[1, {x: 1, y: 2}], [2, {x: 3, y: 4}]];
+var b = [[1, {x: 1, y: 2}], [2, {x: 3, y: 4}]];
 
-//Array elements for which values 
-//are omitted do not exist but appear to be undefined if you query them:
-
-let count = [1,,3]; // Elements at indexes 0 and 2. No element at index 1
+/* Array elements for which values are omitted do not exist 
+but appear to be undefined if you query them: */
+let count = [1,,3]; //[ 1, <1 empty item>, 3 ]
 let undefs = [,,]; // An array with no elements but a length of 2
 
 
@@ -24,8 +29,8 @@ let undefs = [,,]; // An array with no elements but a length of 2
 //you can use the “spread operator,” ..., to include
 //the elements of one array within an array literal:
 
-let a = [1, 2, 3];
-let b = [0, ...a, 4]; // b == [0, 1, 2, 3, 4]
+var a = [1, 2, 3];
+var b = [0, ...a, 4]; // c == [0, 1, 2, 3, 4]
 
 
 let original = [1,2,3];
@@ -34,26 +39,54 @@ copy[0] = 0; // Modifying the copy does not change the original
 original[0] // => 1
 
 
-//7.1.3 The Array() Constructor
+//7.1.3 The Array() Constructor(Using the new keyword)
 
-//Call it with no arguments:
-let a=new Array();
+//You can also create an array using JavaScript's 'new' keyword.
+
+const array2 = new Array("eat", "sleep");
+/*In both of the above examples, we have created an array having two elements. */
+
+// empty array
+const myList = [ ];
+// array of numbers
+const numberArray = [ 2, 4, 6, 8];
+// array of strings
+const stringArray = [ 'eat', 'work', 'sleep'];
+// array with mixed data types
+const newData = ['work', 'exercise', 1, true];
+
+//You can also store arrays, functions and other objects inside an array.
+
+newData = [
+    {'task1': 'exercise'},
+    [1, 2 ,3],
+    function hello() { console.log('hello')}
+];
 
 
-// /This method creates an empty array with no elements and is
-//equivalent to the array literal [].
 
-
-//Call it with a single numeric argument, which specifies a length:
-let a = new Array(10);
-
-//Explicitly specify two or more array elements or a single nonnumeric
-//element for the array:
-
-let a = new Array(5, 4, 3, 2, 1,"testing, testing");
 
 
 //7.1.4 Array.of()
+
+//Array of() method creates a new Array instance from the given arguments.
+
+
+//Syntax
+//Array.of(element0, element1, ..., elementN)
+
+//of() Parameters
+/* of() method takes in an arbitrary number of elements 
+that is then used to create the array. */
+
+//Return value from of()
+//Returns a new Array instance.
+
+Array.of(5);       // [5] 
+Array(5);          // array of 5length
+
+Array(1, 2, 3);    // [1, 2, 3]
+Array.of(1, 2, 3); // [1, 2, 3]
 
 
 Array.of() // => []; returns empty array with no arguments
@@ -63,31 +96,80 @@ Array.of(1,2,3) // => [1, 2, 3]
 
 //7.1.5 Array.from()
 
-//With an iterable argument, Array.from(iterable) works like the spread operator
-//[...iterable] does. It is also a simple way to make a copy of an array:
 
-let copy = Array.from(original);
 
-let truearray = Array.from(arraylike);
+/*Array.from() static method creates a shallow-copied Array instance 
+from an array-like or iterable object. */
 
+//Syntax
+Array.from(arraylike, mapFunc, thisArg)
+
+
+/*from() Parameters
+
+arraylike - Array-like or iterable object to convert to an array.
+mapFunc (optional) - Map function that is called on each element.
+thisArg (optional) - Value to use as this when executing mapFunc. */
+
+//Return value 
+//Returns a new Array instance.
+
+/*This method can create Array from:
+
+Array-like objects - The objects that have length property 
+and have indexed elements like strings. 
+Iterable objets like Map or Set. */
+
+
+//Using from() method
+// Array from String
+let arr1 = Array.from("abc");
+console.log(arr1); // [ 'a', 'b', 'c' ]
+// Array from Map
+let mapper = new Map([
+  ["1", "a"],
+  ["2", "b"],
+]);
+let arr2 = Array.from(mapper);
+console.log(arr2); // [ [ '1', 'a' ], [ '2', 'b' ] ]
+let arr3 = Array.from(mapper.keys());
+console.log(arr3); // [ '1', '2' ]
+
+// Array from Set
+varset = new Set(["JavaScript", "Python", "Go"]);
+vararr4 = Array.from(set);
+console.log(arr4); // [ 'JavaScript', 'Python', 'Go' ]
+
+//Using from() method with mapFunc
+function createArr(arraylike, mapFunc) {
+  return Array.from(arraylike, mapFunc);
+}
+// using arrow function for mapFunc
+var arr5 = createArr("123456", (x) => 2 * x);
+console.log(arr5); // [ 2, 4, 6, 8, 10, 12 ]
 
 
 
 
 //7.2 Reading and Writing Array Elements
 
-let a = ["world"]; // Start with a one-element array
-let value = a[0]; // Read element 0
-a[1] = 3.14; // Write element 1
-let i = 2;
-a[i] = 3; // Write element 2
-a[i + 1] = "hello"; // Write element 3
-a[a[i]] = a[0]; // Read elements 0 and 2, write element 3
+//You access an element of an array using the [] operator.
+/* An arbitrary expression that has a non-negative integer value 
+should be inside the brackets. */
 
-//The square brackets used to access array elements work 
-//just like the square brackets used to access object properties.
+//Accessing elements
+var arr=['a', 'b', 'c', 'd', 'e'];
+arr[1] // b
+arr[4] // e
+arr[-1] // undefined
 
-let o = {}; // Create a plain object
+//Populating an array
+let emp = []
+emp[0] = 'Casey Jones'
+emp[1] = 'Phil Lesh'
+emp[2] = 'August West'
+
+var o = {}; // Create a plain object
 o[1] = "one"; // Index it with an integer 32
 o["1"] // => "one"; numeric and string property names are the same
 
@@ -95,160 +177,287 @@ o["1"] // => "one"; numeric and string property names are the same
 //All indexes are property names, but only property
 //names that are integers between 0 and 2 –2 are indexes.
 
-let a = [true, false]; // This array has elements at indexes 0 and 1
+var a = [true, false]; // This array has elements at indexes 0 and 1
 a[2] // => undefined; no element at this index.
 a[-1] // => undefined; no property with this name.
 
 
 //7.3 Sparse Arrays
-let a = new Array(5); // No elements, but a.length is 5.
-a = []; // Create an array with no elements and length = 0.
-a[1000] = 0; // Assignment adds one element but sets length to 1001.
+
+/* A sparse array is one in which the elements are not sequential, and they don't always start at 0 */
 
 
 
-let a1 = [,]; // This array has no elements and length 1
-let a2 = [undefined]; // This array has one undefined element
-0 in a1 // => false: a1 has no element with index 0
-0 in a2 // => true: a2 has the undefined value at index 0
+//How do you get a sparse array?
+
+
+//Use the Array object
+var array = new Array(10); // array initialized with no elements
+array.length // 10
+
+//Insert a key/value at a certain index
+array[1000] = 0; // Assignment adds one element 
+array.length // But .length returns 1001
+
+//Use the delete operator
+var array = [1, 2, 3, 4, 5]
+delete array[0]
+array.length // .length returns 5
+
+//Initialize an Array with holes
+/*[,,,,] //You have created an array with nothing but holes
+[1,2,3,4,,5] //you mistyped a comma and entered a hole between 4 and 5! */
+
 
 
 //7.4 Array Length
 
-[].length // => 0: the array has no elements
-["a","b","c"].length // => 3: highest index is 2, length is 3 
+//The length property returns or sets the number of elements in an array.
 
-// /if you set the length property to a nonnegative
-//integer n smaller than its current value, any array elements
-//whose index is greater than or equal to n are deleted from the array:
 
-a = [1,2,3,4,5]; // Start with a 5-element array.
-a.length = 3; // a is now [1,2,3].
-a.length = 0; // Delete all elements. a is [].
-a.length = 5; // Length is 5, but no elements, like new Array(5)
+//Syntax
+arr.length
+
+//Finding Number of Elements in an Array
+var companyList = ["Apple", "Google", "Facebook", "Amazon"];
+console.log(companyList.length); // Output: 4
+
+var randomList = ["JavaScript", 44];
+console.log(randomList.length); // Output: 2
+
+var emptyArray = [];
+console.log(emptyArray.length); // Output: 0
+/* we can see that length property returns the number of items in each array. 
+It returns the integer just greater than the highest index in an Array. */
+
+
+//Using Array length in for loop
+var languages = ["JavaScript", "Python", "C++", "Java", "Lua"];
+// languages.length can be used to find out 
+// the number of times to loop over an array
+for (i = 0; i < languages.length; i++){
+    console.log(languages[i]);
+}
+/*You can also reassign the length property of an Array
+using the assignment operator =. */
+
+//Syntax to assign the Array length:
+//array.length = <Integer>
+
+//Changing length property of Array
+var languages = ["JavaScript", "Python", "C++", "Java", "Lua"];
+// truncate the Array to 3 elements
+languages.length = 3
+// Output: [ 'JavaScript', 'Python', 'C++' ]
+console.log(languages)
+// extend the Array to length 6
+languages.length = 6
+// Output: [ 'JavaScript', 'Python', 'C++', <3 empty items> ]
+console.log(languages)
+
 
 
 //7.5 Adding and Deleting Array Elements
-let a = []; // Start with an empty array.
-a[0] = "zero"; // And add elements to it.
-a[1] = "one";
 
+/* push() method adds zero or more elements to the end of an array and returns the new length of the array.*/
+
+//Syntax
+arr.push(element1, element2, ..., elementN)
+
+//Parameters
+//push() method takes in an arbitrary number of elements to add to the array.
+
+//Return Value
+/*Returns the new (after appending the arguments) length of the array upon which the method was called. */
 
 let a = []; // Start with an empty array
 a.push("zero"); // Add a value at the end. a = ["zero"]
 a.push("one", "two"); // Add two more values. a = ["zero","one", "two"]
+
+
+
+
+//delete
+/* You can delete array elements with the delete operator, just as you
+can delete object properties: */
 
 let a = [1,2,3];
 delete a[2]; // a now has no element at index 2
 2 in a // => false: no array index 2 is defined
 a.length // => 3: delete does not affect array length
 
-//Note that using delete on an array element does not alter 
-//the length property and does not shift elements with higher
-//indexes down to fill in the gap that is left by the deleted property.
 
 
 //7.6 Iterating Arrays
-let letters = [..."Hello world"]; // An array of letters
-let string = "";
+
+//Using 'for/of' loop
+
+var letters = [..."Hello world"]; // An array of letters
+var string = "";
 for(let letter of letters) {
     string += letter;
 }
-string // => "Hello world"; we reassembled the original text
+string // => "Hello world";
+/* for/of loop uses returns the elements of an array in ascending order. */
 
-//If you want to use a for/of loop for an array and need to know the
-//index of each array element, use the entries() method of the array,
-//along with destructuring assignment,
 
-let everyother = "";
+//Array entries()
+/* Array entries() method returns a new Array Iterator object containing key/value pairs for each array index. */
+
+//Syntax
+arr.entries()
+
+//Parameters
+//entries() method does not have any parameters.
+
+//Return value from entries()
+//Returns a new Array iterator object.
+
+var everyother = "",letters = [..."Hello world"];
 for(let [index, letter] of letters.entries()) {
     if (index % 2 === 0) everyother += letter; // letters at even indexes
 }
-everyother // => "Hlowrd"
-
-//You pass a function to the forEach() method of an array,
-//and forEach() invokes your function once on each element of the array:
-let uppercase = "";
-letters.forEach(letter => { // Note arrow function syntax here
-    uppercase += letter.toUpperCase();
-});
-uppercase // => "HELLO WORLD"
-
-//You can also loop through the elements of an array with a good oldfashioned
-//for loop
-
-let vowels = "";
-for(let i = 0; i < letters.length; i++) { // For each index in the array
-    let letter = letters[i]; // Get the element at that index
-    if (/[aeiou]/.test(letter)) { // Use a regular expression test
-    vowels += letter; // If it is avowel, remember it
-    }
-}
-vowels // => "eoo"
-
-
-
-//Both of the following for loop forms are idiomatic, 
-//though not particularly common, and with modern JavaScript interpreters, 
-//it is not at all clear that they have any performance impact:
-
-// Save the array length into a local variable
-for(let i = 0, len = letters.length; i < len; i++) {
-// loop body remains the same
-}
-// Iterate backwards from the end of the array to the start
-for(let i = letters.length-1; i >= 0; i--) {
-// loop body remains the same
-}
-
-//If you want to skip undefined and nonexistent elements, you might write:
-for(let i = 0; i < a.length; i++) {
-    if (a[i] === undefined) continue; // Skip undefined + nonexistent elements
-    // loop body here
-}
+everyother //'Hlowrd'
 
 //7.7 Multidimensional Arrays
+/* JavaScript does not support true multidimensional arrays, but you can
+approximate them with arrays of arrays. */
 
+//Every element in matrix[x] is an array of numbers.
+
+//concrete example that uses a two-dimensional array as a multiplication table:
 // Create a multidimensional array
 let table = new Array(10); // 10 rows of the table
-for(let i = 0; i < table.length; i++) {
-    table[i] = new Array(10); // Each row has 10 columns
+    for(let i = 0; i < table.length; i++) {
+        table[i] = new Array(10); // Each row has 10 columns
 }
 
 // Initialize the array
 for(let row = 0; row < table.length; row++) {
     for(let col = 0; col < table[row].length; col++) {
-    table[row][col] = row*col;
+        table[row][col] = row*col;
     }
 }
 
 // Use the multidimensional array to compute 5*7
 table[5][7] // => 35
 
+
+
+
+
 //7.8.1 Array Iterator Methods
+
+/* all of these methods accept a function as their first argument and invoke that function once for each element of the array. */
+
 
 
 //FOREACH()
 
-//array.forEach(function(currentValue, index, arr), thisValue)
+/*forEach() method calls a function and iterates over the elements of an array. 
+The forEach() method can also be used on Maps and Sets.*/
 
-let data = [1,2,3,4,5], sum = 0;
-// Compute the sum of the elements of the array
-data.forEach(value => { sum += value; }); // sum == 15
-// Now increment each array element
-data.forEach(function(v, i, a) { a[i] = v + 1; }); // data ==[2,3,4,5,6]
+//Syntax
+
+array.forEach(function(currentValue, index, arr))
+/* 
+function(currentValue, index, arr) - a function to be run for each element of an array
+
+currentValue - the value of an array
+
+index (optional) - the index of the current element */
+
+//forEach with Arrays
+let students = ['John', 'Sara', 'Jack'];
+//using forEach
+students.forEach(myFunction);
+function myFunction(item) {
+    console.log(item);
+} //John Sara Jack
+
 
 //MAP()
 
-//array.map(function(currentValue, index, arr), thisValue)
+/* Map is similar to objects in JavaScript that allows us to store elements 
+in a 'key/value' pair. */
+
+//Create JavaScript Map
+//we use the new Map() constructor. For example,
+
+var map1 = new Map(); // an empty map
+console.log(map1); // Map {}
+
+//Insert Item to Map
 
 
-//The map() method passes each element of the array on which it is
-//invoked to the function you specify and returns an array containing the
-//values returned by your function.
+/*After you create a map, you can use the 'set()' method to insert elements to it. */
+// create a set
+var map1 = new Map();
+// insert key-value pair
+map1.set('info', {name: 'Jack', age: 26});
+console.log(map1); // Map {"info" => {name: "Jack", age: 26}}
 
-let a = [1, 2, 3];
-a.map(x => x*x) // => [1, 4, 9]: the function takes input x and returns x*x
+
+
+
+//Access Map Elements
+
+
+//You can access Map elements using the 'get()' method. 
+let map1 = new Map();
+map1.set('info', {name: 'Jack', age: "26"});
+// access the elements of a Map
+console.log(map1.get('info')); // {name: "Jack", age: "26"}
+
+
+
+//Check Map Elements
+
+//You can use the 'has()' method to check if the element is in a Map.
+var set1 = new Set([1, 2, 3]);
+let map1 = new Map();
+map1.set('info', {name: 'Jack', age: "26"});
+// check if an element is in Set
+console.log(map1.has('info')); // true
+
+
+//Removing Elements
+
+/*You can use clear() and  delete() method to remove elements from a Map. */
+
+/* delete() method returns true if a specified 'key/value' pair exists and has been removed or else returns false. */
+
+var map1 = new Map();
+map1.set('info', {name: 'Jack', age: "26"});
+// removing a particular element
+map1.delete('address'); // false
+console.log(map1); // Map {"info" => {name: "Jack", age: "26"}} 
+map1.delete('info'); // true
+console.log(map1); // Map {}
+
+//clear() method removes all 'key/value' pairs from a Map object.
+let map1 = new Map();
+map1.set('info', {name: 'Jack', age: "26"});
+// removing all element
+map1.clear();
+console.log(map1); // Map {}
+
+
+//JavaScript Map Size
+
+//You can get the number of elements in a Map using the 'size' property.
+
+let map1 = new Map();
+map1.set('info', {name: 'Jack', age: "26"});
+
+console.log(map1.size); // 1
+
+
+//Iterate Through a Map
+
+/*You can iterate through the Map elements using the 'for...of' loop or 'forEach()' method. The elements are accessed in the insertion order. */
+
+
 
 
 
