@@ -1,9 +1,7 @@
 //7.1 Creating Arrays
 
 //An array is an object that can store multiple elements. For example,
-const myArray = ['hello', 'world', 'welcome'];
-
-
+var myArray = ['hello', 'world', 'welcome'];
 
 
 //7.1.1 Array Literals
@@ -200,7 +198,7 @@ array[1000] = 0; // Assignment adds one element
 array.length // But .length returns 1001
 
 //Use the delete operator
-var array = [1, 2, 3, 4, 5]
+const array = [1, 2, 3, 4, 5]
 delete array[0]
 array.length // .length returns 5
 
@@ -256,38 +254,6 @@ languages.length = 6
 console.log(languages)
 
 
-
-//7.5 Adding and Deleting Array Elements
-
-/* push() method adds zero or more elements to the end of an array and returns the new length of the array.*/
-
-//Syntax
-arr.push(element1, element2, ..., elementN)
-
-//Parameters
-//push() method takes in an arbitrary number of elements to add to the array.
-
-//Return Value
-/*Returns the new (after appending the arguments) length of the array upon which the method was called. */
-
-let a = []; // Start with an empty array
-a.push("zero"); // Add a value at the end. a = ["zero"]
-a.push("one", "two"); // Add two more values. a = ["zero","one", "two"]
-
-
-
-
-//delete
-/* You can delete array elements with the delete operator, just as you
-can delete object properties: */
-
-let a = [1,2,3];
-delete a[2]; // a now has no element at index 2
-2 in a // => false: no array index 2 is defined
-a.length // => 3: delete does not affect array length
-
-
-
 //7.6 Iterating Arrays
 
 //Using 'for/of' loop
@@ -299,6 +265,9 @@ for(let letter of letters) {
 }
 string // => "Hello world";
 /* for/of loop uses returns the elements of an array in ascending order. */
+
+
+
 
 
 //Array entries()
@@ -319,6 +288,10 @@ for(let [index, letter] of letters.entries()) {
 }
 everyother //'Hlowrd'
 
+
+
+
+
 //7.7 Multidimensional Arrays
 /* JavaScript does not support true multidimensional arrays, but you can
 approximate them with arrays of arrays. */
@@ -338,17 +311,15 @@ for(let row = 0; row < table.length; row++) {
         table[row][col] = row*col;
     }
 }
-
 // Use the multidimensional array to compute 5*7
 table[5][7] // => 35
 
 
 
-
-
 //7.8.1 Array Iterator Methods
 
-/* all of these methods accept a function as their first argument and invoke that function once for each element of the array. */
+/* all of these methods accept a function as their first argument 
+and invoke that function once for each element of the array. */
 
 
 
@@ -402,7 +373,6 @@ console.log(map1); // Map {"info" => {name: "Jack", age: 26}}
 
 //Access Map Elements
 
-
 //You can access Map elements using the 'get()' method. 
 let map1 = new Map();
 map1.set('info', {name: 'Jack', age: "26"});
@@ -425,7 +395,8 @@ console.log(map1.has('info')); // true
 
 /*You can use clear() and  delete() method to remove elements from a Map. */
 
-/* delete() method returns true if a specified 'key/value' pair exists and has been removed or else returns false. */
+/* delete() method returns true if a specified 'key/value' pair 
+exists and has been removed or else returns false. */
 
 var map1 = new Map();
 map1.set('info', {name: 'Jack', age: "26"});
@@ -443,6 +414,8 @@ map1.clear();
 console.log(map1); // Map {}
 
 
+
+
 //JavaScript Map Size
 
 //You can get the number of elements in a Map using the 'size' property.
@@ -455,24 +428,51 @@ console.log(map1.size); // 1
 
 //Iterate Through a Map
 
-/*You can iterate through the Map elements using the 'for...of' loop or 'forEach()' method. The elements are accessed in the insertion order. */
+/*You can iterate through the Map elements using the 'for...of' 
+loop or 'forEach()' method. The elements are accessed in the insertion order. */
+let map1 = new Map();
+map1.set('name', 'Jack');
+map1.set('age', '27');
 
+// looping through Map
+for (let [key, value] of map1) {
+    console.log(key + '- ' + value);
+}
 
 
 
 
 //FILTER()
+/* filter() method returns a new array with all elements that pass 
+the test defined by the given function. */
 
-//array.filter(function(currentValue, index, arr), thisValue)
+//Syntax
+arr.filter(callback(element), thisArg)
+
+//Parameters
+/*
+callback - The test function to execute on each array element; 
+returns true if element passes the test, else false. It takes in:
+
+element - The current element being passed from the array.
+
+thisArg (optional) - The value to use as this when executing callback. 
+By default, it is undefined. */
 
 
-//The filter() method returns an array containing a subset of the
-//elements of the array on which it is invoked.
+//Return Value
+//Returns a new array with only the elements that passed the test.
+
+
+/*filter() does not change the original array.
+filter() does not execute callback for array elements without values */
+
+
 let a = [5, 4, 3, 2, 1];
 a.filter(x => x < 3) // => [2, 1]; values less than 3
 a.filter((x,i) => i%2 === 0) // => [5, 3, 1]; every other value
 
-//Note that filter() skips missing elements in sparse arrays and that
+//Note that 'filter()' skips missing elements in sparse arrays and that
 //its return value is always dense. 
 let dense = sparse.filter(() => true);
 
@@ -482,229 +482,659 @@ a = a.filter(x => x !== undefined && x !== null);
 
 
 
-//FIND() AND FINDINDEX()
+//FIND()
+
+/*find() method returns the value of the first array element that 
+satisfies the provided test function. */
+
+//Syntax
+
+arr.find(callback(element, index, arr),thisArg)
+
+//Parameters
+/*
+callback - Function to execute on each element of the array. It takes in:
+element - The current element of array.
+
+thisArg (optional) - Object to use as this inside callback. */
+
+//Return Value
+/*
+Returns the value of the first element in the array that satisfies the given function.
+Returns undefined if none of the elements satisfy the function.
+*/
+function isEven(element) {
+    return element % 2 == 0;
+}
+let randomArray = [1, 45, 8, 98, 7];
+
+let firstEven = randomArray.find(isEven);
+console.log(firstEven); // 8
+// using arrow operator
+let firstOdd = randomArray.find((element) => element % 2 == 1);
+console.log(firstOdd); // 1
 
 
-//array.find(function(currentValue, index, arr),thisValue)
 
-let a = [1,2,3,4,5];
-a.findIndex(x => x === 3) // => 2; the value 3 appears at index 2
-a.findIndex(x => x < 0) // => -1; no negative numbers in the array
-a.find(x => x % 5 === 0) // => 5: this is a multiple of 5
-a.find(x => x % 7 === 0) // => undefined: no multiples of 7 in the array
+//findindex()
 
+/*findIndex() method returns the index of the first array element 
+that satisfies the provided test function or else returns -1. */
 
-//EVERY() AND SOME()
+//Syntax
+arr.findIndex(callback(element, index, arr),thisArg)
 
-//array.every(function(currentValue, index, arr), thisValue)
+//Parameters
+/*
+callback - Function to execute on each element of the array. It takes in:
+element - The current element of array.
 
-let a = [1,2,3,4,5];
-a.every(x => x < 10) // => true: all values are < 10.
-a.every(x => x % 2 === 0) // => false: not all values are even.
+thisArg (optional) - Object to use as this inside callback.*/
 
-//array.some(function(currentValue, index, arr), thisValue)
+//Return value 
+/*Returns the index of the first element in the array that satisfies the given function.
+Returns -1 if none of the elements satisfy the function. */
 
-let a = [1,2,3,4,5];
-a.some(x => x%2===0) // => true; a has some even numbers.
-a.some(isNaN) // => false; a has no non-numbers.
+function isEven(element) {
+    return element % 2 == 0;
+}
+let randomArray = [1, 45, 8, 98, 7];
 
-
-
-
-//REDUCE() AND REDUCERIGHT()
-
-//array.reduce(function(total, 
-//currentValue, currentIndex, arr), initialValue)
-
-
-//The reduce() and reduceRight() methods combine the
-//elements of an array, using the function you specify, to produce a
-//single value.
+firstEven = randomArray.findIndex(isEven);
+console.log(firstEven); // 2
+// using arrow operator
+firstOdd = randomArray.findIndex((element) => element % 2 == 1);
+console.log(firstOdd); // 0
 
 
-//reduce() takes two arguments. The first is the function that
-//performs the reduction operation
+//EVERY()
+//every() method checks if all the array elements pass the given test function.
 
-//The second (optional) argument is an initial value
-//to pass to the function.
+//Syntax
+arr.every(callback(currentValue), thisArg)
+
+//Parameters
+/*
+callback - The function to test for each array element. It takes in:
+currentValue - The current element being passed from the array.
+
+thisArg (optional) - Value to use as this when executing callback. 
+By default, it is undefined */
 
 
-let a = [1,2,3,4,5];
-a.reduce((x,y) => x+y, 0) // => 15; the sum of the values
-a.reduce((x,y) => x*y, 1) // => 120; the product of the values
-a.reduce((x,y) => (x > y) ? x : y) // => 5; the largest of the values
+//Return value 
+/*Returns true if all array elements pass 
+the given test function (callback returns a truthy value). Otherwise, it returns false.
+
+every() does not change the original array.
+every() does not execute callback for array elements without values. */
+
+//Check Value of Array Element
+function checkAdult(age) {
+    return age >= 18;
+}
+const ageArray = [34, 23, 20, 26, 12];
+let check = ageArray.every(checkAdult); // false
+if (!check) {
+    console.log("All members must be at least 18 years of age.")
+}
+// using arrow function
+let check1 = ageArray.every(age => age >= 18); // false
+console.log(check1);
+
+
+
+
+
+//some()
+
+//some() method tests whether any of the array elements pass the given test function.
+
+//Syntax
+arr.some(callback(currentValue), thisArg)
+
+//Parameters
+/*
+callback - The function to test for each array element. It takes in:
+currentValue - The current element being passed from the array.
+
+thisArg (optional) - Value to use as this when executing callback. 
+By default, it is undefined */
+
+
+//Return value
+/*Returns true if an array element passes the given test function 
+(callback returns a truthy value). Otherwise, it returns false */
+
+
+//Check Value of Array Element
+function checkMinor(age) {
+    return age < 18;
+}
+
+var ageArray = [34, 23, 20, 26, 12];
+let check = ageArray.some(checkMinor); // true
+if (check) {
+    console.log("All members must be at least 18 years of age.")
+}
+// using arrow function
+let check1 = ageArray.some(age => age >= 18); // true
+console.log(check1)
+
+
+
+//REDUCE()
+
+/* reduce() method executes a reducer function on each element 
+of the array and returns a single output value. */
+
+//Syntax
+arr.reduce(callback(accumulator, currentValue), initialValue)
+
+//Parameters
+/*
+callback - The function to execute on each array element 
+(except the first element if no initialValue is provided). It takes in
+accumulator - It accumulates the callback's return values.
+currentValue - The current element being passed from the array.
+
+initialValue (optional) - A value that will be passed to callback() on first call. 
+If not provided, the first element acts as the accumulator 
+on the first call and callback() won't execute on it. */
+
+//Return Value
+/*
+Returns the single value resulting after reducing the array.
+
+reduce() executes the given function for each value from left to right.
+reduce() does not change the original array. */
+
+//Sum of All Values of Array
+const numbers = [1, 2, 3, 4, 5, 6];
+
+function sum_reducer(accumulator, currentValue) {
+  return accumulator + currentValue;
+}
+
+let sum = numbers.reduce(sum_reducer);
+console.log(sum); // 21
+
+// using arrow function
+let summation = numbers.reduce(
+  (accumulator, currentValue) => accumulator + currentValue
+);
+console.log(summation); // 21
+
+
 
 
 //7.8.2 Flattening arrays with flat() and flatMap()
-[1, [2, 3]].flat() // => [1, 2, 3]
-[1, [2, [3]]].flat() // => [1, 2, [3]]
 
-let a = [1, [2, [3, [4]]]];
-a.flat(1) // => [1, 2, [3, [4]]]
-a.flat(2) // => [1, 2, 3, [4]]
-a.flat(3) // => [1, 2, 3, 4]
-a.flat(4) // => [1, 2, 3, 4]
+//flat()
 
+/* flat() method creates a new array with all sub-array elements 
+concatenated into it recursively up to the specified depth. */
 
-let phrases = ["hello world", "the definitive guide"];
-let words = phrases.flatMap(phrase => phrase.split(" "));
-words // => ["hello", "world", "the", "definitive", "guide"];
-//a.flatMap(f) is the same as a.map(f).flat():
+//Syntax
+arr.flat(depth)
+
+//Parameters
+//depth (optional) - Integer specifying how deep a nested array should be flattened.
 
 
+//Return value 
+//Returns a new array with the sub-array elements concatenated into it.
+var arr1 = [1, [2, 3, 4], 5];
+var flattened1 = arr1.flat();
+console.log(flattened1); // [ 1, 2, 3, 4, 5 ]
 
-//7.8.3 Adding arrays with concat()
+var arr2 = [1, 2, [3, 4, [5, 6]]];
 
-//array1.concat(array2, array3, ..., arrayX)
+var flattened2 = arr2.flat();
+console.log(flattened2); // [1, 2, 3, 4, [5, 6]]
 
-let a = [1,2,3];
-a.concat(4, 5) // => [1,2,3,4,5]
-a.concat([4,5],[6,7]) // => [1,2,3,4,5,6,7]; arrays are flattened
-a.concat(4, [5,[6,7]]) // => [1,2,3,4,5,[6,7]]; but not nested arrays
-a // => [1,2,3]; the original array is unmodified
+var flattened3 = arr2.flat(2);
+console.log(flattened3); //  [ 1, 2, 3, 4, 5, 6 ]
+
+var arr4 = [1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]];
+var flattened4 = arr4.flat(Infinity);
+console.log(flattened4); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+// flat() removes holes
+var numArr = [1, , 3];
+console.log(numArr.flat()); // [ 1, 3 ]
+
+
+
+//flatMap()
+/* flatMap() method first maps each element using a mapping function, 
+then flattens it into a new array. */
+
+//Syntax
+arr.flatMap(callback(currentValue),thisArg)
+
+//Parameters
+/*
+callback - The function to initially execute on each array element. It takes in:
+currentValue - The current element being passed from the array.
+
+thisArg (optional) - Value to use as this when executing callback */
+
+//Return value 
+/* Returns a new array after mapping every element using callback and flattening 
+it to a depth of 1. */
+const arr1 = [1, 2, 3, 4, 5];
+
+const newArr1 = arr1.flatMap((x) => [x ** 2]);
+console.log(newArr1); // [ 1, 2, 3, 4, 5 ]
+
+// can also be done as
+const intermediate = arr1.map((x) => [x ** 2]);
+console.log(intermediate); // [ [ 1 ], [ 4 ], [ 9 ], [ 16 ], [ 25 ] ]
+
+const newArr2 = intermediate.flat();
+console.log(newArr2); // [ 1, 4, 9, 16, 25 ]
+const numbers = [1, 2, 3, 4, 5, 6, 7];
+// remove odd and split even element to two half elements
+function func(n) {
+    if (n % 2 === 0) {
+        return [n / 2, n / 2];
+  } else {
+        return [];
+  }
+}
+const newArr3 = numbers.flatMap(func);
+console.log(newArr3); // [ 1, 1, 2, 2, 3, 3 ]
+
+
+
+//Concat()
+/* concat() method returns a new array by merging two or more values/arrays. */
+
+/*Syntax
+arr.concat(value1, value2, ..., valueN)
+
+Parameters
+concat() method takes in an arbitrary number of arrays and/or values as arguments. */
+
+//Return Value
+/*Returns a newly created array after merging all arrays/values passed in the argument. */
+
+
+//Using concat() method
+var languages1 = ["JavaScript", "Python", "Java"],languages2 = ["C", "C++"];
+
+// concatenating two arrays
+var new_arr = languages1.concat(languages2);
+console.log(new_arr); // [ 'JavaScript', 'Python', 'Java', 'C', 'C++' ]
+
+// concatenating a value and array
+var new_arr1 = languages2.concat("Lua", languages1);
+console.log(new_arr1); // [ 'C', 'C++', 'Lua', 'JavaScript', 'Python', 'Java' ]
+
+//Concatenating nested arrays
+/* It copies object references to the new array.
+So if the referenced object is modified, the changes are visible in the returned new array.
+It copies the value of strings and numbers to the new array. */
+
+var randomList = [1, 2, 3];
+var randomNestedList = [[4, 5], [6, 7],];
+var combined = randomList.concat(randomNestedList);
+console.log(combined); // [ 1, 2, 3, [ 4, 5 ], [ 6, 7 ] ]
+
+// changing the value 1 to 0
+randomList[0] = 0;
+console.log(randomList); // [ 0, 2, 3 ]
+// changes not reflected in concatenated array
+console.log(combined); // [ 1, 2, 3, [ 4, 5 ], [ 6, 7 ] ]
+// modifying nested list (adding 6 to first element)
+randomNestedList[0].push(6);
+console.log(randomNestedList); // [ [ 4, 5, 6 ], [ 6, 7 ] ]
+
+// changes are reflected in concatenated array
+// since it is a reference to the object
+console.log(combined); // [ 1, 2, 3, [ 4, 5, 6 ], [ 6, 7 ] ]
 
 
 
 //7.8.4 Stacks and Queues with push(), pop(), shift(), and unshift()
 
-//The Array.push() method adds new items to the end of an array.
-//Array.push() changes the length of the array and returns the new length.
+//1
+//Pop()
+/* pop() method removes the last element from an array and returns that element. */
+//Syntax  arr.pop()
+/* Parameters //The pop() method does not have any parameters. */
 
-//array.push(item1, item2, ..., itemX)
+/*Return Value
+Removes the last element from array and returns that value.
+Returns undefined if the array is empty.
 
+This method changes the original array and its length. */
 
+var languages = ["JavaScript", "Python", "Java", "C++", "Lua"];
+var popped = languages.pop();
 
-//The Array.pop() method removes the last element of an array.
-//Array.pop() returns the element it removes.
+console.log(languages); // [ 'JavaScript', 'Python', 'Java', 'C++' ]
+console.log(popped); // Lua
 
-//array.pop()
-
-let stack = []; // stack == []
-stack.push(1,2); // stack == [1,2];
-stack.pop(); // stack == [1]; returns 2
-stack.push(3); // stack == [1,3]
-stack.pop(); // stack == [1]; returns 3
-stack.push([4,5]); // stack == [1,[4,5]]
-stack.pop() // stack == [1]; returns [4,5]
-stack.pop(); // stack == []; returns 1
-
-
-
-//The Array.shift() method removes the first item of an array.
-//Array.shift() returns the element it removes.
-
-//array.shift()
+// pop returns any type of object
+var numbers = [ [1, 2, 3],[4, 5, 6],[-5, -4, -3],];
+console.log(numbers.pop()); // [ -5, -4, -3 ]
+console.log(numbers); // [ [ 1, 2, 3 ], [ 4, 5, 6 ] ]
 
 
-//The Array.unshift() method adds new items to the beginning of an array,
-// and returns the new length.
 
-//array.unshift(item1, item2, ..., itemX)
+//2
+//Shift()
+/* shift() method removes the first element from an array and returns that element. */
+
+//Syntax //arr.shift()
+//Parameters  //shift() method does not accept any arguments.
+
+/*Return Value
+Removes the first element from array and returns that value.
+
+Returns undefined if the array is empty. 
+This method changes the original array and its length. */
 
 
-let q = []; // q == []
-q.push(1,2); // q == [1,2]
-q.shift(); // q == [2]; returns 1
-q.push(3) // q == [2, 3]
-q.shift() // q == [3]; returns 2
-q.shift() // q == []; returns 3
+var languages = ["JavaScript", "Python", "Java", "C++", "Lua"];
+var shifted = languages.shift();
+
+console.log(languages); // [ 'Python', 'Java', 'C++', 'Lua' ]
+console.log(shifted); // JavaScript
+// shift returns any type of object
+var numbers = [
+    [1, 2, 3],[4, 5, 6],[-5, -4, -3]
+];
+console.log(numbers.shift()); // [ 1, 2, 3 ]
+console.log(numbers); // [ [ 4, 5, 6 ], [ -5, -4, -3 ] ]
 
 
-let a = []; // a == []
-a.unshift(1) // a == [1]
-a.unshift(2) // a == [2, 1]
-a = []; // a == []
-a.unshift(1,2) // a == [1, 2]
+//3 
+//Unshift()
+/* unshift() method adds one or more elements to 
+the beginning of an array and returns the new length of the array. */
+
+//Syntax   arr.unshift(element1, element2, ..., elementN)
+
+//Parameters
+// unshift() method takes in an arbitrary number of elements to add to the array.
+
+/*Return Value
+Returns the new (after adding arguments to the beginning of array) length of the array 
+upon which the method was called.
+
+This method changes the original array and its length. */
+
+var languages = ["JavaScript", "Python", "Java", "Lua"];
+var count = languages.unshift("C++");
+console.log(languages); // [ 'C++', 'JavaScript', 'Python', 'Java', 'Lua' ]
+console.log(count); // 5
+
+var priceList = [12, 21, 35];
+var count1 = priceList.unshift(44, 10, 1.6);
+console.log(priceList); // [ 44, 10, 1.6, 12, 21, 35 ]
+console.log(count1); // 6
+
+
+//4
+//Push()
+/* push() method adds zero or more elements to the end of an array 
+and returns the new length of the array.*/
+
+//Syntax   //arr.push(element1, element2, ..., elementN)
+
+//Parameters //push() method takes in an arbitrary number of elements to add to the array.
+
+//Return Value
+/*Returns the new (after appending the arguments) 
+length of the array upon which the method was called. 
+
+This method changes the original array and its length. */
+
+var languages = ["JavaScript", "Python", "Java", "Lua"];
+var count = languages.push("C++");
+console.log(languages); // [ 'JavaScript', 'Python', 'Java', 'Lua', 'C++' ]
+console.log(count); // 5
+
+var priceList = [12, 21, 35];
+var count1 = priceList.push(44, 10, 1.6);
+console.log(priceList); // [ 12, 21, 35, 44, 10, 1.6 ]
+console.log(count1); // 6
+
+
+
 
 
 //7.8.5 Subarrays with slice(), splice(), fill(), and copyWithin()
 
-
+//1
 //SLICE()
-//array.slice(start, endarray.slice(start, end))
+/* slice() method returns a shallow copy of a portion 
+of an array into a new array object. */
 
-//Its two arguments specify the start and end of the slice to be
-//returned.
-let a = [1,2,3,4,5];
-a.slice(0,3); // Returns [1,2,3]
-a.slice(3); // Returns [4,5]
-a.slice(1,-1); // Returns [2,3,4]
-a.slice(-3,-2); // Returns [3]
+//Syntax  //arr.slice(start, end)
+
+//Parameters
+/*start (optional)
+Starting index of the selection. If not provided, the selection starts at start 0.
+
+end (optional)
+Ending index of the selection (exclusive). 
+If not provided, the selection ends at the index of the last element. */
 
 
+//Return Value
+//Returns a new array containing the extracted elements.
+
+let languages = ["JavaScript", "Python", "C", "C++", "Java"];
+// slicing the array (from start to end)
+let new_arr = languages.slice();
+console.log(new_arr); // [ 'JavaScript', 'Python', 'C', 'C++', 'Java' ]
+
+// slicing from the third element
+let new_arr1 = languages.slice(2);
+console.log(new_arr1); // [ 'C', 'C++', 'Java' ]
+
+// slicing from the second element to fourth element
+let new_arr2 = languages.slice(1, 4);
+console.log(new_arr2); // [ 'Python', 'C', 'C++' ]
+
+
+
+
+
+
+//2
 //SPLICE()
+/* splice() method returns an array by changing (adding/removing) its elements in place. */
 
-//Unlike slice() and concat(),
-//splice() modifies the array on which it is invoked.
+//Syntax   
+//arr.splice(start, deleteCount, item1, ..., itemN)
 
+/*//Parameters
+start - The index from where the array is changed.
 
-//splice() returns an array of the deleted elements, 
-//or an empty array if no elements were deleted.
-let a = [1,2,3,4,5,6,7,8];
-a.splice(4) // => [5,6,7,8]; a is now [1,2,3,4]
-a.splice(1,2) // => [2,3]; a is now [1,4]
-a.splice(1,1) // => [4]; a is now [1]
+deleteCount (optional) - The number of items to remove from start.
 
+item1,..., itemN (optional) - The elements to add to the start index. 
+If not specified, splice() will only remove elements from the array. */
 
-//The first two arguments to splice() specify which array elements
-//are to be deleted.
-
-let a = [1,2,3,4,5];
-a.splice(2,0,"a","b") // => []; a is now [1,2,"a","b",3,4,5]
-a.splice(2,2,[1,2],3) // => ["a","b"]; a is now [1,2,[1,2],3,3,4,5]
+/*Return Value
+Returns an array containing the deleted elements.
+The splice() method changes the original array. */
 
 
+let languages = ["JavaScript", "Python", "Java", "Lua"];
+// replacing "Java" & "Lua" with "C" & "C++"
+let removed = languages.splice(2, 2, "C", "C++");
+console.log(removed); // [ 'Java', 'Lua' ]
+console.log(languages); // [ 'JavaScript', 'Python', 'C', 'C++' ]
+
+// adding elements without deleting existing elements
+let removed1 = languages.splice(1, 0, "Java", "Lua");
+console.log(removed1); // []
+console.log(languages); // [ 'JavaScript', 'Java', 'Lua', 'Python', 'C', 'C++' ]
+// removing 3 elements
+let removed2 = languages.splice(2, 3);
+console.log(removed2); // [ 'Lua', 'Python', 'C' ]
+console.log(languages); // [ 'JavaScript', 'Java', 'C++' ]
+
+
+
+/*Using splice() for different deleteCount values
+If start > array.length,   splice() does not delete anything and 
+starts appending arguments to the end of the array.
+
+If start < 0, the index is counted from backward (array.length + start). 
+For example, -1 is the last element.
+
+If array.length + start < 0, it will begin from index 0. */
+
+let languages = ["JavaScript", "Python", "Java", "Lua"];
+
+// does not removes, only appends to the end
+let removed = languages.splice(5, 2, "C++");
+console.log(removed); // []
+console.log(languages); // ["JavaScript", "Python", "Java", "Lua", "C++"]
+
+// remove last element and add 3 more elements
+let removed1 = languages.splice(-1, 1, "Swift", "Scala", "Go");
+console.log(removed1); // [ "C++" ]
+console.log(languages); 
+// ["JavaScript", "Python", "Java", "Lua", "Swift", "Scala", "Go"]
+
+/*Using splice() for different start values
+If deleteCount is omitted or is greater than the number of elements 
+left in the array, it deletes all elements from start to end of the array.  
+
+If deleteCount is 0 or negative, no elements are removed. 
+But, at least one new element should be specified. */
+
+let languages = ["JavaScript", "Python", "Java", "Lua"];
+// removes everything from start
+let removed = languages.splice(1);
+console.log(removed); // [ "Python", "Java", "Lua" ]
+console.log(languages); // [ "JavaScript" ]
+
+// remove none & add 3 more element
+let removed1 = languages.splice(1, -2, "Swift", "Scala", "Go");
+console.log(removed1); // [ ]
+console.log(languages); // [ "JavaScript", "Swift", "Scala", "Go" ]
+
+
+
+
+//3
 //FILL()
 
-//array.fill(value, start, end)
-//The Array.fill() method fills specified elements 
-//in an array with a static value.
+// fill() method returns an array by filling all elements with a static value.
 
+//Syntax    //arr.fill(value, start, end)
 
-let a = new Array(5); // Start with no elements and length 5
-a.fill(0) // => [0,0,0,0,0]; fill the array with zeros
-a.fill(9, 1) // => [0,9,9,9,9]; fill with 9 starting at index 1
-a.fill(8, 2, -1) // => [0,9,8,8,9]; fill with 8 at indexes 2, 3
+/*Parameters
+value - Value to fill the array with.
+start (optional) - Start index (default is 0).
+end (optional) - End index (default is Array.length) (exclusive). */
+
+/*Return value 
+Returns the modified array, filled with value from start to end.
+
+If start or end is negative, indexes are counted from backwards.
+Since fill() is a mutator method, it changes the array itself (not a copy)
+and returns it. */
+
+var prices = [651, 41, 4, 3, 6];
+// if only one argument, fills all elements
+new_prices = prices.fill(5);
+console.log(prices); // [ 5, 5, 5, 5, 5 ]
+console.log(new_prices); // [ 5, 5, 5, 5, 5 ]
+// start and end arguments specify what range to fill
+prices.fill(10, 1, 3);
+console.log(prices); // [ 5, 10, 10, 5, 5 ]
+
+// -ve start and end to count from back
+prices.fill(15, -2);
+console.log(prices); // [ 5, 10, 10, 15, 15 ]
+// invalid indexed result in no change
+prices.fill(15, 7, 8);
+console.log(prices); // [ 5, 10, 10, 15, 15 ]
+
+prices.fill(15, NaN, NaN);
+console.log(prices); // [ 5, 10, 10, 15, 15 ]
 
 
 
 
 //COPYWITHIN()
 
-//array.copyWithin(target, start, end)
+/* copyWithin() method shallow copies array elements to another position 
+in the array, overwriting the existing values. */
 
-//The Array.copyWithin() method copies array elements 
-//to another position in an array, overwriting the existing values.
+//Syntax    //arr.copyWithin(target, start, end)
 
+/* Parameters
+target - The index position to copy the elements to.
 
-let a = [1,2,3,4,5];
-a.copyWithin(1) // => [1,1,2,3,4]: copy array elements up one
-a.copyWithin(2, 3, 5) // => [1,1,3,4,4]: copy last 2 elements to index 2
-a.copyWithin(0, -2) // => [4,4,3,4,4]: negative offsets work, too
+start (optional) - The index position to start copying elements from. 
+If omitted, it will copy from index 0.
+
+end (optional) - The index position to end copying elements from. 
+(exclusive) If omitted, it will copy until last index. */
+
+//If any of the arguments are negative, index will be counted from backwards.
+
+/* Return value from 
+Returns the modified array after copying the elements.
+
+This method overwrites the original array.
+This method does not change the length of the original array. */
+
+let array = [1, 2, 3, 4, 5, 6];
+// target: from second-to-last element, start: 0, end: array.length
+let returned_arr = array.copyWithin(-2);
+console.log(returned_arr); // [ 1, 2, 3, 4, 1, 2 ]
+// modifies the original array
+console.log(array); // [ 1, 2, 3, 4, 1, 2 ]
+array = [1, 2, 3, 4, 5, 6];
+// target: 0, start copying from 5th element
+array.copyWithin(0, 4);
+console.log(array); // [ 5, 6, 3, 4, 5, 6 ]
+array = [1, 2, 3, 4, 5, 6];
+// target: 1, start copying from 3rd element to second-to-last element
+array.copyWithin(1, 2, -1); // -1 = last element (exclusive)
+console.log(array); // [ 1, 3, 4, 5, 5, 6 ]
 
 
 
 //7.8.6 Array Searching and Sorting Methods
 
-//INDEXOF() AND LASTINDEXOF()
-
-//The Array.indexOf() method searches an array 
-//for a specified item and returns its position.
-
-//array.indexOf(item, start)
 
 
+//indexOF()
 
-//The Array.lastIndexOf() method 
-//returns the last index (position) of a specified value.
+//Syntax   //arr.indexOf(searchElement, fromIndex)
 
-//array.lastIndexOf(item, start)
+/* Parameters
+
+searchElement - The element to locate in the array.
+fromIndex (optional) - The index to start the search at. By default, it is 0. */
+
+/* Return Value
+Returns the first index of the element in the array if it is present at least once.
+Returns -1 if the element is not found in the array. */
 
 
-let a = [0,1,2,1,0];
-a.indexOf(1) // => 1: a[1] is 1
-a.lastIndexOf(1) // => 3: a[3] is 1
-a.indexOf(3) // => -1: no element has value 3
+
+
+
+
+
+//LASTINDEXOF()
+
+
+
+
 
 // Find all occurrences of a value x in an array a and return an array
 // of matching indexes
@@ -820,11 +1250,12 @@ for(let j = 0; j < a.length; j++) {
 //7.10 Strings as Arrays
 
 
+    
 //chatAt()
 
 //The charAt() method returns the character at a specified index in a string.
 //string.charAt(index)
 
 let s = "test";
-s.charAt(0) // => "t"
 s[1] // => "e"
+s.charAt(0) // => "t"
