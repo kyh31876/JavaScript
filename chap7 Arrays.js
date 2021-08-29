@@ -70,31 +70,30 @@ newData = [
 //Array of() method creates a new Array instance from the given arguments.
 
 
-//Syntax
-//Array.of(element0, element1, ..., elementN)
+//Syntax        //Array.of(element0, element1, ..., elementN)
 
 //of() Parameters
-/* of() method takes in an arbitrary number of elements 
-that is then used to create the array. */
+/* an arbitrary number of elements  that is then used to create the array. */
 
-//Return value from of()
-//Returns a new Array instance.
-
+/*Return value from of()
+Returns a new Array instance. 
+difference between Array.of() and the Array constructor is the handling of the arguments. */
 Array.of(5);       // [5] 
 Array(5);          // array of 5length
 
 Array(1, 2, 3);    // [1, 2, 3]
 Array.of(1, 2, 3); // [1, 2, 3]
 
-
 Array.of() // => []; returns empty array with no arguments
 Array.of(10) // => [10]; can create arrays with a single numeric argument
 Array.of(1,2,3) // => [1, 2, 3]
 
 
+
+
+
+
 //7.1.5 Array.from()
-
-
 
 /*Array.from() static method creates a shallow-copied Array instance 
 from an array-like or iterable object. */
@@ -105,32 +104,31 @@ Array.from(arraylike, mapFunc, thisArg)
 
 /*from() Parameters
 
-arraylike - Array-like or iterable object to convert to an array.
-mapFunc (optional) - Map function that is called on each element.
-thisArg (optional) - Value to use as this when executing mapFunc. */
+arraylike -   Array-like or iterable object to convert to an array.
+
+mapFunc (optional) -     Map function that is called on each element.
+
+thisArg (optional) -    Value to use as this when executing mapFunc. */
 
 //Return value 
-//Returns a new Array instance.
+/*Returns a new Array instance.
 
-/*This method can create Array from:
+This method can create Array from:
 
-Array-like objects - The objects that have length property 
-and have indexed elements like strings. 
+Array-like objects - The objects that have length property  and 
+have indexed elements like strings.  
 Iterable objets like Map or Set. */
 
 
 //Using from() method
 // Array from String
-let arr1 = Array.from("abc");
+var arr1 = Array.from("abc");
 console.log(arr1); // [ 'a', 'b', 'c' ]
 // Array from Map
-let mapper = new Map([
-  ["1", "a"],
-  ["2", "b"],
-]);
-let arr2 = Array.from(mapper);
+var mapper = new Map([ ["1", "a"], ["2", "b"], ]);
+var arr2 = Array.from(mapper);
 console.log(arr2); // [ [ '1', 'a' ], [ '2', 'b' ] ]
-let arr3 = Array.from(mapper.keys());
+var arr3 = Array.from(mapper.keys());
 console.log(arr3); // [ '1', '2' ]
 
 // Array from Set
@@ -713,8 +711,8 @@ then flattens it into a new array. */
 arr.flatMap(callback(currentValue),thisArg)
 
 //Parameters
-/*
-callback - The function to initially execute on each array element. It takes in:
+/* callback - The function to initially execute on each array element. It takes in:
+
 currentValue - The current element being passed from the array.
 
 thisArg (optional) - Value to use as this when executing callback */
@@ -1109,10 +1107,7 @@ console.log(array); // [ 1, 3, 4, 5, 5, 6 ]
 
 //7.8.6 Array Searching and Sorting Methods
 
-
-
 //indexOF()
-
 //Syntax   //arr.indexOf(searchElement, fromIndex)
 
 /* Parameters
@@ -1126,136 +1121,276 @@ Returns -1 if the element is not found in the array. */
 
 
 
+var priceList = [10, 8, 2, 31, 10, 1, 65];
+// indexOf() returns the first occurancevar index1 = priceList.indexOf(31);
+console.log(index1); // 3
+var index2 = priceList.indexOf(10);
+console.log(index2); // 0
+// second argument specifies the search's start index
+var index3 = priceList.indexOf(10, 1);
+console.log(index3); // 4
+// indexOf returns -1 if not found
+var index4 = priceList.indexOf(69.5);
+console.log(index4); // -1
+/* If fromIndex >= array.length, array is not searched and -1 is returned.
+If fromIndex < 0, the index is calculated backward.  */
 
 
+/* Finding All the Occurrences of an Element */}
 
-
-//LASTINDEXOF()
-
-
-
-
-
-// Find all occurrences of a value x in an array a and return an array
-// of matching indexes
-function findall(a, x) {
-    let results = [], // The array of indexes we'll return
-        len = a.length, // The length of the array to be searched
-        pos = 0; // The position to search from
-    while(pos < len) { // While more elements to search...
-        pos = a.indexOf(x, pos); // Search
-        if (pos === -1) break; // If nothing found, we're done.
-        results.push(pos); // Otherwise, store index in array
-        pos = pos + 1; // And start next search at next element
+function findAllIndex(array, element) {
+    indices = [];
+    var currentIndex = array.indexOf(element);
+    while (currentIndex != -1) {
+      indices.push(currentIndex);
+      currentIndex = array.indexOf(element, currentIndex + 1);
     }
-    return results; // Return array of indexes
+    return indices;
 }
+
+var priceList = [10, 8, 2, 31, 10, 1, 65, 10];
+var occurance1 = findAllIndex(priceList, 10);
+console.log(occurance1); // [ 0, 4, 7 ]
+
+var occurance2 = findAllIndex(priceList, 8);
+console.log(occurance2); // [ 1 ]
+
+var occurance3 = findAllIndex(priceList, 9);
+console.log(occurance3); // []
+
+
+//lastIndexOf()
+
+//Syntax    //arr.lastIndexOf(searchElement, fromIndex)
+
+/* Parameters 
+searchElement - The element to locate in the array.
+
+fromIndex(optional) -The index to start searching backwards.
+ By default it is array.length - 1. 
+ 
+//Return value
+
+Returns the last index of the element in the array if it is present at least once.
+Returns -1 if the element is not found in the array. 
+ */
+
+//Using lastIndexOf() method
+var priceList = [10, 8, 2, 31, 10, 1, 65];
+// lastIndexOf() returns the last occurance
+var index1 = priceList.lastIndexOf(31);
+console.log(index1); // 3
+var index2 = priceList.lastIndexOf(10);
+console.log(index2); // 4
+// second argument specifies the backward search's start index
+var index3 = priceList.lastIndexOf(10, 3);
+console.log(index3); // 0
+// lastIndexOf returns -1 if not found
+var index4 = priceList.lastIndexOf(69.5);
+console.log(index4); // -1
+
+//If fromIndex < 0, the index is calculated backwards.
+
+
+
 
 //INCLUDES()
 
-//The Array.includes() method returns true 
-//if an array contains a specified element, otherwise false.
+//Syntax        //arr.includes(valueToFind, fromIndex)
 
-//array.includes(element, start)
+/*Parameters
+valueToFind - The value to search for.
+
+fromIndex (optional) 
+- The position in the array at which to begin the search. By default, it is 0. 
+
+For negative values, the search counts from backward */
+
+//Return value 
+
+/*Returns true if valueToFind is found anywhere within array.
+
+Returns false if valueToFind is not found anywhere within array.
+The includes() method is case sensitive for strings and character values. */
+
+let languages = ["JavaScript", "Java", "C", "C++", "Python", "Lua"];
+let check = languages.includes("Java");
+console.log(check); // true
+// case sensitive
+let check1 = languages.includes("java");
+console.log(check1); // false
+// second argument specifies position to start at
+let check2 = languages.includes("Java", 2);
+console.log(check2); // false
+// negative argument starts count from backwards
+// start searching from third-to-last element
+let check3 = languages.includes("Java", -3);
+console.log(check3); // false
+let check4 = languages.includes("Ruby");
+console.log(check4); // false
+
+
+
 
 
 //SORT()
 
-//The Array.sort() method sorts the elements of an array.
+//Syntax        //arr.sort(compareFunction)
 
-//array.sort(compareFunction)
+//Parameters
+//compareFunction (optional) - It is used to define a custom sort order.
 
-
-//When sort() is called with no arguments, it sorts the array
-//elements in alphabetical order.
-
-
-let a = ["banana", "cherry", "apple"];
-a.sort(); // a == ["apple", "banana", "cherry"]
-
-//If an array contains undefined elements, they are sorted to the end of
-//the array.
+//Return Value
+/*Returns the array after sorting the elements of the array in place 
+(meaning that it changes the original array and no copy is made). */
 
 
-let a = [33, 4, 1111, 222];
-a.sort(); // a == [1111, 222, 33, 4]; alphabetical order
-a.sort(function(a,b) { // Pass a comparator function
-    return a-b; // Returns < 0, 0, or > 0, depending on order
-}); // a == [4, 33, 222, 1111]; numerical order
-a.sort((a,b) => b-a); // a == [1111, 222, 33, 4]; reverse numerical order
 
 
-let a = ["ant", "Bug", "cat", "Dog"];
-a.sort(); // a == ["Bug","Dog","ant","cat"]; casesensitive sort
-a.sort(function(s,t) {
-    let a = s.toLowerCase();
-    let b = t.toLowerCase();
-    if (a < b) return -1;
-    if (a > b) return 1;
-    return 0;
-}); // a == ["ant","Bug","cat","Dog"]; case-insensitive sort
+
+//Sorting the Elements of an Array
+
+/*  When compareFunction is not passed,
+
+All non-undefined array elements are first converted to strings.
+
+These strings are then compared using their UTF-16 code point value.
+
+The sorting is done in ascending order.
+All undefined elements are sorted to the end of the array.*/
+
+// sorting an array of strings
+var names = ["Adam", "Jeffrey", "Fabiano", "Danil", "Ben"];
+// returns the sorted array
+console.log(names.sort()); //[ 'Adam', 'Ben', 'Danil', 'Fabiano', 'Jeffrey' ]
+// modifies the array in place
+console.log(names); //[ 'Adam', 'Ben', 'Danil', 'Fabiano', 'Jeffrey' ]
+var priceList = [1000, 50, 2, 7, 14];
+priceList.sort(); //[ 1000, 14, 2, 50, 7 ]
+// Number is converted to string and sorted
+console.log(priceList) //[ 1000, 14, 2, 50, 7 ]
 
 
-//REVERSE()
+//Sorting using Custom Function
 
-let a = [1,2,3];
+/* 
+When compareFunction is passed,
+
+All non-undefined array elements are sorted according 
+to the return value of compareFunction.
+
+All undefined elements are sorted to the end of the array 
+and compareFunction is not called for them.
+*/
+
+// custom sorting an array of strings
+var names = ["Adam", "Jeffrey", "Fabiano", "Danil", "Ben"];
+function len_compare(a, b){
+    return a.length - b.length;
+}
+// sort according to string length
+names.sort(len_compare);
+console.log(names);
+
+
+
+function (a, b){
+    // sorting logic
+    // return a Number 
+}
+/* sort() method compares all values of the array by passing 
+two values at a time to the compareFunction.   
+
+The 'compareFunction' should return a 'Number'.
+This returned value is used to sort the elements in the following way:
+
+If returned value < 0, 'a' comes before 'b'.
+
+If returned value > 0, 'b' comes before 'a' .
+
+If returned value == 0, 'a' and 'b' remain unchanged relative to each other. */
+
+
+
+// reverse()
+
+//Syntax        //arr.reverse()
+
+//Parameters
+//The reverse() method does not take in any parameters.
+
+/*Return Value 
+Returns the array after reversing the order of its elements.
+
+it changes the original array and no copy is made. */
+
+var a = [1,2,3];
 a.reverse(); // a == [3,2,1]
+
 
 //7.8.7 Array to String Conversions
 
-//The Array.join() method returns an array as a string.
-//array.join(separator)
+/* join() method returns a new string by concatenating 
+all of the elements in an array, separated by a specified separator.  */
 
 
-let a = [1, 2, 3];
+//Syntax        //arr.join(separator)
+
+/*Parameters
+separator (optional) - 
+A string to separate each pair of adjacent elements of the array. 
+By default, it is comma ',' */
+
+/*Return Value
+Returns a String with all the array elements joined by separator.
+
+The join() method does not change the original array. */
+
+var a = [1, 2, 3];
 a.join() // => "1,2,3"
 a.join(" ") // => "1 2 3"
 a.join("") // => "123"
-let b = new Array(10); // An array of length 10 with no elements
+var b = new Array(10); // An array of length 10 with no elements
 b.join("-") // => "---------": a string of 9 hyphens
-
-//The join() method is the inverse of the String.split()
-//method, which creates an array by breaking a string into pieces
-
-[1,2,3].toString() // => "1,2,3"
-["a", "b", "c"].toString() // => "a,b,c"
-[1, [2,"c"]].toString() // => "1,2,c"
-
-
-//7.9 Array-Like Objects
-
-//The following code takes a regular object, adds properties 
-//to make it an array-like object, and then
-//iterates through the “elements” of the resulting pseudo-array:
-
-
-let a = {}; // Start with a regular empty object
-
-// Add properties to make it "array-like"
-let i = 0;
-while(i < 10) {
-    a[i] = i * i;
-    i++;
-}
-a.length = i;
-
-
-// Now iterate through it as if it were a real array
-let total = 0;
-for(let j = 0; j < a.length; j++) {
-    total += a[j];
-}
 
 
 //7.10 Strings as Arrays
 
 
     
-//chatAt()
+//charAt()
 
-//The charAt() method returns the character at a specified index in a string.
-//string.charAt(index)
+//Syntax        //string.charAt(int index)
 
-let s = "test";
-s[1] // => "e"
+/*Parameters
+index - the index of the character (an int value) */
+
+/* Return Value
+returns the character at the specified index
+If the index passed to chartAt() is negative or out of bounds, 
+it throws an exception. */
+
+var s = "test";
 s.charAt(0) // => "t"
+s[1] // => "e"
+
+
+class Main {
+    public static void main(String[] args) {
+      String str1 = "Learn Java";
+      String str2 = "Learn\nJava";
+  
+      // first character
+      System.out.println(str1.charAt(0));  // 'L'
+  
+      // seventh character
+      System.out.println(str1.charAt(6));  // 'J'
+  
+  
+      // sixth character
+      System.out.println(str2.charAt(5));  // '\n'
+    }
+}
+
+/* the index of Strings starts from 0, 
+That's why chartAt(0) returns the first character.  */
