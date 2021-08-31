@@ -1,38 +1,120 @@
-//a function definition may include a list of identifiers,
-//known as parameters, that work as local variables for the body of the
-//function. Function invocations provide values, or arguments, for the
-//function’s parameters.
-
-
-//If a function is assigned to a property of an object, it is known as a
-//method of that object.
-
-
-
-//When a function is invoked on or through anobject, 
-//that object is the invocation context or "this" value for the function.
-
 
 
 //8.1 Defining Functions
+
+/* A function is a block of code that performs a specific task.
+
+
 
 
 //8.1.1 Function Declarations
 
 
-//function functionName(parameters) {
-    // code to be executed
-//}
 
-//Function parameters are the names listed in the function definition.
-//Function arguments are the real values passed to (and received by) the function.
-
-// Print the name and value of each property of o. Return undefined.
-function printprops(o) {
-    for(let p in o) {
-        console.log(`${p}: ${o[p]}\n`);
-    }
+/*Syntax
+function nameOfFunction () {
+    // function body   
 }
+
+A function is declared using the 'function' keyword.
+
+The basic rules of naming a function are similar to naming a variable.
+
+It is better to write a descriptive name for your function. 
+
+The body of function is written within `{}`. */
+
+// declaring a function
+function greet() {
+    console.log("Hello there!");
+}
+
+//Calling a Function
+
+// function call
+greet();
+/*  we have declared a function named greet(). 
+To use that function, we need to call it. */
+
+
+
+//Function Parameters
+// A parameter is a value that is passed when declaring a function.
+
+// program to print the text
+// declaring a function
+function greet(name) {
+    console.log("Hello " + name + ":)");
+}
+// variable name can be different
+let name = prompt("Enter a name: ");
+// calling function
+greet(name);
+
+/*  When a value is passed when declaring a function, it is called 'parameter'. 
+And when the function is called, the value passed is called 'argument'. */
+
+
+
+
+//Add Two Numbers
+
+// program to add two numbers using a function
+// declaring a function
+function add(a, b) { 
+    console.log(a + b);//The function is declared with two parameters 'a' and 'b'.
+
+}
+// calling functions
+add(3,4); //7
+add(2,9); //11
+
+
+
+//Function Return
+/* The 'return' statement can be used to return the value to a function call.
+
+The 'return' statement denotes that the function has ended. 
+Any code after return is not executed.
+
+If nothing is returned, the function returns an 'undefined' value. */
+
+function add(num1,num2){
+    //code
+    return result;
+}
+var x = add(a,b);
+
+
+//Sum of Two Numbers
+
+// program to add two numbers
+// declaring a function
+function add(a, b) {
+    return a + b;
+}
+
+// take input from the user
+let number1 = parseFloat(prompt("Enter first number: "));
+let number2 = parseFloat(prompt("Enter second number: "));
+
+// calling function
+let result = add(number1,number2);
+
+// display the result
+console.log("The sum is " + result);
+
+/* the sum of the numbers is returned by the function 
+using the 'return' statement. And that value is stored in the 'result' variable. */
+
+
+
+
+
+
+
+
+
 
 // Compute the distance between Cartesian points (x1,y1) and (x2,y2).
 function distance(x1, y1, x2, y2) {
@@ -40,7 +122,6 @@ function distance(x1, y1, x2, y2) {
     let dy = y2 - y1;
     return Math.sqrt(dx*dx + dy*dy);
 }
-
 // A recursive function (one that calls itself) that computes factorials
 // Recall that x! is the product of x and all positive integers less than it.
 function factorial(x) {
@@ -52,12 +133,40 @@ function factorial(x) {
 //the name of the function becomes a variable whose value is the function itself.
 
 
+
+
+
 //8.1.2 Function Expressions
 
+//The 'function' keyword can be used to define a function inside an expression.
 
-// This function expression defines a function that squares its argument.
-// Note that we assign it to a variable
-const square = function(x) { return x*x; };
+//Syntax
+
+//The expression is not allowed at the start of a statement.
+/*function [name]([param1[, param2[, ..., paramN]]]) {
+  //code: statement 
+}*/
+
+
+//Parameters 
+
+/*name //Optional
+The function name. Can be omitted, in which case the function is anonymous.
+ The name is only local to the function body.
+
+paramN //Optional
+The name of an argument to be passed to the function.
+
+statements //Optional
+The statements which comprise the body of the function. */
+
+//Creating an unnamed function
+/*The following example defines an unnamed function and assigns it to `z`. 
+The function returns the square of its argument: */
+
+var z = function(y) {
+   return y * y;
+};
 
 // Function expressions can include names, which is useful for recursion.
 const f = function fact(x) { if (x <= 1) return 1; else
@@ -70,157 +179,290 @@ return x*fact(x-1); };
 let tensquared = (function(x) {return x*x;}(10));
 
 
-//the function name is optional for functions defined as expressions, 
-//and most of the preceding function expressions we’ve shown omit it.
-
-
 
 //8.1.3 Arrow Functions
 
 
-hello = function() {
-    return "Hello World!";
-  }
+//Syntax 
+let myFunction = (arg1, arg2, ...argN) => {
+    statement(s)
+}
 
-//it is same as 
-hello = () => {
-    return "Hello World!";
-  }
+/*'myFunction' is the name of the function
+'arg1', 'arg2', '...argN' are the function arguments
+'statement(s)' is the function body */
 
+//If the body has single statement or expression
 
-sum=(x,y) => {return x+y;};
-
-//If the function has only one statement, and the statement returns a value,
-//you can remove the brackets{} and the return keyword:
-sum=(x,y) =>x+y;
-
-//if an arrow function has exactly one parameter, 
-//you can omit the parentheses around the parameter list:
-
-polynomial = x => x*x + 2*x+3;
+//let myFunction = (arg1, arg2, ...argN) => expression
 
 
-const f = x => { return { value: x }; }; // Good: f() returns an object
-const g = x => ({ value: x }); // Good: g() returns an object
 
-const h = x => { value: x }; // Bad: h() returns nothing
-const i = x => { v: x, w: x }; // Bad: Syntax Error
+//Arrow Function with No Argument
+
+/*If a function doesn't take any argument, 
+then you should use 'empty parentheses'. */
+var greet = () => console.log('Hello');
+greet(); // Hello
 
 
-//the expression to be returned is an object literal, then you have to
-//put the object literal inside parentheses to avoid syntactic ambiguity
-//between the curly braces of a function body and the curly braces of 
-//an object literal:
+//Arrow Function with One Argument
+/*If a function has only one argument, you can omit the parentheses. */
+
+var greet = x => console.log(x);
+greet('Hello'); // Hello 
+
+
+//Arrow Function as an Expression
+
+//You can also dynamically create a function and use it as an expression.
+var age = 5;
+var welcome = (age < 18) ?
+  () => console.log('Baby') :
+  () => console.log('Adult');
+welcome(); // Baby
+
+
+
+
+//Multiline Arrow Functions
+
+/*If a function body has multiple statements, 
+you need to put them inside curly brackets {}.  */
+
+var sum = (a, b) => {
+    let result = a + b;
+    return result;
+}
+var result1 = sum(5,7);
+console.log(result1); // 12
+
+
+
+
+//'this' with Arrow Function
+
+/* Inside a regular function, 
+'this' keyword refers to the function where it is called.*/
+
+
+//Inside a regular function
+
+function Person() {
+    this.name = 'Jack',
+    this.age = 25,
+    this.sayName = function () {
+        // this is accessible
+        console.log(this.age);
+        function innerFunc() {
+            // this refers to the global object
+            console.log(this.age);
+            console.log(this);
+        }
+
+        innerFunc();
+    }
+}
+var k = new Person();
+k.sayName();   //25    undefined   Window {}
+
+/* 'this.age' inside 'this.sayName'() is accessible because 'this.sayName()' is the method of an object.
+
+However, 'innerFunc()' is a normal function and 'this.age' is not accessible because this refers to the global object . Hence, 'this.age' inside the 'innerFunc()' function gives 'undefined.' */
+
+
+
+//Inside an arrow function
+
+function Person() {
+    this.name = 'Jack',
+    this.age = 25,
+    this.sayName = function () {
+
+        console.log(this.age);
+        let innerFunc = () => {
+            console.log(this.age);
+        }
+
+        innerFunc();
+    }
+}
+
+var l = new Person();
+l.sayName();  //25  25
+
+/* 'innerFunc()' function is defined using the arrow function. And inside the arrow function, 'this' refers to the parent's scope. Hence, 'this.age' gives 25. */
+
+
+//Arguments Binding
+
+/*Regular functions have arguments binding. That's why when you pass arguments to a regular function, you can access them using the 'arguments' keyword.*/
+
+var x = function () {
+    console.log(arguments);
+}
+x(4,6,7); // Arguments [4, 6, 7]
+
+
+/* Arrow functions do not have arguments binding.
+When you try to access an argument using the arrow function, it will give an error*/
+var x = () => {
+    console.log(arguments);
+}
+x(4,6,7);  // ReferenceError: Can't find variable: arguments
+
+//To solve this issue, you can use the 'spread' syntax. 
+var x = (...n) => {
+    console.log(n);
+}
+x(4,6,7); // [4, 6, 7]
+
+
+//Arrow Function with Promises and Callbacks
+
+/* Arrow functions provide better syntax to write promises and callbacks. */
+// ES5
+asyncFunction().then(function() {
+    return asyncFunction1();
+}).then(function() {
+    return asyncFunction2();
+}).then(function() {
+    finish;
+});
+
+
+//can be written as
+// ES6
+asyncFunction()
+.then(() => asyncFunction1())
+.then(() => asyncFunction2())
+.then(() => finish);
+
+
+
+//Things You Should Avoid With Arrow Functions
+
+/* 1. You should not use arrow functions to create methods inside objects. */
+var person = {
+    name: 'Jack',
+    age: 25,
+    sayName: () => {
+        // this refers to the global .....
+        //
+        console.log(this.age);
+    }
+}
+person.sayName(); // undefined
+
+
+
+/* 2. You cannot use an arrow function as a constructor.*/
+
+var Foo = () => {};
+var foo = new Foo(); // TypeError: Foo is not a constructor
 
 
 
 //8.1.4 Nested Functions
-function hypotenuse(a, b) {
-    function square(x) { return x*x; }
-    return Math.sqrt(square(a) + square(b));
+
+/* A function is called “nested” when it is created inside another function. */
+
+function sayHiBye(firstName, lastName) {
+    // helper nested function to use below
+    function getFullName() {
+      return firstName + " " + lastName;
+    }
+    alert( "Hello, " + getFullName() );
+    alert( "Bye, " + getFullName() );
 }
-hypotenuse(1,2)
+
+/* the nested function 'getFullName()' is made for convenience. It can access the outer variables and so can return the full name.  
+
+a nested function can be returned: 
+either as a property of a new object or as a result by itself. 
+It can then be used somewhere else. No matter where, it still has access to the same outer variables. */
+
+
+/*Below, makeCounter creates the “counter” function that returns the next number on each invocation: */
+function makeCounter() {
+  let count = 0;
+  return function() {
+    return count++;
+  };
+}
+var counter = makeCounter();
+counter(); // 0
+counter(); // 1
+counter(); // 2
+
 
 
 //8.2 Invoking Functions
 
+
+
+
 //8.2.1 Function Invocation
 
-//If the function expression is a property-access expression
-//then it is a method invocation expression.
- 
-printprops({x: 1});
-let total = distance(0,0,2,1) + distance(2,1,3,5);
-factorial=x=>{return x*x;}
-let probability = factorial(5)/factorial(13);
+//Function invocation is performed by invoking a function using ():
+add(2,3); //5
+
+/* When using the function invocation pattern, this is set to the global object.
+It is noticable when using an inner function within a method function. 
+An example should explain things better: */
+
+var value = 500; //Global variable
+var obj = {
+    value: 0,
+    increment: function() {
+        this.value++;
+        var innerFunction = function() {
+            alert(this.value);
+        }
+        innerFunction(); //Function invocation pattern
+    }
+}
+obj.increment(); //Method invocation pattern
 
 
 
-
+/* Note that innerFunction is called using the function invocation pattern, therefore 'this' is set to the global object. The result is that innerFunction will not have 'this' set to current object. Instead, it is set to the global object, where value is defined as 500. */
 
 
 //8.2.2 Method Invocation
-//A method is nothing more than a JavaScript function that is stored in a
-//property of an object.
 
-//If you have a function f and an object o, 
-//you can define a method named m of o with the following line:
-o.m = f;
+/* When a function is part of an object, it is called a 'method'. 'Method' invocation is the pattern of invoking a function that is part of an 'object'. */
 
-
-//Having defined the method m() of the object o
-p.m();
-
-
-let calculator = { // An object literal
-    operand1: 1,
-    operand2: 1,
-    add() { // We're using method shorthand syntax for this function
-    // Note the use of the this keyword to refer to the containing object.
-    this.result = this.operand1 + this.operand2;
+var obj = {
+    value: 0,
+    increment: function() {
+        this.value+=1;
     }
 };
-calculator.add(); // A method invocation to compute 1+1.
-calculator.result // => 2
+obj.increment(); //Method invocation
+
+/* Method invocation is identified when a function is preceded by 'object.' , where 'object' is the name of some object. JavaScript will set the 'this' parameter to the 'object' where the method was invoked on. In the example above, this would be set to obj. JavaScript binds 'this' at execution (also known as late binding). */
 
 
-//property access expressions that use square brackets also cause method
-//invocation.
-
-o["m"](x,y); // Another way to write o.m(x,y).
-a[0](z) // Also a method invocation (assuming a[0] is a function).
-
-
-//Method invocations may also involve more complex property access expressions:
-customer.surname.toUpperCase(); // Invoke method on customer.surname
-f().m(); // Invoke method m() on return value of f()
-
-//this in a Method
-//In an object method, this refers to the "owner" of the method.
-//Note that this is a keyword, not a variable or property name.
-
-
-//If a nested function (that is not an arrow function) 
-//is invoked as a function, then its this value will be 
-//either the global object (non-strict mode) or undefined (strict mode)
-
-
-let o = { // An object o.
-    m: function() { // Method m of the object.
-        let self = this; // Save the "this" value in a variable.
-        this === o // => true: "this" is the object o.
-        f(); // Now call the helper function f().
-        function f() { // A nested function f
-            this === o // => false: "this" is global or undefined
-            self === o // => true: self is the outer "this" value.
-        }
-    }
-};
-o.m(); // Invoke the method m on the object o.
-
-//Inside the nested function f(), the "this" keyword is not equal to the
-//object o.
-
-//it will properly inherit the "this" value:
-const f = () => {
-    this === o // true, since arrow functions inherit this
-    };
 
 
 //8.2.3 Constructor Invocation
 
-//If a function or method invocation is preceded by the keyword new,
-//then it is a constructor invocation.
+/* The constructor invocation pattern involves putting the 'new' operator just before the function is invoked. */
 
-o = new Object();
-o = new Object;
+var Cheese = function(type) {
+    var cheeseType = type;
+    return cheeseType;
+}
+cheddar = new Cheese("cheddar"); //new object returned, not the type.
 
-//A constructor invocation creates a new, empty object that inherits from
-//the object specified by the prototype property of the constructor.
+/* 'this' parameter will be set to the newly created object and the 'return' operator of the function will have its behaviour altered. */
+/*Regarding the behaviour of the 'return' operator in constructor invocation, 
+there are two cases: */
 
+/* 1 If the function returns a simple type (number, string, boolean, null or undefined), the return will be ignored and instead 'this' will be returned (which is set to the new object).
 
-//Constructor functions do not normally use the return keyword.
-
+2 If the function returns an instance of 'Object' (anything other than a simple type), then that object will be returned instead of returning 'this'. This pattern is not used that often, but it may have utility when used with closures. */
 
 
 
@@ -229,28 +471,24 @@ o = new Object;
 
 //8.3.1 Optional Parameters and Defaults
 
-//When a function is invoked with fewer arguments than declared parameters, 
-//the additional parameters are set to their default value,
-//which is normally undefined.
+/* When a function is invoked with fewer arguments than declared parameters,
+the additional parameters are set to their default value,
+which is normally 'undefined'.*/
 
-
-// Append the names of the enumerable properties of object o to the
-// array a, and return a. If a is omitted, create and return a new array.
+// Append the names of the enumerable properties of object 'o' to the array a,
+// and return 'a'. If 'a' is omitted, create and return a new array.
 function getPropertyNames(o, a) {
     if (a === undefined) a = []; // If undefined, use a new array
     for(let property in o) a.push(property);
     return a;
 }
-
-//Instead of using an if statement in the first line of this function, you
-//can use the || operator in this idiomatic way:
+/*Instead of using an if statement in the first line of this function, you
+can use the || operator in this idiomatic way: */
 a = a || [];
 
-
-
 // getPropertyNames() can be invoked with one or two arguments:
-let o = {x: 1}, p = {y: 2, z: 3}; // Two objects for testing
-let a = getPropertyNames(o); // a == ["x"]; get o's properties in a new array
+var o = {x: 1}, p = {y: 2, z: 3}; // Two objects for testing
+var a = getPropertyNames(o); // a == ["x"]; get o's properties in a new array
 getPropertyNames(p, a); // a == ["x","y","z"]; add p's properties to it
 
 
