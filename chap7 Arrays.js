@@ -24,17 +24,96 @@ let undefs = [,,]; // An array with no elements but a length of 2
 
 //7.1.2 The Spread Operator
 
-//you can use the “spread operator,” ..., to include
-//the elements of one array within an array literal:
+//spread operator '...' is used to expand or spread an iterable or an array. 
 
-var a = [1, 2, 3];
-var b = [0, ...a, 4]; // c == [0, 1, 2, 3, 4]
+var arrValue = ['My', 'name', 'is', 'Jack'];
+
+console.log(arrValue);   // ["My", "name", "is", "Jack"]
+console.log(...arrValue); // My name is Jack
+
+console.log(...arrValue)
+//is equivalent to:
+console.log(...arrValue)
+//is equivalent to:
+console.log('My', 'name', 'is', 'Jack');
 
 
-let original = [1,2,3];
-let copy = [...original];
-copy[0] = 0; // Modifying the copy does not change the original
-original[0] // => 1
+//Copy Array Using Spread Operator
+/*You can also use the spread syntax '...' 
+to copy the items into a single array */
+var arr1 = ['one', 'two'];
+var arr2 = [...arr1, 'three', 'four', 'five'];
+console.log(arr2);  //  ["one", "two", "three", "four", "five"]
+
+
+//Clone Array Using Spread Operator
+
+//objects are assigned by reference and not by values. 
+
+var arr1 = [ 1, 2, 3];
+var arr2 = arr1;
+console.log(arr1); // [1, 2, 3]
+console.log(arr2); // [1, 2, 3]
+
+// append an item to the array
+arr1.push(4);
+console.log(arr1); // [1, 2, 3, 4]
+console.log(arr2); // [1, 2, 3, 4]
+
+/* both variables 'arr1' and 'arr2' are referring to the same array. 
+Hence the change in one variable results in the change in both variables.
+
+However, if you want to copy arrays so that 
+they do not refer to the same array, you can use the spread operator.
+This way, the change in one array is not reflected in the other.  */
+
+var arr1 = [ 1, 2, 3];
+// copy using spread syntax
+var arr2 = [...arr1];
+console.log(arr1); // [1, 2, 3]
+console.log(arr2); // [1, 2, 3]
+
+// append an item to the array
+arr1.push(4);
+console.log(arr1); // [1, 2, 3, 4]
+console.log(arr2); // [1, 2, 3]
+
+
+//Spread Operator with Object
+
+//You can also use the spread operator with object literals. For example,
+var obj1 = { x : 1, y : 2 };
+var obj2 = { z : 3 };
+// add members obj1 and obj2  to obj3
+var obj3 = {...obj1, ...obj2};
+
+console.log(obj3); // {x: 1, y: 2, z: 3}
+//Here, both 'obj1' and 'obj2' properties are added to 'obj3' using the spread operator.
+
+
+
+//Rest Parameter
+/* When the spread operator(...)is used as a parameter, 
+it is known as the rest parameter.
+
+You can also accept multiple arguments in a function call using the rest parameter.*/
+var func = function(...args) {
+    console.log(args);
+}
+func(3); // [3]
+func(4, 5, 6); // [4, 5, 6]
+/* When a single argument is passed to the 'func()' function, the 'rest' parameter 
+takes only one parameter.
+
+When three arguments are passed, the rest parameter takes all three parameters. */
+
+//You can also pass multiple arguments to a function using the spread operator.
+
+function sum(x, y ,z) {
+    console.log(x + y + z);
+}
+var num1 = [1, 3, 4, 5];
+sum(...num1); // 8
 
 
 //7.1.3 The Array() Constructor(Using the new keyword)
@@ -326,9 +405,7 @@ and invoke that function once for each element of the array. */
 /*forEach() method calls a function and iterates over the elements of an array. 
 The forEach() method can also be used on Maps and Sets.*/
 
-//Syntax
-
-array.forEach(function(currentValue, index, arr))
+//Syntax //array.forEach(function(currentValue, index, arr))
 /* 
 function(currentValue, index, arr) - a function to be run for each element of an array
 
@@ -337,7 +414,7 @@ currentValue - the value of an array
 index (optional) - the index of the current element */
 
 //forEach with Arrays
-let students = ['John', 'Sara', 'Jack'];
+var students = ['John', 'Sara', 'Jack'];
 //using forEach
 students.forEach(myFunction);
 function myFunction(item) {

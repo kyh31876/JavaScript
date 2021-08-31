@@ -961,13 +961,18 @@ name = person.fullName;
 
 //The JavaScript Object toString() method returns the object as a string.
 
-//Syntax
-obj.toString()
+//Syntax        //obj.toString()
 
 //Return value
 //Returns a string representing the object.
 
-/*Every object descended from Object inherits toString() 
+// Parameters
+//The toString() method does not take any parameters.
+
+/*Return value 
+Returns a string representing the object. 
+
+Every object descended from Object inherits toString() 
 and if not overridden, it returns "[object <type>]" */
 
 //The toString() method does not take any parameters.
@@ -977,11 +982,12 @@ when the object is to be represented as a text value or
 when an object is referred to in a manner in which a string is expected. */
 
 // built-in objects
-let num = 10;
+var num = 10;
 
 // number takes in optional radix argument (numeral base)
 console.log(num.toString(2)); // "1010" in binary
-console.log(new Date().toString()); // Thu Aug 06 2020 12:08:44 GMT+0545 (Nepal Time)
+console.log(new Date().toString()); 
+//Sun Aug 29 2021 15:56:32 GMT+0900 (Korean Standard Time)
 
 // overriding default toString(), custom object
 function Dog(name, breed, sex) {
@@ -1083,9 +1089,8 @@ console.log(+null + num); // 5
 
 //6.9.4 JSON.stringify() method
 
-/* The JSON.stringify() method converts a object or value to a JSON string, 
-optionally replacing values if a replacer function is specified or 
-optionally including only the specified properties if a replacer array is specified. */
+/* JSON.stringify() method converts JavaScript objects into strings.
+When sending data to a web server the data has to be a string.*/
 
 
 //Syntax
@@ -1099,14 +1104,13 @@ value
 //The value to convert to a JSON string.
 
 //replacer Optional
-/* A function that alters the behavior of the stringification process, 
-or an array of String and Number that serve as an allowlist 
-for selecting/filtering the properties of the value object 
-to be included in the JSON string. */
+/* Either a function or an array used to transform the result. 
+The replacer is called for each item. */
 
 //space Optional
-/* A String or Number object that's used to insert white space 
-into the output JSON string for readability purposes. */
+/* Either a String or a Number.
+A string to be used as white space (max 10 characters),
+or a Number, from 0 to 10, to indicate how many space characters to use as white space. */
 
 JSON.stringify({});                    // '{}'
 JSON.stringify(true);                  // 'true'
