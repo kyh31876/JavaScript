@@ -1,15 +1,9 @@
 
-
 //8.1 Defining Functions
-
 /* A function is a block of code that performs a specific task.
 
 
-
-
 //8.1.1 Function Declarations
-
-
 
 /*Syntax
 function nameOfFunction () {
@@ -17,11 +11,9 @@ function nameOfFunction () {
 }
 
 A function is declared using the 'function' keyword.
-
 The basic rules of naming a function are similar to naming a variable.
 
 It is better to write a descriptive name for your function. 
-
 The body of function is written within `{}`. */
 
 // declaring a function
@@ -29,30 +21,142 @@ function greet() {
     console.log("Hello there!");
 }
 
-//Calling a Function
 
 // function call
 greet();
-/*  we have declared a function named greet(). 
-To use that function, we need to call it. */
+/*we have declared a function named 'greet()'. 
+To use that function, we need to call it.
 
+Here's how you can call the above greet() function.*/
 
 
 //Function Parameters
-// A parameter is a value that is passed when declaring a function.
-
-// program to print the text
-// declaring a function
-function greet(name) {
-    console.log("Hello " + name + ":)");
+//A parameter is the variable listed inside the parentheses in the function declaration
+function showMessage(from, text) { // parameters: from, text
+    console.log(from + ': ' + text);
 }
-// variable name can be different
-let name = prompt("Enter a name: ");
-// calling function
-greet(name);
 
-/*  When a value is passed when declaring a function, it is called 'parameter'. 
-And when the function is called, the value passed is called 'argument'. */
+/* A parameter is the variable listed inside 
+the parentheses in the function declaration (it’s a declaration time term) */
+
+function showMessage(from, text) {
+    from = '*' + from + '*'; // make "from" look nicer
+    console.log( from + ': ' + text );
+}
+var from = "Ann";
+showMessage(from, "Hello"); // *Ann*: Hello
+
+// the value of "from" is the same, the function modified a local copy
+console.log(from); // Ann
+
+/*function 'showMessage' is declared with two parameters,
+then called with two arguments: from and "Hello"". */
+
+//Arguments
+
+/* 'arguments' is an object that is accessible inside 'functions'
+that contain the values of the arguments passed to that function. */
+function test(a, b, c) {
+    console.log("Printing arguments: ",
+    arguments[0], arguments[1], arguments[2]);
+}
+test(1,2,3);  //1, 2, 3
+
+/* The 'arguments' object is only available inside non-arrow functions. 
+Although it isn’t an array, we can access elements using the index, 
+and it has a length property that contains the number of arguments 
+passed to the function. */
+function test(a, b, c) {
+console.log(arguments.length);
+}
+test(1); // 1
+test(1, 2); // 2
+
+
+/* The 'arguments' objects contain all of the arguments passed 
+during the function call, 
+even if there are not as many parameters in the function declaration. */
+function test() {
+    console.log(arguments.length);
+}
+test();  //0
+test(1);  //1
+test(1,2,3,5);  //4
+
+
+//You can update the value of arguments
+function test() {
+  arguments[0] = 100;
+  console.log(arguments[0]);
+}
+test(); //100
+test(1); //100
+
+
+//Default values
+
+/* If a function is called, but an argument is not provided, 
+then the corresponding value becomes 'undefined'. */
+
+//function showMessage(from, text) can be called with a single argument:
+showMessage("Ann"); //"*Ann*: undefined"
+
+/*As the value for 'text' isn’t passed, it becomes 'undefined'. */
+
+
+
+
+//Alternative default parameters
+
+/*We can check if the parameter is passed during the function execution, 
+by comparing it with undefined: */
+
+function showMessage(text) {
+    // ...  
+    if (text === undefined) { // if the parameter is missing
+      text = 'empty message';
+    }
+console.log(text);
+}
+showMessage(); // empty message
+
+
+//Returning a value
+
+/* A function can return a value back into the calling code as the result. */
+function sum(a, b) {
+    return a + b;
+}
+var result = sum(1, 2);
+console.log( result ); // 3
+
+/* the directive `return` can be in any place of the function. 
+When the execution reaches it, the function stops, and the value is returned to the calling code (assigned to result above). */
+
+function checkAge(age) {
+    if (age >= 18) {
+      return true;
+    } else {
+      return confirm('Do you have permission from your parents?');
+    }
+}  
+var age = prompt('How old are you?', 18);
+if ( checkAge(age) ) {
+    console.log( 'Access granted' );
+} else {
+    console.log( 'Access denied' );
+}
+
+/* It is possible to use `return` without a value. 
+That causes the function to exit immediately. */
+function showMovie(age) {
+    if (!checkAge(age)) {
+      return;
+    }
+    console.log( "Showing you the movie" ); // (*)
+    // ...
+}
+
 
 
 
@@ -83,7 +187,7 @@ function add(num1,num2){
     //code
     return result;
 }
-var x = add(a,b);
+var x = add(num1,numb2);
 
 
 //Sum of Two Numbers
@@ -99,7 +203,7 @@ let number1 = parseFloat(prompt("Enter first number: "));
 let number2 = parseFloat(prompt("Enter second number: "));
 
 // calling function
-let result = add(number1,number2);
+var result = add(number1,number2);
 
 // display the result
 console.log("The sum is " + result);
@@ -112,16 +216,13 @@ using the 'return' statement. And that value is stored in the 'result' variable.
 
 
 
-
-
-
-
 // Compute the distance between Cartesian points (x1,y1) and (x2,y2).
 function distance(x1, y1, x2, y2) {
     let dx = x2 - x1;
     let dy = y2 - y1;
     return Math.sqrt(dx*dx + dy*dy);
 }
+
 // A recursive function (one that calls itself) that computes factorials
 // Recall that x! is the product of x and all positive integers less than it.
 function factorial(x) {
@@ -140,12 +241,12 @@ function factorial(x) {
 
 //The 'function' keyword can be used to define a function inside an expression.
 
-//Syntax
-
 //The expression is not allowed at the start of a statement.
-/*function [name]([param1[, param2[, ..., paramN]]]) {
+
+/*Syntax
+function [name]([param1[, param2[, ..., paramN]]]) {
   //code: statement 
-}*/
+}               */
 
 
 //Parameters 
@@ -193,9 +294,7 @@ let myFunction = (arg1, arg2, ...argN) => {
 'statement(s)' is the function body */
 
 //If the body has single statement or expression
-
 //let myFunction = (arg1, arg2, ...argN) => expression
-
 
 
 //Arrow Function with No Argument
@@ -278,16 +377,13 @@ function Person() {
     this.name = 'Jack',
     this.age = 25,
     this.sayName = function () {
-
         console.log(this.age);
         let innerFunc = () => {
             console.log(this.age);
         }
-
         innerFunc();
     }
 }
-
 var l = new Person();
 l.sayName();  //25  25
 
@@ -355,11 +451,10 @@ var person = {
 person.sayName(); // undefined
 
 
-
 /* 2. You cannot use an arrow function as a constructor.*/
-
 var Foo = () => {};
 var foo = new Foo(); // TypeError: Foo is not a constructor
+
 
 
 
@@ -372,8 +467,8 @@ function sayHiBye(firstName, lastName) {
     function getFullName() {
       return firstName + " " + lastName;
     }
-    alert( "Hello, " + getFullName() );
-    alert( "Bye, " + getFullName() );
+    console.log( "Hello, " + getFullName() );
+    console.log( "Bye, " + getFullName() );
 }
 
 /* the nested function 'getFullName()' is made for convenience. It can access the outer variables and so can return the full name.  
@@ -400,8 +495,6 @@ counter(); // 2
 //8.2 Invoking Functions
 
 
-
-
 //8.2.1 Function Invocation
 
 //Function invocation is performed by invoking a function using ():
@@ -417,7 +510,7 @@ var obj = {
     increment: function() {
         this.value++;
         var innerFunction = function() {
-            alert(this.value);
+            console.log(this.value);
         }
         innerFunction(); //Function invocation pattern
     }
@@ -425,13 +518,16 @@ var obj = {
 obj.increment(); //Method invocation pattern
 
 
-
-/* Note that innerFunction is called using the function invocation pattern, therefore 'this' is set to the global object. The result is that innerFunction will not have 'this' set to current object. Instead, it is set to the global object, where value is defined as 500. */
+/* Note that innerFunction is called using the function invocation pattern,
+ therefore 'this' is set to the global object. 
+ The result is that innerFunction will not have 'this' set to current object. 
+ Instead, it is set to the global object, where value is defined as 500. */
 
 
 //8.2.2 Method Invocation
 
-/* When a function is part of an object, it is called a 'method'. 'Method' invocation is the pattern of invoking a function that is part of an 'object'. */
+/* When a function is part of an object, it is called a 'method'. 
+'Method' invocation is the pattern of invoking a function that is part of an 'object'. */
 
 var obj = {
     value: 0,
@@ -441,14 +537,19 @@ var obj = {
 };
 obj.increment(); //Method invocation
 
-/* Method invocation is identified when a function is preceded by 'object.' , where 'object' is the name of some object. JavaScript will set the 'this' parameter to the 'object' where the method was invoked on. In the example above, this would be set to obj. JavaScript binds 'this' at execution (also known as late binding). */
+/* Method invocation is identified when a function is preceded by 'object.' ,
+where 'object' is the name of some object. 
+JavaScript will set the 'this' parameter to the 'object' 
+where the method was invoked on. In the example above, this would be set to obj.
+JavaScript binds 'this' at execution (also known as late binding). */
 
 
 
 
 //8.2.3 Constructor Invocation
 
-/* The constructor invocation pattern involves putting the 'new' operator just before the function is invoked. */
+/* The constructor invocation pattern involves putting the 'new' operator 
+just before the function is invoked. */
 
 var Cheese = function(type) {
     var cheeseType = type;
@@ -456,34 +557,51 @@ var Cheese = function(type) {
 }
 cheddar = new Cheese("cheddar"); //new object returned, not the type.
 
-/* 'this' parameter will be set to the newly created object and the 'return' operator of the function will have its behaviour altered. */
+/* 'this' parameter will be set to the newly created object and 
+the 'return' operator of the function will have its behaviour altered. */
+
 /*Regarding the behaviour of the 'return' operator in constructor invocation, 
 there are two cases: */
 
-/* 1 If the function returns a simple type (number, string, boolean, null or undefined), the return will be ignored and instead 'this' will be returned (which is set to the new object).
+/* 1 If the function returns a simple type  (number, string, boolean, null or undefined)
+, the `return` will be ignored and instead 'this' will be returned 
+(which is set to the new object).
 
-2 If the function returns an instance of 'Object' (anything other than a simple type), then that object will be returned instead of returning 'this'. This pattern is not used that often, but it may have utility when used with closures. */
+2 If the function returns an instance of 'Object' (anything other than a simple type),
+then that object will be returned instead of returning 'this'. 
+This pattern is not used that often, but it may have utility when used with closures. */
 
 
 
 
 //8.3 Function Arguments and Parameters
 
-//8.3.1 Optional Parameters and Defaults
+//8.3.1.1Naming a function
+
+//Function starting with…
+
+/*"get…" – return a value,
+"calc…" – calculate something,
+"create…" – create something,
+"check…" – check something and return a boolean, etc. */
+
+
+//8.3.1.2 Optional Parameters and Defaults
 
 /* When a function is invoked with fewer arguments than declared parameters,
 the additional parameters are set to their default value,
-which is normally 'undefined'.*/
+which is normally 'undefined'    .*/
 
-// Append the names of the enumerable properties of object 'o' to the array a,
-// and return 'a'. If 'a' is omitted, create and return a new array.
+/* Append the names of the enumerable properties of object 'o' to the array 'a',
+and return 'a'. If 'a' is omitted, create and return a new array. */
+
 function getPropertyNames(o, a) {
     if (a === undefined) a = []; // If undefined, use a new array
     for(let property in o) a.push(property);
     return a;
 }
-/*Instead of using an if statement in the first line of this function, you
-can use the || operator in this idiomatic way: */
+/*Instead of using an 'if' statement in the first line of this function, 
+you can use the '||' operator in this idiomatic way: */
 a = a || [];
 
 // getPropertyNames() can be invoked with one or two arguments:
@@ -495,123 +613,155 @@ getPropertyNames(p, a); // a == ["x","y","z"]; add p's properties to it
 getPropertyNames=(o,a) =>{if (a===undefined) a=[];
     for(let property in o) a.push(property);
     return a;
-}
+};
+
+/* '||' operator returns its first argument 
+if  that argument is truthy and otherwise returns its second argument. */
+
+/*may be you want to calls your function cannot omit 
+the first argument and pass the second: they would have to
+explicitly pass undefined as the first argument. */
 
 
+/*Parameter default expressions are evaluated when your function is called,
+not when it is defined,*/
 
-//|| operator returns its first argument if
-//that argument is truthy and otherwise returns its second argument.
-
-//may be you want to calls your function cannot omit the first argument 
-//and pass the second: they would have to
-//explicitly pass undefined as the first argument.
-
-
-//Parameter default expressions are evaluated when your function is called,
-//not when it is defined,
-
-// This function returns an object representing a rectangle's 2 dimensions.
-// If only width is supplied, make it twice as high as it is wide.
-const rectangle = (width, height=width*2) => ({width,
-height});
-rectangle(1) // => { width: 1, height: 2 }
 
 
 //8.3.2 Rest Parameters and Variable-Length Argument Lists
 
-//Parameter defaults enable us to write functions that can be invoked
-//with fewer arguments than parameters.
+//When we see "..." in the code, it is either 'rest parameters' or the 'spread syntax'.
+
+/*Rest parameters '...'
+A function can be called with any number of arguments, no matter how it is defined. */
+function sum(a, b) {
+    return a + b;
+} 
+console.log(sum(1, 2, 3, 4, 5) );
+/* There will be no error because of “excessive” arguments. 
+But of course in the result only the first two will be counted. */
+
+/* The rest of the parameters can be included in the function definition 
+by using three dots '...' followed by the name of the array that will contain them. */
+
+//'...' literally mean “gather the remaining parameters into an array”.
+function sumAll(...args) { // args is the name for the array
+    let sum = 0;
+    for (let arg of args) sum += arg;
+    return sum;
+}  
+console.log( sumAll(1) ); // 1
+console.log( sumAll(1, 2) ); // 3
+console.log( sumAll(1, 2, 3) ); // 6
 
 
-//Functions like this example that can accept any number of
-//arguments are called variadic functions,
-function max(first=-Infinity, ...rest) {
-    let maxValue = first; // Start by assuming the first arg is biggest
-    // Then loop through the rest of the arguments, looking for bigger
-    for(let n of rest) {
-        if (n > maxValue) {
-            maxValue = n;
-        }
-    }
-    // Return the biggest
-    return maxValue;
+/* We can choose to get the first parameters as variables, and gather only the rest. 
+
+Here the first two arguments go into variables and the rest go into 'titles' array: */
+
+function showName(firstName, lastName, ...titles) {
+    console.log( firstName + ' ' + lastName ); // Julius Caesar  
+    // the rest go into titles array
+    // i.e. titles = ["Consul", "Imperator"]
+    console.log( titles[0] ); // Consul
+    console.log( titles[1] ); // Imperator
+    console.log( titles.length ); // 2
 }
-max(1, 10, 100, 2, 3, 1000, 4, 5, 6) // => 1000
-    
-//A rest parameter is preceded by three periods, and it must be the last
-//parameter in a function declaration.
+  
+showName("Julius", "Caesar", "Consul", "Imperator");
+//The rest parameters must be at the end
 
 
+//8.3.3 The Argument variables 
 
-//8.3.3 The Arguments Object
-
-//within the body of any function, the identifier arguments 
-//refers to the Arguments object for that invocation.
-
-//Arguments object is an array-like object (see  7.9) that allows the
-//argument values passed to the function to be retrieved by number
-
-
-//rewritten to use the Arguments object instead of a rest parameter:
-function max(x) {
-    let maxValue = -Infinity;
-    // Loop through the arguments, looking for, and remembering, the biggest.
-    for(let i = 0; i < arguments.length; i++) {
-        if (arguments[i] > maxValue) maxValue = arguments[i];
-    }
-    // Return the biggest
-    return maxValue;
+/* There is also a special array-like object named arguments
+that contains all arguments by their index. */
+function showName() {
+    console.log( arguments.length );
+    console.log( arguments[0] );
+    console.log( arguments[1] );
+    // it's iterable
+    // for(let arg of arguments) console.log(arg);
 }
-max(1, 10, 100, 2, 3, 1000, 4, 5, 6) // => 1000
 
-//if you encounter a function that uses arguments, you can often replace it
-//with a ...args rest parameter.
+// shows: 2, Julius, Caesar
+showName("Julius", "Caesar");
 
+// shows: 1, Ilya, undefined (no second argument)
+showName("Ilya");
+
+/* 'arguments' is both 'array-like' and 'iterable', it’s not an array.
+Also, it always contains all arguments. We can’t capture them partially, 
+like we did with rest parameters. */
+
+//Arrow functions do not have "arguments"
+
+
+/* If we access the arguments object from an arrow function, 
+it takes them from the outer “normal” function. */
+function f() {
+    let showArg = () => console.log(arguments[0]);
+    showArg();
+}
+f(1); // 1
 
 
 
 //8.3.4 The Spread Operator for Function Calls
 
-
-let numbers = [5, 2, 10, -1, 9, 100, 1];
-Math.min(...numbers) // => -1
-//it is a special JavaScript syntax that 
-//can be used in array literals and function invocations.
+/* When '...' occurs in a function call or alike, 
+it’s called a “spread syntax” and expands an array into a list. */
 
 
-//in  8.3.2, using ... in a function definition gathers
-//multiple function arguments into an array.
+var arr = [3, 5, 1];
+console.log( Math.max(...arr) ); // 5 ('spread' turns array into a list of arguments)
+/* When '...arr' is used in the function call, 
+it “expands” an iterable object arr into the list of arguments.*/
 
-// This function takes a function and returns a wrapped version
-function timed(f) {
-    return function(...args) { // Collect args into a rest parameter array
-        console.log(`Entering function ${f.name}`);
-        let startTime = Date.now();
-        try {
-            // Pass all of our arguments to the wrapped function
-            return f(...args); // Spread the args back out again
-        }
-        finally {
-            // Before we return the wrapped return value, print elapsed time.
-            console.log(`Exiting ${f.name} after
-${Date.now()-startTime}ms`);
-        }
-    };
-}
-// Compute the sum of the numbers between 1 and n by brute force
-function benchmark(n) {
-    let sum = 0;
-    for(let i = 1; i <= n; i++) sum += i;
-    return sum;
-}
-// Now invoke the timed version of that test function
-timed(benchmark)(1000000) // => 500000500000; this is the sum of the numbers
+//We also can pass multiple iterables this way:
+var arr1 = [1, -2, 3, 4];
+var arr2 = [8, 3, -8, 1];
+console.log( Math.max(...arr1, ...arr2) ); // 8
+
+//We can even combine the spread syntax with normal values:
+var arr1 = [1, -2, 3, 4];
+var arr2 = [8, 3, -8, 1];
+console.log( Math.max(1, ...arr1, 2, ...arr2, 25) ); //25
 
 
-benchmark=(n)=>{let sum =0;
-for(let i=1;i<=n;i++) sum +=i;
-return sum;
-}
+//Also, the spread syntax can be used to merge arrays:
+var arr = [3, 5, 1];
+var arr2 = [8, 9, 15];
+
+var merged = [0, ...arr, 2, ...arr2];
+console.log(merged); // 0,3,5,1,2,8,9,15 (0, then arr, then 2, then arr2)
+
+/* they are also iterable
+here we use the spread syntax to turn the string into array of characters: */
+var str = "Hello";
+console.log( [...str] ); // H,e,l,l,o
+
+
+/* 'spread syntax' internally uses iterators to gather elements,
+the same way as 'for..of' does. */
+
+
+
+/* For this particular task we could also use 'Array.from', 
+because it converts an iterable (like a string) into an array: */
+
+var str = "Hello";
+// Array.from converts an iterable into an array
+console.log( Array.from(str) ); // H,e,l,l,o
+
+/*But there’s a subtle difference between 'Array.from(obj)' and '[...obj]':
+
+'Array.from' operates on both array-likes and iterables.
+The spread syntax works only with iterables. */
+
+
+
+
 
 
 //8.3.5 Destructuring Function Arguments into Parameters
