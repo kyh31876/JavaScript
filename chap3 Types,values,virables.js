@@ -3,8 +3,10 @@ any particular value type, and any variable can be assigned (and re-assigned)
 values of all types:  */ 
 
 let foo=42;    // foo is now a number
-foo    = 'bar'; // foo is now a string
-foo     = true;  // foo is now a boolean
+foo = 'bar'; // foo is now a string
+foo = true;  // foo is now a boolean
+
+
 
 //Primitive
 
@@ -21,14 +23,17 @@ new WeakMap, new WeakSet, new Date and almost everything made with new keyword; 
 
 //Function : a non-data structure, though it also answers for typeof operator:i
 typeof instance === 'function'
- /*This is merely a special shorthand for Functions, though every Function 
- constructor is derived from Object constructor. */
+/*This is merely a special shorthand for Functions, 
+though every Function  constructor is derived from Object constructor. */
+
+
+
 
 
 //Primitive values
 
-//All types except objects define immutable values
-//We refer to values of these types as "primitive values".
+/*All types except objects define immutable values
+We refer to values of these types as "primitive values". */
 
 //Undefined type
 
@@ -39,9 +44,6 @@ console.log("x's value is", x) //logs "x's value is undefined"
 
 //Null types
 //The Null type has exactly one value: null
-
-
-
 
 
 
@@ -97,53 +99,53 @@ Math.exp(3) // Math.E cubed
 //ES6 defines more functions on the Math object:
 Math.cbrt(27) // => 3: cube root
 Math.hypot(3, 4) // => 5: square root of sum of squares of all arguments
-Math.log10(100) // => 2: Base-10 logarithm
-Math.log2(1024) // => 10: Base-2 logarithm
-Math.log1p(x) // Natural log of (1+x); accurate for very small x
-Math.expm1(x) // Math.exp(x)-1; the inverse of
-Math.log1p()
-Math.sign(x) // -1, 0, or 1 for arguments <, ==, or > 0
-Math.imul(2,3) // => 6: optimized multiplication of 32-bit integers
-Math.clz32(0xf) // => 28: number of leading zero bits in a 32-bit integer
-Math.trunc(3.9) // => 3: convert to an integer by truncating fractional part
-Math.fround(x) // Round to nearest 32-bit float number
-Math.sinh(x) // Hyperbolic sine. Also Math.cosh(),
-Math.tanh()
-Math.asinh(x) // Hyperbolic arcsine. Also Math.acosh(),
-Math.atanh()
+Math.log10(100); // => 2: Base-10 logarithm
+Math.log2(1024); // => 10: Base-2 logarithm
+Math.log1p(x); // Natural log of (1+x); accurate for very small x
+Math.expm1(x); // Math.exp(x)-1; the inverse of
+Math.log1p();
+Math.sign(x); // -1, 0, or 1 for arguments <, ==, or > 0
+Math.imul(2,3); // => 6: optimized multiplication of 32-bit integers
+Math.clz32(0xf); // => 28: number of leading zero bits in a 32-bit integer
+Math.trunc(3.9); // => 3: convert to an integer by truncating fractional part
+Math.fround(x); // Round to nearest 32-bit float number
+Math.sinh(x); // Hyperbolic sine. Also Math.cosh(),
+Math.tanh();
+Math.asinh(x); // Hyperbolic arcsine. Also Math.acosh(),
+Math.atanh();
 
 
 /*JavaScript predefines global constants Infinity and NaN to hold the
 positive infinity and not-a-number value, and these values are also
 available as properties of the Number object: */
 
-Infinity // A positive number too big to represent
-Number.POSITIVE_INFINITY // Same value 1/0 // => Infinity
-Number.MAX_VALUE * 2 // => Infinity; overflow
--Infinity // A negative number too big to represent
-Number.NEGATIVE_INFINITY // The same value
--1/0 // => -Infinity
--Number.MAX_VALUE * 2 // => -Infinity
-NaN // The not-a-number value
-Number.NaN // The same value, written another way
-0/0 // => NaN
-Infinity/Infinity // => NaN
-Number.MIN_VALUE/2 // => 0: underflow
--Number.MIN_VALUE/2 // => -0: negative zero
--1/Infinity // -> -0: also negative 0
--0
+Infinity; // A positive number too big to represent
+Number.POSITIVE_INFINITY; // Same value 1/0 // => Infinity
+Number.MAX_VALUE * 2; // => Infinity; overflow
+-Infinity; // A negative number too big to represent
+Number.NEGATIVE_INFINITY; // The same value
+-1/0; // => -Infinity
+-Number.MAX_VALUE * 2; // => -Infinity
+NaN; // The not-a-number value
+Number.NaN; // The same value, written another way
+0/0; // => NaN
+Infinity/Infinity; // => NaN
+Number.MIN_VALUE/2; // => 0: underflow
+-Number.MIN_VALUE/2; // => -0: negative zero
+-1/Infinity; // -> -0: also negative 0
+-0;
 
 
 // The following Number properties are defined in ES6
-Number.parseInt() // Same as the global parseInt() function
-Number.parseFloat() // Same as the global parseFloat() function
-Number.isNaN(x) // Is x the NaN value?
-Number.isFinite(x) // Is x a number and finite?
-Number.isInteger(x) // Is x an integer?
-Number.isSafeInteger(x) // Is x an integer -(2**53) < x < 2**53?
-Number.MIN_SAFE_INTEGER // => -(2**53 - 1)
-Number.MAX_SAFE_INTEGER // => 2**53 - 1
-Number.EPSILON // => 2**-52: smallest difference between numbers
+Number.parseInt(); // Same as the global parseInt() function
+Number.parseFloat(); // Same as the global parseFloat() function
+Number.isNaN(x); // Is x the NaN value?
+Number.isFinite(x); // Is x a number and finite?
+Number.isInteger(x); // Is x an integer?
+Number.isSafeInteger(x); // Is x an integer -(2**53) < x < 2**53?
+Number.MIN_SAFE_INTEGER; // => -(2**53 - 1)
+Number.MAX_SAFE_INTEGER; // => 2**53 - 1
+Number.EPSILON; // => 2**-52: smallest difference between numbers
 
 
 
@@ -906,179 +908,65 @@ but the definition of the variable moves to the top of the function. */
 
 //3.10.3 Destructuring Assignment
 
-/*The destructuring assignment syntax is a JavaScript expression 
-that makes it possible to unpack values from arrays, or properties from objects, 
-into distinct variables. */
+/* "Destructuring assignment" is a special syntax 
+that allows us to “unpack” arrays or objects into a bunch of variables,
+as sometimes that’s more convenient. */
 
-/* the value on the right of = is an array or object 
-and left side specifies one or more variable names using a syntax that 
-mimics array and object literalk syntax. */
-
-let [x,y] = [1,2]; // Same as let x=1, y=2
-[x,y] = [x+1,y+1]; // Same as x = x + 1, y = y + 1
-[x,y] = [y,x]; // Swap the value of the two variables
-[x,y] // => [3,2]: the incremented and swapped values
-
-
-//Notice how destructuring assignment makes it easy to work with
-//functions that return arrays of values:
-
-// Convert [x,y] coordinates to [r,theta] polar coordinates
-function toPolar(x, y) {
-    return [Math.sqrt(x*x+y*y), Math.atan2(y,x)];
+//Befrore ES6 
+// assigning object attributes to variables
+const person = {
+    name: 'Sara',
+    age: 25,
+    gender: 'female'    
 }
-// Convert polar to Cartesian coordinates
-function toCartesian(r, theta) {
-    return [r*Math.cos(theta), r*Math.sin(theta)];
-}
-let [r,theta] = toPolar(1.0, 1.0); // r == Math.sqrt(2); theta == Math.PI/4
-let [x,y] = toCartesian(r,theta); // [x, y] == [1.0, 1,0]
+
+let name = person.name;
+let age = person.age;
+let gender = person.gender;
+//The order of the name does not matter in object destructuring.
+
+console.log(name); // Sara
+console.log(age); // 25
+console.log(gender); // female
+
+//AFTER ES6
+// destructuring assignment
+let { name, age, gender } = person;
+
+console.log(name); // Sara
+console.log(age); // 25
+console.log(gender); // female
+
+//If you want to assign different variable names for the object key
+
+// using different variable names
+// destructuring assignment
+let { name: name1, age: age1, gender:gender1 } = person;
+
+console.log(name1); // Sara
+console.log(age1); // 25
+console.log(gender1); // female
+
 
 
 //Array destructuring
 
-// we have an array with the name and surname
-let arr = ["John", "Smith"]
-// destructuring assignment
-// sets firstName = arr[0]
-// and surname = arr[1]
-let [firstName, surname] = arr;
-alert(firstName); // John
-alert(surname);  // Smith
-//Now we can work with variables instead of array members.
-//It looks great when combined with split or other array-returning methods:
+var arr = ["John", "Smith"]
 
-let [firstName, surname] = "John Smith".split(' ');
-alert(firstName); // John
-alert(surname);  // Smith
+// destructuring assignment
+var [firstName, surname] = arr;
+// sets firstName = arr[0] and surname = arr[1]
+console.log(firstName); // John
+console.log(surname);  // Smith
+
 
 
 //“Destructuring” does not mean “destructive”.
-/*It’s called “destructuring assignment,” because it “destructurizes” 
-by copying items into variables. But the array itself is not modified. */
+/* it “destructurizes” by copying items into variables. 
+But the array itself is not modified. */
 
-// let [firstName, surname] = arr;
-let firstName = arr[0];
-let surname = arr[1];
-
-
-//Ignore elements using commas
-
-//Unwanted elements of the array can also be thrown away via an extra comma:
-// second element is not needed
-let [firstName, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
-console.log(title); // Consul
+// var [firstName, surname] = arr;
+var firstName = arr[0];
+var surname = arr[1];
 
 
-
-//Assign to anything at the left-side
-
-//We can use any “assignables” at the left side.
-let user = {};
-[user.name, user.surname] = "John Smith".split(' ');
-
-console.log(user.name); // John
-console.log(user.surname); // Smith
-
-//Looping with .entries()
-
-//We can use it with destructuring to loop over keys-and-values of an object:
-let user = {
-    name: "John",
-    age: 30
-};
-// loop over keys-and-values
-for (let [key, value] of Object.entries(user)) {
-    console.log(`${key}:${value}`); // name:John, then age:30
-}
-
-
-//The rest "..."
-
-//Usually, if the array is longer than the list at the left, 
-//the “extra” items are omitted.
-
-let [name1, name2] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
-name1 //'Julius'
-name2 //'Caesar'
-
-//we can add one more parameter that gets “the rest” using three dots "...":
-
-let [name1, name2, ...var1] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
-var1 //[ 'Consul', 'of the Roman Republic' ] 
-//The value of rest is the array of the remaining array elements.
-
-
-
-
-//Object destructuring
-
-//The basic syntax is:
-let {var1, var2} = {var1:'',var2:''}
-/* We should have an existing object at the right side, that 
-we want to split into variables.
-The left side contains an object-like “pattern” for corresponding properties. */
-
-
-let options = {
-    title: "Menu",
-    width: 100,
-    height: 200
-};
-
-let {title, width, height} = options;
-
-console.log(title);  // Menu
-console.log(width);  // 100
-console.log(height); // 200
-
-//The order does not matter. This works too:
-let {height, width, title} = { title: "Menu", height: 200, width: 100 }
-
-
-
-/* Just like with arrays or function parameters, default values can be 
-any expressions or even function calls. 
-They will be evaluated if the value is not provided. */
-
-//In the code below prompt asks for width, but not for title:
-
-let options = {
-  title: "Menu"
-};
-
-let {width = prompt("width?"), title = prompt("title?")} = options;
-
-
-console.log(title);  // Menu
-console.log(width);  // (whatever the result of prompt is)
-
-//We also can combine both the colon and equality:
-let options = {
-  title: "Menu"
-};
-
-let {width: w = 100, height: h = 200, title} = options;
-
-console.log(title);  // Menu
-console.log(w);      // 100
-console.log(h);      // 200
-
-
-
-
-//the rest pattern "..."
-
-let options = {
-    title: "Menu",
-    height: 200,
-    width: 100
-  };
-  
-// title = property named title
-// rest = object with the rest of properties
-let {title, ...rest} = options;
-
-// now title="Menu", rest={height: 200, width: 100}
-rest.height;  // 200
-rest.width;   // 100

@@ -1413,7 +1413,6 @@ let func = function(...args) {
 func(3); // [3]
 func(4, 5, 6); // [4, 5, 6]
 
-
 /*When a single argument is passed to the 'func()' function,
 the rest parameter takes only one parameter.
 
@@ -1429,7 +1428,7 @@ sum(...num1); // 8
 /* If you pass multiple arguments using the spread operator, 
 the function takes the required arguments and ignores the rest. */
 
-
+const array2 = new Array("eat", "sleep");
 
 
 

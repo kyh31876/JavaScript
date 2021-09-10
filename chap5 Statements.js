@@ -1,14 +1,11 @@
-//JavaScript statements are composed of:
-//Values, Operators, Expressions, Keywords, and Comments.
+/* Statements are syntax constructs and commands that perform actions.
 
+Conditionals : Statements like "if" and "switch"
 
+Loops: Statements like "while" and "of" that execute other statements repetitively
 
-//Conditionals : Statements like "if" and "switch"
-
-//Loops: Statements like "while" and "of" that execute other statements repetitively
-
-//Jumps: Statements like 'break', 'return', 'throw' that cause the interpreter to jump
-//to another program
+Jumps: Statements like 'break', 'return', 'throw' that cause the interpreter 
+to jump to another program */
 
 
 //5.1 Expression Statements

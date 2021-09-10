@@ -2,100 +2,106 @@
 
 // Any text between a // and the end of a line 
 // is treated as a comment and is ignored by JavaScript. 
-//Any text between the characters /* and */ is also treated as a comment; 
+
+//Any text between the characters /* ... */ is also treated as a comment;
+
 
 
 //2.3 Literals
 
+/* Literals are the fixed value that cannot be changed, 
+you do not need to specify any type of keyword to write literals. */
 
-//Fixed values are called Literals.
 
-12 // The number twelve
-1.2 // The number one point two
-"hello world" // A string of text
-'Hi' // Another string
-true // A Boolean value
-false // The other Boolean value
-null // Absence of an object
+//Array literals
+
+/* each of which represents an array element, enclosed in [].
+When you create an array using an array literal, 
+it is initialized with the specified values as its elements,  */
+var coffees = ['French Roast', 'Colombian', 'Kona'];
+
+
+//Extra commas in array literals
+
+/* If you put two " , " in a row ,the array fills in the value "undefined" 
+for the unspecified elements */
+
+var fish = ['Lion', , 'Angel'];
+fish[0]; //"Lion"
+fish[1]; //undefined
+fish[2] //"Angel"
+
+
+//Boolean literals
+
+/* The Boolean type has two literal values: true and false. */
+true // Boolean literal
+false // Boolean literal
+
+
+//Numeric literals
+
+/* JavaScript numeric literals include "integer literals" in different bases 
+as well as "floating-point" literals in base-10. */
+
+
+//JavaScript Floating-Point Literal 
+
+/*It contains a decimal point(.)  A fraction is a floating-point literal
+It may contain an Exponent. */
+6.99689 // floating-point literal
+-167.39894 // negative floating-point literal
+
+
+//String Literal
+
+/* within a '' or ""  */
+"Study" // String literal
+'tonight' // String literal 
 
 
 //2.4 Identifiers and Reserved Words
 
-//identifiers are used to name variables (and keywords, and functions, and labels).
 
-//A JavaScript identifier must begin with a letter, 
-//an underscore (_), or a dollar sign ($).
+//2.4.1 JavaScript keywords
 
-/*In JavaScript, there is no way to convert identifiers to strings, 
-but sometimes it is possible to parse strings into identifiers. */
+/* 'Keywords' are reserved words that are part of the syntax 
+in the programming language. */
 
-//These are all legal identifiers:
-i 
-my_variable_name
-v13
-_dummy
-$str
+const a = 'hello';
+/*'const' is a keyword that denotes that 'a' is a constant.
+Keywords cannot be used to name identifiers. */
 
 
+//2.4.2 JavaScript Identifiers
 
-//2.4.1 Reserved Words
-/*Many of these (such as if, while, and for) are reserved keywords that must
-not be used as the names of constants, variables, functions, or classes */
+/* An identifier is a name that is given to entities like 
+variables, functions, class, etc. */
 
-//Others (such as from, of, get, and set) are used in limited
-//contexts with no syntactic ambiguity and are perfectly legal as
-//identifiers.
 
-/*The simplest course is to avoid using any of these words as identifiers, 
-except for from, set, and target, which are safe to use and are already 
-in common use. */
-as 
-const 
-export 
-get 
-null 
-target
-void
-async 
-continue 
-extends 
-if 
-of 
-this
-while
-await 
-debugger 
-false 
-import 
-return 
-throw
-with
-break 
-default 
-finally 
-in 
-set 
-true
-yield
-case 
-delete 
-for 
-instanceof 
-static 
-try
-catch 
-do 
-from 
-let 
-super 
-typeof
-class 
-else 
-function 
-new 
-switch 
-var
+//Rules for Naming JavaScript Identifiers
 
+//valid
+const a = 'hello';
+const _a = 'hello';
+const $a = 'hello';
+//Identifier names cannot start with numbers. For example,
+
+
+//invalid
+const 1a = 'hello'; // this gives an error
+//Identifier names cannot start with numbers. 
+
+
+var y="hi";
+var Y = 5;
+console.log(y); // hi
+console.log(Y); // 5
+//JavaScript is case-sensitive. So y and Y are different identifiers. 
+
+//invalid
+const new = 5; // Error! new is a keyword.
+//Keywords cannot be used as identifier names. 
 
 
 
