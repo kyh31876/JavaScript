@@ -32,11 +32,12 @@ though every Function  constructor is derived from Object constructor. */
 
 //Primitive values
 
-/*All types except objects define immutable values
+/*All types except 'objects' define immutable values
 We refer to values of these types as "primitive values". */
 
-//Undefined type
 
+
+//Undefined type
 //A variable that has not been assigned a value has the value undefined.
 var x; //create a variable but assign it no value
 
@@ -44,7 +45,6 @@ console.log("x's value is", x) //logs "x's value is undefined"
 
 //Null types
 //The Null type has exactly one value: null
-
 
 
 
@@ -66,7 +66,6 @@ console.log("x's value is", x) //logs "x's value is undefined"
 
 //[digits][.digits][(E|e)[(+|-)]digits]
 
-// For example:
 3.14
 2345.6789
 .333333333333333333
@@ -75,8 +74,8 @@ console.log("x's value is", x) //logs "x's value is undefined"
 
 //3.2.3 Arithmetic in JavaScript
 
-//JavaScript supports more complex mathematical operations through 
-//a set of functions and constants defined as properties of the Math object:
+/*JavaScript supports more complex mathematical operations through 
+a set of functions and constants defined as properties of the Math object: */
 Math.pow(2,53) // => 9007199254740992: 2 to the power 53
 Math.round(.6) // => 1.0: round to the nearest integer
 Math.ceil(.6) // => 1.0: round up to an integer
@@ -115,7 +114,7 @@ Math.asinh(x); // Hyperbolic arcsine. Also Math.acosh(),
 Math.atanh();
 
 
-/*JavaScript predefines global constants Infinity and NaN to hold the
+/*JavaScript predefines global constants 'Infinity' and 'NaN to hold the
 positive infinity and not-a-number value, and these values are also
 available as properties of the Number object: */
 
@@ -152,15 +151,17 @@ Number.EPSILON; // => 2**-52: smallest difference between numbers
 
 
 //3.3 Text
-//The JavaScript type for representing text is the string.
 
-//In ES6, strings are iterable, and if you use the for/of loop or ... operator 
-//with a string, it will iterate the actual characters of the string, 
-//not the 16-bit values.
+
+/*The JavaScript type for representing text is the string.
+
+In ES6, strings are iterable, and if you use the for/of loop or ... operator 
+with a string, it will iterate the actual characters of the string, 
+not the 16-bit values. */
 
 
 //3.3.1 String Literals
-//To include a string in a JavaScript program, enclose string with in ' or ".
+/*To include a string in a JavaScript program, enclose string with in ' or " */
 
 "" // The empty string: it has zero characters
 'testing'
@@ -169,11 +170,12 @@ Number.EPSILON; // => 2**-52: smallest difference between numbers
 "Wouldn't you prefer O'Reilly's book?"
 "τ is the ratio of a circle's circumference to its radius"
 `"She said 'hi'", he said.`
-//allow JavaScript expressions to be embedded within (or interpolated into) the
-//string literal.
 
-//you can break a string literal across multiple lines by
-//ending each line but the last with a backslash (\).
+/*allow JavaScript expressions to be embedded within 
+(or interpolated into) the string literal. */
+
+/*you can break a string literal across multiple lines by
+ending each line but the last with a backslash (\). */
 
 // A string representing 2 lines written on one line:
 'two\nlines'
@@ -186,108 +188,140 @@ line"
 `the newline character at the end of this line
 is included literally in this string`
 
-//you must use the backslash character (\) to “escape” any
-//apostrophes that appear in single-quoted strings
+/*you must use the backslash character (\) to “escape” any
+apostrophes that appear in single-quoted strings*/
 
 //3.3.2 Escape Sequences in String Literals
 
-//  '\' is conbined with the character that follow it, it represent that is not 
-//otherwise representable within the string 
-
-//Table 3-1. JavaScript escape sequences
+/*'\' is conbined with the character that follow it, 
+it represent that is not otherwise representable within the string*/
 
 /*Sequence             Character represented
-\0                      //The NUL character (\u0000)
-\b                      //Backspace (\u0008)
-\t                      //Horizontal tab (\u0009)
-\n                      //Newline (\u000A)
-\v                      //Vertical tab (\u000B)
-\f                      //Form feed (\u000C)
-\r                      //Carriage return (\u000D)
-\" 
-                        //Double quote (\u0022)
-\'  
-                        //Apostrophe or single quote (\u0027)
-\\                      //Backslash (\u005C)
+\0                      //The NUL character 
+\b                      //Backspace 
+\t                      //Horizontal tab 
+\n                      //Newline 
+\v                      //Vertical tab 
+\f                      //Form feed 
+\r                      //Carriage return 
+\"                      //Double quote 
+\'                      //Apostrophe or single quote 
+\\                      //Backslash 
+
 \xnn //The Unicode character specified by the two hexadecimal digits nn
 \unnnn //The Unicode character specified by the four hexadecimal digits nnnn
-\u{n
-}
+\u{n}
 */
+
 /*The Unicode character specified by the codepoint n, where n is one to six
 hexadecimal digits between 0 and 10FFFF (ES6) */
 
 
 
-//primitive types: number, strings ,Booleans 
-let zero = 0; // Regular zero
+//3.3.2.1 JavaScript Variables and Constants
 
-let negz = -0; // Negative zero
-zero === negz // => true: zero and negative zero are equal
-1/zero === 1/negz // => false: Infinity and -Infinity are not equal
+//3.3.2.2 Variables
+/* a variable is a container (storage area) to hold data.*/
+let num = 5;
+//'num' is a variable. It's storing 5.
 
-let x = .3 - .2; // thirty cents minus 20 cents
-let y = .2 - .1; // twenty cents minus 10 cents
-x === y // => false: the two values are not the same!
-x === .1 // => false: .3-.2 is not equal to .1
-y === .1 // => true: .2-.1 is equal to .1
+//Declaring Variables
+/* we use either 'var' or 'let' keyword to declare variables. 
+and there are some differences between them.*/
+
+/* 'var' is function scoped.  however, 'let' is block scoped  */
+
+
+//3.3.2.3 Initializing Variables
+/* We use the assignment operator '=' to assign a value to a variable.*/
+let x;
+x = 5;
+//'5' is assigned to variable 'x'.
+
+
+/* If you use a variable without initializing it, 
+it will have an 'undefined' value.*/
+
+let x; // x is the name of the variable
+console.log(x); // undefined
+
+
+//3.3.2.4 Changing the Value of Variables
+
+// 5 is assigned to variable x
+let x = 5; 
+console.log(x); // 5
+
+// vaue of variable x is changed
+x = 3; 
+console.log(x); // 3
+/* The value of a variable may vary. Hence, the name variable. */
 
 
 
 //3.3.3 Working with Strings
 
-//If you use the + operator with numbers, it adds them. But if
-//you use this operator on strings, it join thme by appending the second to the 
-//first
+/*If you use the '+' operator with numbers, it adds them. 
+But if you use '+' operator on strings, 
+it join them by appending the second to the first */
 
 let msg = "Hello, " + "world"; // Produces the string "Hello, world"
 let greeting = "Welcome to my blog," + " " + name;
-
 //javascript provide  a rich API for working with strings
 
+
+
 let s = "Hello, world"; // Start with some text.
+
 // Obtaining portions of a string
 s.substring(1,4) // => "ell": the 2nd, 3rd, and 4th characters.
 s.slice(1,4) // => "ell": same thing
 s.slice(-3) // => "rld": last 3 characters
 s.split(", ") // => ["Hello", "world"]: split at delimiter string
+
 // Searching a string
 s.indexOf("l") // => 2: position of first letter l
 s.indexOf("l", 3) // => 3: position of first "l" at or after 3
 s.indexOf("zz") // => -1: s does not include the substring "zz"
 s.lastIndexOf("l") // => 10: position of last letter l
+
 // Boolean searching functions in ES6 and later
 s.startsWith("Hell") // => true: the string starts with these
 s.endsWith("!") // => false: s does not end with that
 s.includes("or") // => true: s includes substring "or"
+
 // Creating modified versions of a string
 s.replace("llo", "ya") // => "Heya, world"
 s.toLowerCase() // => "hello, world"
 s.toUpperCase() // => "HELLO, WORLD"
 s.normalize() // Unicode NFC normalization: ES6
 s.normalize("NFD") // NFD normalization. Also "NFKC", "NFKD"
+
 // Inspecting individual (16-bit) characters of a string
 s.charAt(0) // => "H": the first character
 s.charAt(s.length-1) // => "d": the last character
 s.charCodeAt(0) // => 72: 16-bit number at the specified position
 s.codePointAt(0) // => 72: ES6, works for codepoints > 16 bits
+
 // String padding functions in ES2017
 "x".padStart(3) // => " x": add spaces on the left to a length of 3
 "x".padEnd(3) // => "x ": add spaces on the right to a length of 3
 "x".padStart(3, "*") // => "**x": add stars on the left to a length of 3
 "x".padEnd(3, "-") // => "x--": add dashes on the right to a length of 3
+
 // Space trimming functions. trim() is ES5; others ES2019
-" test ".trim() // => "test": remove spaces at start and end
-" test ".trimStart() // => "test ": remove spaces on left. Also trimLeft
-" test ".trimEnd() // => " test": remove spaces at right. Also trimRight
+"test".trim() // => "test": remove spaces at start and end
+"test".trimStart() // => "test ": remove spaces on left. Also trimLeft
+"test".trimEnd() // => " test": remove spaces at right. Also trimRight
+
 // Miscellaneous string methods
 s.concat("!") // => "Hello, world!": just use + operator instead
 "<>".repeat(5) // => "<><><><><>": concatenate n copies. ES6
 
 
 
-//Remember that strings are immutable in JavaScript. Methods like
-//replace() and toUpperCase() return new strings:
+/* Remember that strings are immutable in JavaScript. 
+Methods like replace() and toUpperCase() return new strings: */
 
 
 // a string using square brackets instead of the charAt() method:
@@ -298,134 +332,150 @@ s[s.length-1] // => "d"
 
 
 
-//3.3.4 Template Literals
+//3.3.4 Template Literals (Template Strings)
 
-//string literals can be delimited with backticks:
-let s =`hello world`;
+/* Template literals(template strings) allow you to use 
+strings or embedded expressions in the form of a string. 
 
-//these template literals can include arbitrary JavaScript expressions.
-
-
-//converting the values of those expressions to strings and combining 
-//those computed strings with the literal characters within the backticks:
-
-let name = "Bill";
-let greeting = `Hello ${ name }.`; // greeting == "Hello Bill."
-
-//Everything between the ${ and the matching } is interpreted as a
-//JavaScript expression.
-
-//The expression inside the braces is evaluated and then converted 
-//to a string and inserted into the template, replacing the dollar sign,
-// the curly braces, and everything in between them.
+They are enclosed in backticks ``*/
+const name1 = 'Jack';
+console.log(`Hello ${name1}!`); // Hello Jack!
 
 
+//3.3.4.1 Template Literals for Strings
+
+/* To use the same quotations inside the string, 
+you can use the escape character \. */
+
+// escape characters using \
+const str3 = 'A \'quote\' inside a string';  // valid code
+const str5 = "Another \"quote\" inside a string"; // valid code
+
+/*Instead of using escape characters(\), you can use template literals.*/
+const str1 = `This is a string`;
+const str2 = `This is a string with a 'quote' in it`;
+const str3 = `This is a string with a "double quote" in it`;
 
 
-//The following template literal includes four JavaScript expressions, 
-//a Unicode escape sequence, and at least four newlines
+//3.3.4.2 Multiline Strings Using Template Literals
 
-let errorMessage = `\
-\u2718 Test failure at ${filename}:${linenumber}:
-${exception.message}
-Stack trace:
-${exception.stack}
-`;
+// using the + operator
+const message1 = 'This is a long message\n' +  'that spans across multiple lines\n' 
++ 'in the code.'
 
-//A template literal may include any number of expressions.
-
-//it can use any of the escape characters that normal string can,
-//it can span any number of lines, with no special escaping required.
-
-
-//TAGGED TEMPLATE LITERALS
-//if a function name (or “tag”) comes right before the opening backtick,
-//then the text and the values of the expressions within the template
-//literal are passed to the function.
-
-`\n`.length // => 1: the string has a single newline character
-String.raw`\n`.length // => 2: a backslash character and the letter n
-
-
-//Note that even though the tag portion of a tagged template literal is a
-//function, there are no parentheses used in its invocation.
+//you can replace
+const message1 = `This is a long message 
+that spans across multiple lines
+in the code.`
 
 
 
-//3.3.5 Pattern Matching
-//JavaScript defines a datatype known as a regular expression (or
-//RegExp) for describing and matching patterns in strings of text.
+//3.3.4.3 Expression Interpolation
+
+/* you would use the + operator to concatenate variables and expressions in a string.*/
+
+const name = 'Jack';
+console.log('Hello ' + name); // Hello Jack
+
+/* With template literals, it's a bit easier to include variables 
+and expressions inside a string. 
+For that, we use the ${...} syntax. */
+
+const name = 'Jack';
+console.log(`Hello ${name}`); // Hello Jack
+
+// template literals used with expressions
+const result = `The sum of  4 + 5 is ${4 + 5}`;
+console.log(result); //The sum of  4 + 5 is 9
+
+console.log(`${result < 10 ? 'Too low': 'Very high'}`) //Very high
 
 
-/HTML/ // Match the letters H T M L at the start of a string
-/[1-9][0-9]*/; // Match a nonzero digit, followed by any # of digits`
-/\bjavascript\b/i; // Match "javascript" as a word, caseinsensitive
+//3.3.4.4 Tagged Templates
 
-let text = "testing: 1, 2, 3"; // Sample text
+/* you would use a function to pass arguments.*/
+function tagExample(strings) {
+    return strings;
+}
+// passing argument
+const result = tagExample('Hello Jack');
 
-let pattern = /\d+/g; // Matches all instances of one or more digits
-pattern.test(text) // => true: a match exists
-text.search(pattern) // => 9: position of first match
-text.match(pattern) // => ["1", "2", "3"]: array of all matches
-text.replace(pattern, "#") // => "testing: #, #, #"
-text.split(/\D+/) // => ["","1","2","3"]: split on nondigits
+console.log(result)
+
+/* However, you can create tagged templates (that behave like a function) 
+using template literals.
+Tagged template is written like a function definition. 
+However, you do not pass parentheses () when calling the literal */
+
+function tagExample(strings) {
+    return strings;
+}
+// creating tagged template
+const result = tagExample`Hello Jack`;
+
+console.log(result);
+
+/* An array of string values are passed as the first argument of a tag function. 
+You could also pass the values and expressions as the remaining arguments. */
+
+const name = 'Jack';
+const greet = true;
+
+function tagExample(strings, nameValue) {
+    let str0 = strings[0]; // Hello
+    let str1 = strings[1]; // , How are you?
+
+    if(greet) {
+        return `${str0}${nameValue}${str1}`;
+    }
+}
+
+// creating tagged literal and passing argument name :
+const result = tagExample`Hello ${name}, How are you?`;
+console.log(result); //Hello Jack, How are you?
+
+
+
+
 
 
 //3.4 Boolean Values
-//a Boolean is a logical data type that can have only the values true or false.
+
+/* booleans are the primitive data types that can either be 'true' or 'false' */
+
+const a = 'true';
+console.log(typeof a); // string
+/*  If you wrap true or false in a quote, then they are considered as a string. */
 
 
-//Boolean values are generally the result of comparisons you make in
-//your JavaScript programs.
+/* Equal to operator '==' returns 'true' if the operands are equal. */
+console.log(5 == 6); // false
 
-a === 4
-//if the value of a is equal to 4, result is the value "true"
-//whether, result is "false".
-
+/* Not equal to operator '!=' returns 'true' if all the operands are not equal. */
+console.log(5 != 6); // true
 
 
-//the if/else statement in JavaScript performs one action if 
-//a boolean value is true and another action if the value is false.
-//they are sometimes callued "falsy value".
+/* Logical AND '&&' returns 'true' if both the operand values are true, 
+else evaluates to false. */
+console.log(true && false); // false
 
+/* The boolean values are used in 'if...else' statements and 'for' loops as well. */
 
-if (a === 4) {
-    b = b + 1;
-    } else {
-    a = a + 1;
-    }
-
-//The following values convert to, and therefore work like, false:
-undefined
-null
-0 -
-0
-NaN
-""
-
-//All other values, including all objects (and arrays) convert to, and work
-//like, true. false,
-
-if (o !== null) 
-//!== compares o to null and evaluates to either true or false.
+undefined	//false
+null	//false
+NaN	//false
+''	//false
+0	//false
+20	//true
+-20	//true
+'hello'	//true
 
 
 
 
-//you can omit the comparison and instead rely on the fact 
-//that null is falsy and objects are truthy:
-
-//it will execute the body of the if only if o is not false or any falsy value
-if (o)...
-
-if ((x === 0 && y === 0) || !(z === 0)) {
-    // x and y are both zero or z is non-zero
-    }
 
 
-//3.5 null and undefined
-
-//null 
+//3.5.1null 
 
 //null expresses a lack of identification, 
 //indicating that a variable points to no object.
@@ -437,7 +487,7 @@ strings as well as objects. */
 
 
 
-//undefined
+//3.5.2 undefined
 //undefined is a primitive value automatically assigned 
 //to variables that have just been declared, 
 //or to formal arguments for which there are no actual arguments.
