@@ -1,60 +1,32 @@
-/*Dynamic typing in JavaScript are not directly associated with 
-any particular value type, and any variable can be assigned (and re-assigned)
-values of all types:  */ 
+//3.1.1 primitive type
 
-let foo=42;    // foo is now a number
-foo = 'bar'; // foo is now a string
-foo = true;  // foo is now a boolean
+/* These six types are considered to be 'primitives'. 
+A primitive is not an 'object' and has no methods of its own. 
+All primitives are immutable. */
+/*
+Boolean — true or false
 
+Null — no value
 
+Undefined — a declared variable but hasn’t been given a value
 
-//Primitive
+Number — integers, floats, etc
 
-/* a primitive (primitive value, primitive data type) is data  
-that is not an object and has no methods.*/
+String — an array of characters i.e words
 
-
-//Structural Types:
-
-typeof instance === "object" 
-/*Object : Special non-data but Structural type for any constructed object 
-instance also used as data structures: new Object, new Array, new Map, new Set,
-new WeakMap, new WeakSet, new Date and almost everything made with new keyword; */
-
-//Function : a non-data structure, though it also answers for typeof operator:i
-typeof instance === 'function'
-/*This is merely a special shorthand for Functions, 
-though every Function  constructor is derived from Object constructor. */
-
-
-
-
-
-//Primitive values
-
-/*All types except 'objects' define immutable values
-We refer to values of these types as "primitive values". */
-
-
-
-//Undefined type
-//A variable that has not been assigned a value has the value undefined.
-var x; //create a variable but assign it no value
-
-console.log("x's value is", x) //logs "x's value is undefined"
-
-//Null types
-//The Null type has exactly one value: null
-
-
+Symbol — a unique value that's not equal to any other value
+*/
 
 
 //3.2 Numbers
 
+/* Number represents integer and floating numbers (decimals and exponentials) */
+
 
 //3.2.1 Integer Literals
-//When a number appears directly in a JavaScript program, it’s called a
-//"numeric literal"
+
+/* When a number appears directly in a JavaScript program, 
+it’s called a "numeric literal" */
 0
 3 
 10000000
@@ -470,54 +442,90 @@ NaN	//false
 -20	//true
 'hello'	//true
 
+// 3.4.1 Boolean Methods
+
+// toString() method 
+/* returns a boolean value by converting boolean to a string */
+
+var count = false;
+
+// converting to string
+var result = count.toString();
+
+console.log(result); //false
+console.log(typeof result); //string
+
+
+//valueOf() method 
+/* returns the primitive value of a boolean */
+
+var count = true;
+
+// converting to string
+var result = count.valueOf();
+
+console.log(result); //true
+console.log(typeof result); //boolean
 
 
 
 
+//3.5.1 null 
 
-//3.5.1null 
+/* 'null' is a special value that represents an empty or unknown value. */
 
-//null expresses a lack of identification, 
-//indicating that a variable points to no object.
+var number = null;
+// the 'number' variable is empty at the moment and may have a value later.
 
-//"typeof" operator on "null" returns the string “object”,
-/* however, null is typically regarded as the sole member of its
-own type, and it can be used to indicate “no value” for numbers and
-strings as well as objects. */
 
 
 
 //3.5.2 undefined
-//undefined is a primitive value automatically assigned 
-//to variables that have just been declared, 
-//or to formal arguments for which there are no actual arguments.
 
-/* 초기화되지 않은 변수의 값과 존재하지 않는 객체 속성 또는 
-배열 요소의 값을 쿼리할 때 얻을 수 있는 값입니다. */
-
-
-/* The undefined value is also the return value of functions that
-do not explicitly return a value and the value of function parameters for
-which no argument is passed. */
-
-//undefined is a non-configurable, non-writable property, 
+/* If a variable is declared but the value is not assigned, 
+then the value of that variable will be 'undefined' */
+var name;
+console.log(name); // undefined
 
 
-//undefined to represent a system-level, unexpected, or  
-//error-like absence of value
-//null to represent a program-level, normal, or expected absence of value
+/* It is also possible to explicitly assign 'undefined' to a variable */
+var name = "Felix";
+// assigning undefined to the name variable
+name = undefined
+
+console.log(name); // returns undefined
+
+/* An 'undefined' or 'null' gets converted to 'false' 
+when used with the Boolean() function. */
+
+var result;
+
+result = Boolean(undefined);
+console.log(result); // false
+
+result = Boolean(null);
+console.log(result); // false
 
 
 
-//3.6 Symbols
-]
-//Symbol is a built-in object whose constructor returns a symbol 'primitive'
 
-/* To understand Symbols, you need to know that JavaScript’s
-fundamental Object type is an unordered collection of properties,
-where each property has a name and a value. 
-Property names are typically (and until ES6, were exclusively) strings.
-*/
+
+
+//3.6 Javasciript Symbols
+
+/* Symbols are immutable (cannot be changed) and are unique */
+
+// two symbols with the same description
+const value1 = Symbol('hello');
+const value2 = Symbol('hello');
+
+console.log(value1 === value2); // false
+/* Though value1 and value2 both contain the same description, they are different. */
+
+
+
+
+//3.6.1 Creating Symbol
 
 //Symbol() constructor
 
@@ -529,22 +537,11 @@ the syntax "new Symbol()" and it is not intended to be subclassed.  */
 Symbol()
 Symbol(description)
 
-//description Optional
-/* A string. A description of the symbol which can be used for debugging 
-but not to access the symbol itself. */
 
-//Creating symbols
+/* Symbol() function to create a Symbol */
 
-/* To create a new primitive symbol, you write Symbol() 
-with an optional string as its description: */
-let sym1 = Symbol()
-let sym2 = Symbol('foo')
-let sym3 = Symbol('foo')
-
-
-/* Note that Symbol("foo") does not coerce the string "foo" into a symbol. 
-It creates a new symbol each time: */
-Symbol('foo') === Symbol('foo')  // false
+const x = Symbol() // creating symbol
+typeof x; // symbol
 
 //new Symbol(...)
 //The following syntax with the new operator will throw a TypeError:
@@ -552,27 +549,88 @@ let sym = new Symbol()  // TypeErrorÂ
 
 
 
+//3.6.2 Access Symbol Description
+
+/* To access the description of a symbol, use '.' operator. */
+const x = Symbol('hey');
+console.log(x.description); // hey
 
 
-//3.8 Immutable Primitive Values and Mutable Object References
 
-//Immutable Primitive Values
+//3.6.3 Add Symbol as an Object Key
+
+/* You can add symbols as a key in an object using '[]' */
+var id = Symbol("id");
+
+var person = {
+    name: "Jack",
+    // adding symbol as a key
+    [id]: 123 // not "id": 123
+};
+
+console.log(person); // {name: "Jack", Symbol(id): 123}
+
+
+//3.6.4 Symbol Methods
+
+for()	//Searches for existing symbols
+
+keyFor()	//Returns a shared symbol key from the global symbol registry.
+
+toSource()	//Returns a string containing the source of the Symbol object
+
+toString()	//Returns a string containing the description of the Symbol
+
+valueOf()	//Returns the primitive value of the Symbol object.
+
+
+// get symbol by name
+var sym = Symbol.for('hello');
+var sym1 = Symbol.for('id');
+
+// get name by symbol
+console.log( Symbol.keyFor(sym) ); // hello
+console.log( Symbol.keyFor(sym1) ); // id
+
+
+
+
+//3.8 Immutable Primitive Values and  Reference type 
+
+
+//3.8.1     Immutable Primitive Values
 
 //Primitives are immutable: there is no way to change a primive value.
 
-let s = "hello"; // Start with some lowercase text
-s.toUpperCase(); // Returns "HELLO", but doesn't alter s
-console.log(s) //undefined, null, booleans, numbers, and strings aren`t changed 
+/* It is important not to confuse a primitive itself 
+with a variable assigned a primitive value. 
 
-/* If two distinct string values are compared, JavaScript treats
-them as equal if, and only if, they have the same length and if 
-the character at each index is the same. */
+The variable may be reassigned a new value, 
+but the existing value can not be changed in the ways that objects, arrays, 
+and functions can be altered. */
 
 
-//Mutable Object References
 
-/* Objects are not compared by value: two distinct objects are not equal
-even if they have the same properties and values */
+//3.8.2 Reference types 
+
+/* Javascript has 3 data types that are passed by reference: 
+Array, Function, and Object. 
+
+These are all technically Objects */
+
+
+/* Variables that are assigned a non-primitive value are given 
+a 'reference' to that value. 
+
+That 'reference' points to the object’s location in memory. 
+The variables don’t actually contain the value. */
+
+
+
+/* 
+Objects are not compared by value: two distinct objects are not equal
+even if they have the same properties and values 
+*/
 
 
 /* two distinct arrays are not equal even if they have 
@@ -608,12 +666,13 @@ a === b // => true: a and b refer to the same object, so they are equal.
 
 //assigning an object (or array) to a variable is not create a new copy of 
 //the object.
-let a = ["a","b","c"]; // An array we want to copy
-let b = []; // A distinct array we'll copy into
+
+var a = ["a","b","c"]; // An array we want to copy
+var b = []; // A distinct array we'll copy into
 for(let i = 0; i < a.length; i++) { // For each index of a[]
     b[i] = a[i]; // Copy an element of a into b
 }
-let c = Array.from(b); // In ES6, copy arrays with Array.from()
+var c = Array.from(b); // In ES6, copy arrays with Array.from()
 
 
 //if we want to compare two distinct objects or arrays, we
@@ -631,9 +690,12 @@ function equalArrays(a, b) {
 //3.9 Type Conversions
 
 
-//Table 3-2. JavaScript type conversions
-//value      to String     to Number   to Boolean
-/*undefined    "undefined"     NaN     false
+//JavaScript type conversions
+
+/*
+value      to String     to Number   to Boolean
+
+undefined    "undefined"     NaN     false
 null        "null"       0           false
 true        "true"       1
 false       "false"      0
@@ -659,6 +721,9 @@ let n = 1 - "x"; // n == NaN; string "x" can't convert to a number
 n + " objects" // => "NaN objects": NaN converts to string "NaN"
 
 
+
+
+
 //3.9.1 Conversions and Equality
 
 //“strict equality operator,” ===, does not consider its operands to
@@ -676,6 +741,9 @@ null == undefined // => true: These two values are treated as equal.
 
 //convertibility of one value to another does not imply
 //equality of those two values.
+
+
+
 
 
 //3.9.2 Explicit Conversions
