@@ -164,7 +164,6 @@ o.constructor === F // => true: the constructor property specifies the class
 //9.3 Classes with the class Keyword
 
 //Example 9-3. The Range class rewritten using class
-
 class Range {
     constructor(from, to) {
     // Store the start and end points (state) of this new range object.
